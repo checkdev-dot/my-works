@@ -4,11 +4,16 @@
 
 ![Calm Home on the TV](docs/screenshots/home.png)
 
+| The dock glides under a fixed focus | All apps, one press below Home |
+|:---:|:---:|
+| ![Moving along the dock](docs/media/home-dock.gif) | ![Browsing All apps by letter](docs/media/all-apps.gif) |
+| [Watch MP4](docs/media/home-dock.mp4) | [Watch MP4](docs/media/all-apps.mp4) |
+
 ## What it does
 
 Calm Home replaces a cluttered, ad-filled stock launcher with one quiet screen:
 
-- **A greeting by name**, with a new line each visit.
+- **A greeting** by name or by time of day ("Hey night owl"), with a new line each visit.
 - **The clock, date, weather and air quality** at a glance.
 - **Wi-Fi status** with a Change button.
 - **For you:** the apps you usually open at this time of day.
@@ -18,13 +23,16 @@ Calm Home replaces a cluttered, ad-filled stock launcher with one quiet screen:
 - **PS4 auto-switch:** turn the console on and a card counts down 5 seconds, then switches to it.
 - **Remote fixes:** the ad button opens Crunchyroll; the grid button opens All apps.
 
-![All apps, one press below Home](docs/screenshots/library.png)
+![Home and All apps](docs/screenshots/gallery.png)
 
 ## What it helped with
 
 **Before:** the TV had two home screens fighting each other (Google TV and Xiaomi's PatchWall), both full of ads. Menus lagged on the weak chip, the remote's extra button opened more ads, and tracking apps ran all the time.
 
-![Before: the stock home screen, full of ads](docs/screenshots/before-stock-home.png)
+| Before: the stock home screen | Before: slow tabs, ads up top |
+|:---:|:---:|
+| ![Before: the stock home screen, full of ads](docs/screenshots/before-stock-home.png) | ![Before: the stock launcher loading](docs/media/before-stock.gif) |
+| | [Watch MP4](docs/media/before-stock.mp4) |
 
 **After:**
 - **No ads, one home.** 25 ad, tracking and junk apps were *disabled* (never uninstalled), and Calm Home became the home screen.
@@ -46,7 +54,7 @@ Calm Home replaces a cluttered, ad-filled stock launcher with one quiet screen:
 | [`xiaomi-tv/`](xiaomi-tv/) | The Android app, plus restore and audit scripts for the Xiaomi TV |
 | [`spec/`](spec/) | The Calm Home UI as a machine-readable spec (`calm-ui-spec.json`), plus a 40-point plan to rebuild it for a Samsung 65" TV |
 | [`CLAUDE.md`](CLAUDE.md) | Working notes: how to build, install and test, and the rules learned the hard way |
-| `docs/screenshots/` | The screenshots on this page |
+| `docs/screenshots/`, `docs/media/` | The screenshots and clips on this page (names and the Wi-Fi network replaced with placeholders) |
 
 Not in git: the `tools/` folder (JDK, Android SDK, adb), the app's signing key, and raw test captures.
 

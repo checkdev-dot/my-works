@@ -6,6 +6,17 @@
 
 > All screenshots use placeholder details (flat 1204, Maple Heights, Home_WiFi). The real ones live in a local file that never leaves the host's computer.
 
+## See it move
+
+| The welcome | A tour of the app | Android one-tap Wi-Fi |
+|:---:|:---:|:---:|
+| ![Welcome animation](docs/media/welcome.gif) | ![Tour: Wi-Fi card flip, Arrive, Order, call](docs/media/tour.gif) | ![Android Circle to Search sheet](docs/media/android.gif) |
+| [Watch MP4](docs/media/welcome.mp4) | [Watch MP4](docs/media/tour.mp4) | [Watch MP4](docs/media/android.mp4) |
+
+**Moments:** the towers rise, the lift climbs and lights each floor, you've arrived, the Wi-Fi card flips to its QR, the route to the gate, and "Copied!" on Order.
+
+![Six moments from the app](docs/screenshots/moments.png)
+
 ## What it does
 
 Guests open one link on their own phone and everything they'd normally ask the host for is one tap away.
