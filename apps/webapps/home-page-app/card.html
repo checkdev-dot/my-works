@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Door card</title>
+<style>
+@font-face { font-family: "Nunito"; src: url("fonts/nunito-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Nunito"; src: url("fonts/nunito-900.woff2") format("woff2"); font-weight: 900; }
+:root { --ink: #3c3c3c; --mute: #6f6f6f; --cobalt: #58cc02; --parchment: #f7f7f7;
+  --display: "Nunito", ui-rounded, system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--parchment); color: var(--ink); font-family: var(--display); -webkit-font-smoothing: antialiased; }
+.bar { max-width: 760px; margin: 24px auto 0; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.bar p { margin: 0; color: var(--mute); font-size: 15px; }
+.bar button { border: 0; border-radius: 16px; background: #58cc02; box-shadow: 0 4px 0 #46a302; color: #fff; font: 900 15px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 14px 22px; cursor: pointer; }
+.sheet { -webkit-print-color-adjust: exact; print-color-adjust: exact; border: 3px solid #e5e5e5; width: 148mm; min-height: 105mm; margin: 24px auto 48px; background: #fff; border-radius: 6mm; padding: 9mm; display: grid; grid-template-columns: 1fr auto; gap: 8mm; align-items: center; box-shadow: 3px 5px 30px rgba(0,0,0,.12); }
+h1 { margin: 0; font-weight: 900; font-size: 13mm; line-height: 1; letter-spacing: -0.035em; }
+.sub { margin: 3mm 0 0; font-size: 4mm; color: var(--mute); }
+.wifi { margin-top: 7mm; font-size: 3.6mm; line-height: 1.5; }
+.wifi b { display: block; font-size: 5mm; }
+.gate { margin-top: 6mm; display: inline-flex; align-items: center; gap: 2.5mm; font-size: 3.8mm; font-weight: 700; }
+.gate span { display: inline-grid; place-items: center; width: 8mm; height: 8mm; border-radius: 50%; background: var(--cobalt); color: #fff; font-size: 4.4mm; }
+.codes { display: grid; gap: 5mm; justify-items: center; text-align: center; }
+.codes img { display: block; width: 46mm; height: 46mm; image-rendering: pixelated; }
+.codes .small img { width: 22mm; height: 22mm; }
+.codes p { margin: 1.5mm 0 0; font-size: 3.2mm; font-weight: 600; }
+.codes .small p { font-weight: 400; color: var(--mute); }
+@media print {
+  @page { size: A6 landscape; margin: 0; }
+  body { background: #fff; }
+  .bar { display: none; }
+  .sheet { margin: 0; box-shadow: none; border-radius: 0; width: 148mm; height: 105mm; }
+}
+@media (max-width: 640px) { .sheet { width: auto; margin: 16px; grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="bar"><p>Print this and stick it by the door. iPhone: open Camera, point, tap <b>Join</b>. Android: Camera or Circle to Search, tap <b>Connect</b>.</p><button type="button" id="printBtn">Print card</button></div>
+<main class="sheet">
+  <div>
+    <h1 id="t">Welcome</h1>
+    <p class="sub" id="place"></p>
+    <p class="wifi">Wi-Fi<b id="ssid"></b>Password: <span id="pw"></span></p>
+    <div class="gate"><span id="gNum"></span><span id="gTxt" style="all:unset"></span></div>
+  </div>
+  <div class="codes">
+    <div><div id="wq"></div><p>Scan to join Wi-Fi</p></div>
+    <div class="small"><div id="pq"></div><p>Address &amp; apps</p></div>
+  </div>
+</main>
+<script src="home.config.local.js"></script>
+<script src="home.config.js"></script>
+<script src="vendor/qrcode-generator.js"></script>
+<script src="card.js"></script>
+</body>
+</html>

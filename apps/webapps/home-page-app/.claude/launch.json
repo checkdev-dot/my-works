@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "home-page-app", "runtimeExecutable": "npx", "runtimeArgs": ["-y", "http-server", "-p", "5206", "-c-1", "--silent"], "port": 5206 }
+  ]
+}

@@ -1,0 +1,7 @@
+.vercel
+.env*
+.impeccable/review/
+node_modules/
+# real details stay on this PC
+home.config.local.js
+wifi.mobileconfig

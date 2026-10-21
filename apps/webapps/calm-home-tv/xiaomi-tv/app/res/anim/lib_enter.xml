@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The Library rises from below at exactly Home's pace, so it reads as one continuous screen. -->
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/fast_out_slow_in"
+    android:duration="420"
+    android:fromYDelta="100%" android:toYDelta="0%" />

@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-16T00:00:00Z",
+  "title": "Design System: 1204 Home",
+  "extensions": {
+    "colorMeta": {
+      "cobalt": { "role": "primary", "displayName": "Cobalt", "canonical": "#494fdf", "source": "Revolut", "tonalRamp": ["#14163f", "#1e2170", "#2c31a6", "#3a40c4", "#494fdf", "#7b80e8", "#aeb1f0", "#e1e2fa"] },
+      "cobalt-on-dark": { "role": "primary", "displayName": "Cobalt on Dark", "canonical": "#8f94ff", "source": "Own", "tonalRamp": ["#1e2170", "#3a40c4", "#494fdf", "#6a6fef", "#8f94ff", "#b0b3ff", "#cfd1ff", "#ebebff"] },
+      "black": { "role": "neutral", "displayName": "True Black", "canonical": "#000000", "source": "Revolut", "tonalRamp": ["#000000", "#0b0c0d", "#16181a", "#202326", "#44464a", "#636366", "#a1a1a6", "#ffffff"] },
+      "elevated": { "role": "neutral", "displayName": "Elevated Black", "canonical": "#16181a", "source": "Revolut", "tonalRamp": ["#000000", "#0b0c0d", "#101213", "#16181a", "#1b1d20", "#202326", "#2a2d31", "#34383c"] },
+      "mute": { "role": "neutral", "displayName": "Mute", "canonical": "#a1a1a6", "source": "Apple", "tonalRamp": ["#3a3a3c", "#636366", "#7c7c80", "#8e8e93", "#a1a1a6", "#b8b8bc", "#d1d1d6", "#ececee"] },
+      "sky-top": { "role": "scene", "displayName": "Night Navy", "canonical": "#1a2b6b", "source": "Own", "tonalRamp": ["#080d22", "#0e1840", "#1a2b6b", "#2a3d8a", "#3a4a9e", "#4b5cc4", "#7783d6", "#aab2e8"] },
+      "window-lit": { "role": "scene", "displayName": "Window Gold", "canonical": "#ffd24d", "source": "Own", "tonalRamp": ["#5c4300", "#8a6500", "#b88800", "#e5a800", "#ffc800", "#ffd24d", "#ffe38a", "#fff3b0"] },
+      "canopy": { "role": "scene", "displayName": "Canopy Green", "canonical": "#58cc02", "source": "Duolingo", "tonalRamp": ["#1d4a12", "#2f6f1c", "#46a302", "#58cc02", "#89e219", "#a6ee52", "#c5f58f", "#e4fbc8"] },
+      "success": { "role": "feedback", "displayName": "Success", "canonical": "#34c759", "source": "Apple", "tonalRamp": ["#0c3d1b", "#146a2e", "#1f9a45", "#34c759", "#5cd67a", "#85e29b", "#b0eec0", "#dcf8e3"] }
+    },
+    "typographyMeta": {
+      "hero": { "displayName": "Hero", "purpose": "The single greeting over the Wi-Fi scene." },
+      "title": { "displayName": "Title", "purpose": "Screen titles and the welcome sheet heading." },
+      "headline": { "displayName": "Headline", "purpose": "Address lines; Wi-Fi name and password use display 700 at 20-30px." },
+      "body": { "displayName": "Body", "purpose": "Default text, 17px/1.47." },
+      "subtext": { "displayName": "Subtext", "purpose": "Supporting line under a title, always Mute." },
+      "label": { "displayName": "Label", "purpose": "Section labels, chips, tile names, card labels." },
+      "button": { "displayName": "Button", "purpose": "Pill button text, 600." },
+      "counter": { "displayName": "Counter", "purpose": "Lift floor count in the intro only." }
+    },
+    "shadows": [
+      { "name": "object", "value": "3px 5px 30px rgba(0,0,0,.45)", "purpose": "Wi-Fi card faces (plus inset 0 1px 0 rgba(255,255,255,.3) and a cobalt glow on the front)." },
+      { "name": "tab-bar", "value": "0 10px 30px -10px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.06)", "purpose": "Floating frosted tab bar; paired with backdrop-filter: saturate(180%) blur(20px) over rgba(29,29,31,.86)." },
+      { "name": "toast", "value": "0 10px 30px rgba(0,0,0,.4)", "purpose": "Completion toast." },
+      { "name": "sheet", "value": "0 -10px 40px rgba(0,0,0,.5)", "purpose": "Intro bottom sheet." },
+      { "name": "neon-glow", "value": "drop-shadow(0 0 3px rgba(255,210,77,.8))", "purpose": "MAPLE HEIGHTS billboard lettering." }
+    ],
+    "motion": [
+      { "name": "spring", "value": "cubic-bezier(.34, 1.56, .64, 1)", "purpose": "Press release, arrivals, confirmations: buttons (.35s), tiles (.35s), tab icons (.35s), sheet (.75s), toast (.5s), boom (.9s), towers rise (1s), trees pop (.6s). Duolingo." },
+      { "name": "ease-out", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Large calm moves: card tilt (.7s), intro scene zoom (1.2s), tab icon keyframes (.7s), scooter (1.2s)." },
+      { "name": "press-in", "value": ".08s", "purpose": "scale(.94) on buttons, scale(.92) on tiles, scale(.97) on the Wi-Fi card." },
+      { "name": "boing", "value": ".5s spring: scale 1 > 1.07 > .97 > 1", "purpose": "Button completion." },
+      { "name": "swap", "value": ".2s opacity, .4s spring transform", "purpose": "Idle label to Copied label; reverts after 2.2s." },
+      { "name": "tilepop", "value": ".55s spring", "purpose": "Tile scale 1.06 then .97, with logohop (logo -8px, -10 degrees, squash)." },
+      { "name": "tab-icons", "value": ".7s ease-out", "purpose": "t-ping (Wi-Fi), t-go (Arrive), t-hop with squash (Order), played on arrival at the tab." },
+      { "name": "glider-stretch", "value": "scaleX 1 to 1.18 while swiping", "purpose": "Tab bar glider follows scroll position." },
+      { "name": "confetti", "value": "80 pieces, 1.8-3.2s fall, .4s max delay, removed at 3.8s", "purpose": "All three steps done." },
+      { "name": "land", "value": ".9s spring + 1.5s light sweep", "purpose": "Wi-Fi card arrival." },
+      { "name": "drive-in", "value": "car 3.4s, boom .9s, repeat every 6.5s while Arrive is visible", "purpose": "Gate 4 scene life." },
+      { "name": "ambient", "value": "clouds 38-64s linear, birds 16-22s, trees 2.6-3.6s, stars 1.5-4s, home window 1.8s, tower mark 2.4s, neon 4s steps, card idle 7s", "purpose": "Slow loops; paused when the screen is hidden." },
+      { "name": "intro-lift", "value": "1.9s lead-in, then 55-165ms per floor, last floor +320ms", "purpose": "Onboarding climb to floor 12." },
+      { "name": "reduced-motion", "value": "animation and transition durations .01ms; confetti skipped; card idle off; scroll behavior auto", "purpose": "prefers-reduced-motion: reduce." }
+    ],
+    "breakpoints": [
+      { "name": "narrow-phone", "value": "max-width 380px (scene props hidden)" },
+      { "name": "short-phone", "value": "max-width 959px and max-height 760px (tighter card overlap, tiles, gaps)" },
+      { "name": "desktop", "value": "min-width 960px (three panels, no tab bar)" },
+      { "name": "band-short", "value": "container max-height 250px (home billboard and birds hidden), 175px (road billboard hidden)" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Pill",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "White pill on black; the main action of a screen.",
+      "html": "<button class=\"ds-btn\">Join on iPhone</button>",
+      "css": ".ds-btn { min-height: 52px; padding: 13px 20px; border: 0; border-radius: 9999px; background: #fff; color: #000; font: 600 16.5px/1.2 -apple-system, 'SF Pro Text', Inter, system-ui, sans-serif; cursor: pointer; transition: transform .35s cubic-bezier(.34,1.56,.64,1); } .ds-btn:hover { background: #f2f2f2; } .ds-btn:active { transform: scale(.94); transition-duration: .08s; } .ds-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }"
+    },
+    {
+      "name": "Cobalt Pill",
+      "kind": "button",
+      "refersTo": "button-cobalt",
+      "description": "The cobalt action pill, used where the white pill is already taken.",
+      "html": "<button class=\"ds-btn-blue\">Continue</button>",
+      "css": ".ds-btn-blue { min-height: 52px; padding: 13px 20px; border: 0; border-radius: 9999px; background: #494fdf; color: #fff; font: 600 16.5px/1.2 -apple-system, 'SF Pro Text', Inter, system-ui, sans-serif; cursor: pointer; transition: transform .35s cubic-bezier(.34,1.56,.64,1), background-color .2s; } .ds-btn-blue:active { background: #3a40c4; transform: scale(.94); transition-duration: .08s; } .ds-btn-blue:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Pill",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action, white at 10% on black.",
+      "html": "<button class=\"ds-btn-ghost\">Password</button>",
+      "css": ".ds-btn-ghost { min-height: 48px; padding: 11px 14px; border: 0; border-radius: 9999px; background: rgba(255,255,255,.1); color: #fff; font: 600 15.5px/1.2 -apple-system, 'SF Pro Text', Inter, system-ui, sans-serif; cursor: pointer; transition: transform .35s cubic-bezier(.34,1.56,.64,1); } .ds-btn-ghost:active { transform: scale(.94); transition-duration: .08s; } .ds-btn-ghost:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }"
+    },
+    {
+      "name": "Wi-Fi Card",
+      "kind": "card",
+      "refersTo": "wifi-card",
+      "description": "The signature cobalt card with light highlight and object shadow.",
+      "html": "<div class=\"ds-wcard\"><div class=\"ds-lab\">Network</div><div class=\"ds-net\">Home-1204</div><div class=\"ds-lab\" style=\"margin-top:16px\">Password</div><div class=\"ds-pw\">welcome1204</div></div>",
+      "css": ".ds-wcard { width: 300px; aspect-ratio: 1.7; padding: 20px; border-radius: 20px; color: #fff; background: radial-gradient(120% 90% at 0% 0%, #5c62ee 0%, transparent 55%), #494fdf; box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 3px 5px 30px rgba(0,0,0,.45), 0 30px 60px -30px rgba(73,79,223,.75); font-family: -apple-system, Inter, system-ui, sans-serif; } .ds-lab { font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.75); } .ds-net { font-weight: 700; font-size: 28px; letter-spacing: -.025em; line-height: 1.06; } .ds-pw { font-weight: 700; font-size: 22px; letter-spacing: .01em; }"
+    },
+    {
+      "name": "Info Card",
+      "kind": "card",
+      "refersTo": "info-card",
+      "description": "Elevated black container for the address and its copy action.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-lines\">Tower 3, Maple Heights<br><span>Pune</span></div></div>",
+      "css": ".ds-card { padding: 20px; border-radius: 20px; background: #16181a; color: #fff; font-family: -apple-system, Inter, system-ui, sans-serif; } .ds-lines { font-weight: 700; font-size: 18px; line-height: 1.28; letter-spacing: -.015em; } .ds-lines span { font-weight: 400; font-size: 14.5px; color: #a1a1a6; letter-spacing: 0; }"
+    },
+    {
+      "name": "App Tile",
+      "kind": "custom",
+      "refersTo": "app-tile",
+      "description": "Delivery or cab app: brand logo square over a 600 name. Pops and hops on tap.",
+      "html": "<a class=\"ds-tile\" href=\"#\"><span class=\"ds-logo\">Z</span><span class=\"ds-nm\">Zomato</span></a>",
+      "css": ".ds-tile { display: grid; justify-items: center; align-content: center; gap: 6px; width: 104px; min-height: 96px; padding: 12px 4px 8px; border-radius: 18px; background: #16181a; color: #fff; text-decoration: none; text-align: center; transition: transform .35s cubic-bezier(.34,1.56,.64,1), background-color .2s; } .ds-tile:hover { background: #202326; } .ds-tile:active { transform: scale(.92); transition-duration: .08s; } .ds-logo { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; background: #e23744; color: #fff; font: 700 19px -apple-system, Inter, sans-serif; transition: transform .4s cubic-bezier(.34,1.56,.64,1); } .ds-tile:hover .ds-logo { transform: rotate(-8deg) scale(1.08); } .ds-nm { font: 600 14px/1.15 -apple-system, Inter, sans-serif; }"
+    },
+    {
+      "name": "Floating Tab Bar",
+      "kind": "nav",
+      "refersTo": "tab-bar",
+      "description": "Frosted pill with a white glider under the active tab.",
+      "html": "<nav class=\"ds-tabbar\"><span class=\"ds-glider\"></span><button class=\"ds-tab on\">Wi-Fi</button><button class=\"ds-tab\">Arrive</button><button class=\"ds-tab\">Order</button></nav>",
+      "css": ".ds-tabbar { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); width: 380px; height: 64px; padding: 6px; border-radius: 9999px; background: rgba(29,29,31,.86); backdrop-filter: saturate(180%) blur(20px); box-shadow: 0 10px 30px -10px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.06); } .ds-glider { position: absolute; top: 6px; bottom: 6px; left: 6px; width: calc((100% - 12px) / 3); border-radius: 9999px; background: #fff; } .ds-tab { position: relative; z-index: 1; border: 0; background: none; border-radius: 9999px; color: rgba(255,255,255,.78); font: 600 13.5px -apple-system, Inter, sans-serif; cursor: pointer; } .ds-tab.on { color: #000; } .ds-tab:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }"
+    },
+    {
+      "name": "Toast",
+      "kind": "custom",
+      "refersTo": "toast",
+      "description": "White pill confirmation that springs in above the tab bar.",
+      "html": "<div class=\"ds-toast\">You're all set. Make yourself at home!</div>",
+      "css": ".ds-toast { display: inline-flex; padding: 12px 18px; border-radius: 9999px; background: #fff; color: #000; font: 600 15px -apple-system, Inter, sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,.4); }"
+    },
+    {
+      "name": "Scene Billboard",
+      "kind": "custom",
+      "refersTo": "scene",
+      "description": "The rooftop MAPLE HEIGHTS neon sign; hidden when the scene band is short.",
+      "html": "<svg class=\"ds-bb\" viewBox=\"0 0 110 34\" width=\"220\"><rect x=\"6\" y=\"23\" width=\"3\" height=\"10\" fill=\"#8f84d6\"/><rect x=\"92\" y=\"23\" width=\"3\" height=\"10\" fill=\"#8f84d6\"/><rect x=\"1\" y=\"2\" width=\"108\" height=\"22\" rx=\"3\" fill=\"#0f1640\" stroke=\"#494fdf\" stroke-width=\"2\"/><text class=\"ds-neon\" x=\"55\" y=\"17\" text-anchor=\"middle\" font-family=\"-apple-system, Inter, sans-serif\" font-weight=\"700\" font-size=\"9\" textLength=\"92\" lengthAdjust=\"spacingAndGlyphs\" fill=\"#ffd24d\">MAPLE HEIGHTS</text></svg>",
+      "css": ".ds-bb { background: #1a2b6b; } .ds-neon { filter: drop-shadow(0 0 3px rgba(255,210,77,.8)); animation: ds-neon 4s steps(1) infinite; } @keyframes ds-neon { 0%, 46%, 50%, 100% { opacity: 1; } 47%, 49% { opacity: .35; } } @media (prefers-reduced-motion: reduce) { .ds-neon { animation: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night Society",
+    "overview": "A guest opens a black screen and finds a small lit town: Maple Heights's towers against a navy sky, Tower 3 with one flat window glowing, a neon billboard, Gate 4 with a boom barrier and a car, a delivery scooter. The black canvas is the stage (Revolut), the type and pill buttons are native-feeling (Apple), and everything that is touched bounces, pops or hops (Duolingo). The scene is authored SVG and is always night, because it lives on black. Own.\n\nThe UI is calm and almost monochrome: black, two elevated greys, white, and one action colour, cobalt. All colour and playfulness beyond that lives in the illustration and in the motion. Three swipe screens (Wi-Fi, Arrive, Order) on mobile; the same three as side-by-side panels on desktop. A floating frosted pill tab bar doubles as navigation.",
+    "keyCharacteristics": [
+      "True black canvas, elevated greys for cards (Revolut).",
+      "One action colour, cobalt (#494fdf); white pill is the primary on black (Revolut + Apple).",
+      "Pills for every button; 20px cards, 18px tiles (Apple geometry).",
+      "Display 700 with tight negative tracking over a 17px/1.47 body (Apple).",
+      "Every touch has a spring response; completion earns a boing, a pop, then confetti (Duolingo).",
+      "A chunky, flat, slightly isometric night scene on each screen (Duolingo style, Own world)."
+    ],
+    "rules": [
+      { "name": "The One Action Colour Rule", "body": "Cobalt is the only colour that means \"do\". No second accent in buttons, text or borders. Revolut.", "section": "colors" },
+      { "name": "The Scene Colour Quarantine Rule", "body": "Greens, yellows, reds and oranges live in the illustration, confetti and brand logos only. Never in chrome.", "section": "colors" },
+      { "name": "The Always-Night Rule", "body": "The scene is night on a black canvas. The day palette in scene.js (?day) is a dev toggle, not a theme.", "section": "colors" },
+      { "name": "The Tight Display Rule", "body": "Every display size carries negative tracking, deepening with size (-0.015em at 18px to -0.045em at the counter).", "section": "typography" },
+      { "name": "The Tonal First Rule", "body": "Tiles, info cards and buttons stay shadowless; only the Wi-Fi card, the tab bar, toast and the intro sheet cast shadows.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use cobalt (#494fdf) as the only action colour; white pill as the primary on black.",
+      "Do make every button a pill: 52px primary, 48px small.",
+      "Do answer every press with the spring ease; confirm with a label swap and boing.",
+      "Do keep the scene always night, flat-filled, and in its quarantined palette.",
+      "Do keep scene props clear of text: the greeting sits on a navy scrim, the card overlaps only the empty band floor, and props hide when the band is short (billboard and birds under 250px on Wi-Fi, billboard under 175px on Order, booth under 380px wide).",
+      "Do pause hidden scenes, mark off-screen screens inert, and honour prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't put scene colours (green, yellow, red, orange) into buttons, text or borders.",
+      "Don't add shadows to tiles, info cards or buttons.",
+      "Don't add a second accent hue or a non-pill button.",
+      "Don't let an ambient loop run on a screen the guest cannot see.",
+      "Don't switch the scene to its day palette in the product."
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+# Big downloaded tools: re-download on a new PC (see README)
+tools/
+# Build output
+xiaomi-tv/app/build/
+**/build/
+*.apk
+*.idsig
+
+# Signing key and device data stay on this PC
+*.jks
+*.keystore
+xiaomi-tv/backup/
+xiaomi-tv/audit/
+xiaomi-tv/video/
+xiaomi-tv/screenshots/

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Window changes only (to know which app is on screen). No key filtering: Android re-sends
+  filtered keys without their repeat count, which broke hold-to-seek and double-tap-mute on
+  the volume buttons. Home works through the Home role; the grid button through the PatchWall swap.
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:notificationTimeout="0"
+    android:description="@string/watcher_desc" />
