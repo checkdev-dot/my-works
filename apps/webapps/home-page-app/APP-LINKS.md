@@ -65,6 +65,6 @@ Android only shows its native **Join network → Yes** prompt when it reads a Wi
 
 ## Putting it on Vercel
 
-Live at **https://your-site.vercel.app** (project `your-site`). After editing `home.config.js`, publish again from the `guest-1204` folder with `vercel deploy --prod`. `vercel.json` makes iPhones recognise the Wi-Fi profile and keeps the page out of Google; `.vercelignore` keeps these notes and design files off the site. Anyone with the link can see the Wi-Fi password, so share it only with guests.
+Live at **https://your-site.vercel.app** (project `your-site`). After editing `home.config.js`, publish again with `node deploy.js`. `vercel.json` makes iPhones recognise the Wi-Fi profile and keeps the page out of Google; `.vercelignore` keeps these notes and design files off the site. Anyone with the link can see the Wi-Fi password, so share it only with guests.
 
 Handy links: `…/#wifi`, `…/#here` (gate + cabs), `…/#order` (delivery apps) open that screen directly and skip the welcome.

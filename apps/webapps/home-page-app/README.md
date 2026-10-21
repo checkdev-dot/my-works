@@ -39,8 +39,8 @@ Guests open one link on their own phone and everything they'd normally ask the h
 ## Use it for your own home
 
 1. Copy `home.config.js` to `home.config.local.js` and fill in your flat, society, gate pin, Wi-Fi and hosts. That file is in `.gitignore`, so it never gets pushed.
-2. Run `node make-wifi-profile.js` to create the iPhone Wi-Fi profile from your details.
-3. Deploy the folder: `vercel deploy --prod --yes`.
+2. Link the folder to your Vercel project once: `vercel link`.
+3. Deploy with `node deploy.js`. It builds the profile and deploys your real details (Vercel would skip the git-ignored files otherwise).
 4. Open `card.html` and print the door card.
 
 ![Printable door card](docs/screenshots/door-card.png)
@@ -50,6 +50,7 @@ Guests open one link on their own phone and everything they'd normally ask the h
 | `home.config.js` | Placeholder details: the shape of everything the page shows |
 | `app.js`, `scene.js` | Behaviour and the society illustrations |
 | `make-wifi-profile.js` | Builds the iPhone Wi-Fi profile from your config |
+| `deploy.js` | Deploys the site with your real, git-ignored details |
 | `card.html` | The printable door card |
 | `APP-LINKS.md` | How each app takes an address, and the one-tap Wi-Fi notes |
 | `DESIGN.md` | The design system |
