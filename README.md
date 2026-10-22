@@ -24,6 +24,8 @@ A fast, calm home screen for TVs that replaces an ad-filled launcher with one qu
 #### [Growth](apps/growth)
 A personal career growth app you run with Claude Code. It interviews you, maps your skills against the roles you want, plans your weeks, builds an honest CV where every fact has a source, and shows it all in a calm local web app. **G mini** uses the same engine to interview someone you are helping and hand them a deep PDF report. The app and its three Claude skills live together in [`apps/growth`](apps/growth), with one installer.
 
+**Documentation:** [Growth docs](apps/growth/docs/README.md)
+
 ## Skills
 
 Claude skills ship with the app they drive: see [`apps/growth/skills`](apps/growth/skills) for Growth, the coach and G mini.

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" role="img" aria-labelledby="t d">
+  <title id="t">The evidence trust ladder</title>
+  <desc id="d">Five kinds of evidence, from your own rating at the bottom to a market result at the top, with the most confidence each can give.</desc>
+  <rect x="0" y="0" width="760" height="400" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#0f172a">
+    <text x="380" y="34" font-size="18" font-weight="700" text-anchor="middle">Evidence trust ladder</text>
+    <text x="380" y="54" font-size="13" text-anchor="middle" fill="#334155">A lower step never overrides a higher one. It can only add a note.</text>
+
+    <rect x="60" y="300" width="640" height="54" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+    <text x="80" y="322" font-size="16" font-weight="700">Your own rating</text>
+    <text x="80" y="342" font-size="13">What you believe about yourself</text>
+    <text x="680" y="332" font-size="15" font-weight="700" text-anchor="end">confidence cap 0.3</text>
+
+    <rect x="100" y="240" width="600" height="54" rx="8" fill="#e0e7ff" stroke="#4338ca" stroke-width="2"/>
+    <text x="120" y="262" font-size="16" font-weight="700">Claude's read</text>
+    <text x="120" y="282" font-size="13">A critique or score, labelled as an estimate</text>
+    <text x="680" y="272" font-size="15" font-weight="700" text-anchor="end">cap 0.5</text>
+
+    <rect x="140" y="180" width="560" height="54" rx="8" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
+    <text x="160" y="202" font-size="16" font-weight="700">Shipped work</text>
+    <text x="160" y="222" font-size="13">An artifact that exists and was opened</text>
+    <text x="680" y="212" font-size="15" font-weight="700" text-anchor="end">cap 0.7</text>
+
+    <rect x="180" y="120" width="520" height="54" rx="8" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+    <text x="200" y="142" font-size="16" font-weight="700">Expert review</text>
+    <text x="200" y="162" font-size="13">A named person outside, who read it</text>
+    <text x="680" y="152" font-size="15" font-weight="700" text-anchor="end">cap 0.8</text>
+
+    <rect x="220" y="60" width="480" height="54" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+    <text x="240" y="82" font-size="16" font-weight="700">Market result</text>
+    <text x="240" y="102" font-size="13">A reply, an interview, an offer</text>
+    <text x="680" y="92" font-size="15" font-weight="700" text-anchor="end">cap 0.9</text>
+
+    <text x="380" y="384" font-size="13" text-anchor="middle" fill="#334155">Points count work done, never skill. Skill moves only when evidence moves it.</text>
+  </g>
+</svg>

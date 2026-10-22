@@ -4,6 +4,8 @@
 
 Growth answers two questions every night: what skill should I build next, and what should I do to get seen. It keeps the answers in plain files on your own computer, and Claude Code does the thinking that a web page can't: diagnosing gaps, researching your field, critiquing your work and writing the plan.
 
+**Documentation:** [Read the docs](docs/README.md). Install, daily use, every command, the honesty rules and the G mini guide.
+
 <!-- Screenshot placeholder: docs/media/tonight.png. The Tonight screen: one Skill task and one Reach task for the evening. -->
 <!-- Screenshot placeholder: docs/media/you-and-hiring.png. The You page (skill levels with evidence) and the Hiring page (CV, case studies, funnel). -->
 <!-- Screenshot placeholder: docs/media/g-mini-report.png. A page of a G mini PDF report. -->

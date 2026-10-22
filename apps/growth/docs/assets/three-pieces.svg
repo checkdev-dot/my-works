@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="t d">
+  <title id="t">The three pieces of Growth</title>
+  <desc id="d">Skills in Claude Code and the app in your browser both read and write local folders on your computer.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="360" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#0f172a">
+    <rect x="30" y="30" width="320" height="150" rx="10" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
+    <text x="190" y="62" font-size="20" font-weight="700" text-anchor="middle">Skills</text>
+    <text x="190" y="86" font-size="14" text-anchor="middle">You talk to them in Claude Code</text>
+    <text x="190" y="116" font-size="14" text-anchor="middle">growth: the front door</text>
+    <text x="190" y="138" font-size="14" text-anchor="middle">growth-coach: the coaching rules</text>
+    <text x="190" y="160" font-size="14" text-anchor="middle">g-mini: for people you help</text>
+
+    <rect x="410" y="30" width="320" height="150" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+    <text x="570" y="62" font-size="20" font-weight="700" text-anchor="middle">App</text>
+    <text x="570" y="86" font-size="14" text-anchor="middle">You use it in your browser, port 4321</text>
+    <text x="570" y="116" font-size="14" text-anchor="middle">Tonight, You, Hiring</text>
+    <text x="570" y="138" font-size="14" text-anchor="middle">Journal, Library, Commands</text>
+    <text x="570" y="160" font-size="14" text-anchor="middle">It never calls an AI itself</text>
+
+    <rect x="130" y="250" width="500" height="80" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+    <text x="380" y="280" font-size="20" font-weight="700" text-anchor="middle">Local data</text>
+    <text x="380" y="304" font-size="14" text-anchor="middle">Plain files on your computer: app/data, app/cv, app/people</text>
+    <text x="380" y="322" font-size="12" text-anchor="middle" fill="#334155">All three are git-ignored. Nothing is uploaded by Growth.</text>
+  </g>
+  <g stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)" marker-start="url(#a)">
+    <path d="M190 182 L190 216 L300 250"/>
+    <path d="M570 182 L570 216 L460 250"/>
+  </g>
+  <g font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#334155" text-anchor="middle">
+    <text x="190" y="206">read and write</text>
+    <text x="570" y="206">read and write</text>
+  </g>
+</svg>
