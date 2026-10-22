@@ -1,0 +1,23 @@
+{
+  "_about": "Placeholder written by an onboarding reset. It is not a ladder for any field. Round 2 replaces it with a researched rubric (onboard.rubric); the earlier rubric is archived in prior.json.",
+  "generic": true,
+  "levels": {
+    "1": "Starting: does the work with guidance",
+    "2": "Working: does the work alone",
+    "3": "Strong: does it well and teaches others",
+    "4": "Leading: sets the standard for others"
+  },
+  "competencies": [
+    {
+      "id": "core_skill",
+      "name": "Core skill of your target role",
+      "group": "skill",
+      "levels": {
+        "1": "Does the core work with guidance",
+        "2": "Does the core work alone",
+        "3": "Does the core work well and raises the bar for others",
+        "4": "Sets the standard for the core work"
+      }
+    }
+  ]
+}

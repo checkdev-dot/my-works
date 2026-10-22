@@ -1,0 +1,35 @@
+export interface BankQuestion {
+  id: string; round: string; must: boolean; hard: boolean; /** 1 to 10: how much an optional question is worth asking (a MUST is 10). */ value: number; text: string; type: string;
+  options: string[] | null; fields: string[] | null; why: string; changes: string; writes: string[];
+  validate: { kind: string; [k: string]: unknown };
+  follow_up: { n: number; text: string; when?: string }[];
+  evidence_ask: string; bias_guard: string[];
+  meta?: Record<string, string> | null; meta_required?: string[];
+  consumer: { kind: string; what: string };
+  unknown: { task_kind: string; method: string; gap: string; placement: string; default?: string };
+  follow_of?: string; generated?: boolean;
+}
+export const ROUNDS: string[];
+export const ROUND_NAMES: Record<string, string>;
+export const UNKNOWN_KINDS: Record<string, { label: string; how: string; how_kind?: string; owner: string; plan_kind: string | null; minutes: number }>;
+export const MODEL_PATHS: string[];
+export const CONSUMER_KINDS: string[];
+export const BANK: BankQuestion[];
+export const VOCAB_DEFAULTS: Record<string, string>;
+export const GENERIC_RUBRIC: { _about: string; generic: boolean; levels: Record<string, string>; competencies: { id: string; name: string; group: string; levels: Record<string, string> }[] };
+export const ADAPTIVE: { version: number; k: number; min_registered: number; slots: any[]; inputs: string[]; outputs: string[]; constraints: string[]; banned_patterns: string[]; self_check: string[]; research_caps: Record<string, number>; rounds: string[] };
+export const BANNED: { re: RegExp; why: string }[];
+export const MAX_WORDS: number;
+export const MAX_PER_SITTING: number;
+export const EST_MIN: { easy: number; hard: number };
+export const byId: Record<string, BankQuestion>;
+export function resolveText(text: string, vocab?: Record<string, string | undefined>): string;
+export function renderQuestion<T extends { text: string; options: string[] | null; follow_up: { n: number; text: string; when?: string }[] }>(q: T, vocab?: Record<string, string | undefined>): T;
+export function sittingMax(budgetMin: unknown): number;
+export function lintText(text: string, o?: { maxWords?: number; names?: string[] }): string[];
+export function resolveQuestion(id: string): BankQuestion | null;
+export function isKnownId(id: string): boolean;
+export function mustIds(round?: string): string[];
+export function counts(): { fixed: number; must: number; nice: number; by_round: Record<string, number>; must_by_round: Record<string, number>; hard: number; adaptive_must_slots: number; adaptive_nice_slots: number; adaptive_min_registered: number; min_viable: number };
+export function planSittings(ids?: string[], max?: number): { round: string; ids: string[]; weight: number; est_min: number }[];
+export function validateValue(q: { validate?: any; options?: string[] | null }, value: unknown, ctx?: { answers?: Record<string, any>; options?: string[] }): { ok: boolean; value: unknown; reason?: string };

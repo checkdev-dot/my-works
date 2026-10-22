@@ -1,0 +1,24 @@
+{
+  "_about": "Current level per competency (see rubric.json). confidence 0-1 is how sure we are of the level, driven by source quality. history is append-only; every change needs a date, source and reason. target is the next-jump level (senior = 3) unless an active bet sets a nearer one.",
+  "updated": "2026-10-22",
+  "ratings": {
+    "core_skill": {
+      "level": 1,
+      "target": 1,
+      "confidence": 0.1,
+      "source": "self",
+      "evidence": [],
+      "placeholder": true,
+      "note": "Not assessed yet. Round 2 rates this from evidence.",
+      "history": [
+        {
+          "date": "2026-10-22",
+          "level": 1,
+          "source": "self",
+          "reason": "Placeholder written by an onboarding reset. Not assessed yet.",
+          "placeholder": true
+        }
+      ]
+    }
+  }
+}

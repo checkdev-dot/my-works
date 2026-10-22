@@ -1,0 +1,37 @@
+{
+  "_about": "Append-only log of things that happened: work shipped, feedback received, applications, wins, rejections. Each entry has a source type from rubric.json sources. Ratings and proof items point at these ids.",
+  "entries": [
+    {
+      "id": "ev-001",
+      "date": "2023-03",
+      "type": "shipped",
+      "title": "Joined Northwind Studio as the only designer",
+      "detail": "A made-up starting point: no design system, three screens of inconsistent UI.",
+      "links": []
+    },
+    {
+      "id": "ev-002",
+      "date": "2024",
+      "type": "shipped",
+      "title": "Redesigned the checkout flow",
+      "detail": "Every state designed: empty, loading, error, success.",
+      "links": []
+    },
+    {
+      "id": "ev-003",
+      "date": "2025",
+      "type": "shipped",
+      "title": "Wrote the component library",
+      "detail": "Tokens, 24 components, usage notes. Used by two teams.",
+      "links": []
+    },
+    {
+      "id": "ev-004",
+      "date": "2026-09",
+      "type": "ai",
+      "title": "Portfolio read by Claude",
+      "detail": "Strong visuals; the stories need a clearer problem and result.",
+      "links": []
+    }
+  ]
+}

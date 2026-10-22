@@ -1,0 +1,24 @@
+{
+  "_example": "This is an example of what an add-on entry looks like. It is not installed and has no skill file yet. /growth module add creates the real one.",
+  "id": "linkedin-analyser",
+  "name": "LinkedIn profile analyser",
+  "capability": "linkedin",
+  "does": "Reads your LinkedIn profile text and says what to change first.",
+  "skill": { "kind": "file", "path": "modules/linkedin-analyser/skill/SKILL.md" },
+  "input": "Your profile text pasted in, or the LinkedIn data export PDF",
+  "source": "pasted",
+  "installed": "YYYY-MM-DD",
+  "enabled": true,
+  "default": true,
+  "can_publish": false,
+  "abilities": [
+    { "id": "score-linkedin", "label": "Score your LinkedIn profile", "say": ["analyse my LinkedIn"], "topic": "linkedin-review", "reads": "your profile text, or the PDF from LinkedIn's Save to PDF", "gives": "score", "enabled": true }
+  ],
+  "impact": {
+    "adds": [{ "text": "A LinkedIn profile read with a score", "why": "Nothing built in reads a LinkedIn profile as a scored read." }],
+    "strengthens": [],
+    "can_drop": [],
+    "based_on": "file",
+    "decided": "YYYY-MM-DD"
+  }
+}

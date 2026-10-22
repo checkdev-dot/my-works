@@ -1,0 +1,4 @@
+{
+  "_about": "Requests from the app to Claude. The growth-coach skill processes pending items when the person says 'run my queue' in Claude Code, writes results into learning.json / tests.json / skills.json / evidence.json / week.json, and marks them done. type: research | critique | test | plan.",
+  "items": []
+}

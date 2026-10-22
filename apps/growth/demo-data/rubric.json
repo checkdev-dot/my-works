@@ -1,0 +1,107 @@
+{
+  "_about": "Product design competencies by level. Levels: 1 junior, 2 mid, 3 senior, 4 lead/staff. Based on public design career ladders (Dropbox, Buffer, Monzo via progression.fyi). The scale is fixed; ratings in skills.json refer to it.",
+  "levels": {
+    "1": "Junior: executes defined tasks with guidance",
+    "2": "Mid: owns features end to end, needs little guidance",
+    "3": "Senior: owns problem framing and outcomes, raises the bar for others",
+    "4": "Lead / Staff: sets direction across products or teams, influences strategy, grows designers"
+  },
+  "competencies": [
+    {
+      "id": "product_thinking",
+      "name": "Product thinking",
+      "group": "skill",
+      "levels": {
+        "1": "Designs to a given spec",
+        "2": "Frames the user problem before designing; understands the business model of the feature",
+        "3": "Chooses which problems are worth solving; ties design decisions to metrics and business outcomes",
+        "4": "Shapes product strategy; defines what the product should become over years"
+      }
+    },
+    {
+      "id": "craft",
+      "name": "Craft: visual and interaction",
+      "group": "skill",
+      "levels": {
+        "1": "Clean screens with help on hierarchy and detail",
+        "2": "Consistent, polished UI; designs every state of a flow",
+        "3": "Distinctive, reference-quality work; sets craft standards others follow",
+        "4": "Defines the visual and interaction language of a product line"
+      }
+    },
+    {
+      "id": "systems",
+      "name": "Design systems and IA",
+      "group": "skill",
+      "levels": {
+        "1": "Uses an existing system",
+        "2": "Builds and documents a system for one product; structures information clearly",
+        "3": "Runs a system across products and contributors; governs change",
+        "4": "Designs systems that other teams adopt; sets organisation-wide standards"
+      }
+    },
+    {
+      "id": "research",
+      "name": "Research and validation",
+      "group": "skill",
+      "levels": {
+        "1": "Participates in research run by others",
+        "2": "Runs lightweight interviews and usability tests; turns findings into design changes",
+        "3": "Plans research for a product area; combines qualitative and quantitative evidence",
+        "4": "Builds the team's research practice and evidence culture"
+      }
+    },
+    {
+      "id": "communication",
+      "name": "Communication and influence",
+      "group": "skill",
+      "levels": {
+        "1": "Explains their screens",
+        "2": "Presents rationale, handles feedback, writes clear documentation",
+        "3": "Persuades leadership; tells the story of the work in case studies and talks; gives useful critique",
+        "4": "Represents design to the company and the industry; shapes how others think"
+      }
+    },
+    {
+      "id": "collaboration",
+      "name": "Collaboration and leadership",
+      "group": "skill",
+      "levels": {
+        "1": "Works with a mentor",
+        "2": "Works directly with PM and engineering; takes critique well",
+        "3": "Mentors other designers; runs critique; unblocks cross-functional teams",
+        "4": "Hires, grows and leads designers; sets team process"
+      }
+    },
+    {
+      "id": "building",
+      "name": "Building: code and AI",
+      "group": "skill",
+      "levels": {
+        "1": "Static mockups only",
+        "2": "Clickable prototypes; basic HTML/CSS",
+        "3": "Ships working front-end prototypes; uses AI tools to go from design to code",
+        "4": "Defines how the team designs and builds with AI; ships production-quality front ends"
+      }
+    },
+    {
+      "id": "domain",
+      "name": "Domain: consumer finance",
+      "group": "skill",
+      "levels": {
+        "1": "Learns the domain as needed",
+        "2": "Understands the core concepts users face",
+        "3": "Understands the mechanics well enough to stop misleading UI and challenge engineers and finance",
+        "4": "Recognised domain expert; others seek their judgement"
+      }
+    }
+  ],
+  "sources": {
+    "_about": "Trust order for any rating or claim. Higher wins when sources disagree.",
+    "market": "A real market result: screen, interview, offer, inbound message, published feature",
+    "expert": "A senior designer or hiring manager who reviewed the actual work",
+    "shipped": "Work that exists and can be inspected: a live product, a document, a repo",
+    "ai": "Claude's assessment from evidence",
+    "self": "The person's own rating"
+  }
+}

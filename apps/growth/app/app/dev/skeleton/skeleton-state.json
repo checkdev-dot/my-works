@@ -1,0 +1,611 @@
+{
+  "profile": {
+    "name": "Sam Rivera",
+    "updated": "2026-10-22",
+    "role_now": "",
+    "positioning": "",
+    "north_star": {
+      "role": "",
+      "salary_inr_per_month": 0,
+      "recognition": []
+    },
+    "constraints": {
+      "hours_per_day": 1,
+      "skips_allowed": true,
+      "learns_best_by": "",
+      "avoid": []
+    },
+    "root_causes": {},
+    "beliefs_to_test": [],
+    "intake": [],
+    "pace": "steady",
+    "person": {
+      "items": [],
+      "words": []
+    },
+    "modules": {
+      "installed": [],
+      "results": [],
+      "primary": {},
+      "retired": []
+    }
+  },
+  "rubric": {
+    "_about": "Placeholder written by an onboarding reset. It is not a ladder for any field. Round 2 replaces it with a researched rubric (onboard.rubric); the earlier rubric is archived in prior.json.",
+    "generic": true,
+    "levels": {
+      "1": "Starting: does the work with guidance",
+      "2": "Working: does the work alone",
+      "3": "Strong: does it well and teaches others",
+      "4": "Leading: sets the standard for others"
+    },
+    "competencies": [
+      {
+        "id": "core_skill",
+        "name": "Core skill of your target role",
+        "group": "skill",
+        "levels": {
+          "1": "Does the core work with guidance",
+          "2": "Does the core work alone",
+          "3": "Does the core work well and raises the bar for others",
+          "4": "Sets the standard for the core work"
+        }
+      }
+    ]
+  },
+  "skills": {
+    "_about": "Current level per competency (see rubric.json). confidence 0-1 is how sure we are of the level, driven by source quality. history is append-only; every change needs a date, source and reason. target is the next-jump level (senior = 3) unless an active bet sets a nearer one.",
+    "updated": "2026-10-22",
+    "ratings": {
+      "core_skill": {
+        "level": 1,
+        "target": 1,
+        "confidence": 0.1,
+        "source": "self",
+        "evidence": [],
+        "placeholder": true,
+        "note": "Not assessed yet. Round 2 rates this from evidence.",
+        "history": [
+          {
+            "date": "2026-10-22",
+            "level": 1,
+            "source": "self",
+            "reason": "Placeholder written by an onboarding reset. Not assessed yet.",
+            "placeholder": true
+          }
+        ]
+      }
+    }
+  },
+  "evidence": {
+    "_about": "Append-only log of things that happened: work shipped, feedback received, applications, wins, rejections. Each entry has a source type from rubric.json sources. Ratings and proof items point at these ids.",
+    "entries": []
+  },
+  "proof": {
+    "_about": "Can others SEE that the person can do the work? Each item is an artifact that exists or doesn't. status: missing | draft | done | verified (verified = an outside person has seen and responded to it).",
+    "updated": "2026-10-22",
+    "items": []
+  },
+  "reach": {
+    "_about": "Does the market respond? Funnel per application batch, and recognition counters. Only market-source facts go here.",
+    "updated": "2026-10-22",
+    "funnel": {
+      "stages": [
+        "applied",
+        "screen",
+        "portfolio_review",
+        "challenge",
+        "final",
+        "offer"
+      ],
+      "batches": [],
+      "applications": []
+    },
+    "recognition": {
+      "linkedin_followers": [],
+      "inbound_messages": [],
+      "published": [],
+      "mentions_by_strangers": []
+    }
+  },
+  "bets": {
+    "_about": "A bet = hypothesis + action + metric + target + result. One active bet per track. This is the proof a step was the right one.",
+    "updated": "2026-10-22",
+    "bets": []
+  },
+  "week": {
+    "_about": "Each day Mon to Sat has one Skill task and one Reach task, about 30 minutes each: tonight's hour. Either can be done first. Sunday is the weekly review. Practice is on new real work. Every task is worth 20 points; points are a simple count of work done, not a grade. Trust comes from the evidence source, not the points.",
+    "week_of": "2026-10-12",
+    "focus": "",
+    "focus_short": "",
+    "tasks": []
+  },
+  "notnow": {
+    "_about": "Things you're deliberately not doing, with the reason. Reviewed every 4 weeks. When the late-night question is 'should I learn X?', check here first.",
+    "updated": "2026-10-22",
+    "items": []
+  },
+  "queue": {
+    "_about": "Requests from the app to Claude. The growth-coach skill processes pending items when the person says 'run my queue' in Claude Code, writes results into learning.json / tests.json / skills.json / evidence.json / week.json, and marks them done. type: research | critique | test | plan.",
+    "items": []
+  },
+  "learning": {
+    "_about": "Research briefs written by Claude: what experts in the field know at your level, with sources. Each brief is followed by a practice task that applies it.",
+    "briefs": []
+  },
+  "tests": {
+    "_about": "Skill tests. Claude writes the test (scenario questions at the competency's next level) with status 'ready'; you answer in the app ('answered'); Claude scores it ('scored') and the score becomes evidence on the competency.",
+    "tests": []
+  },
+  "library": {
+    "_about": "Links and resources, each tied to a skill, proof item or bet so nothing is lost in chat.",
+    "updated": "2026-10-12",
+    "items": [
+      {
+        "title": "progression.fyi: public design career ladders",
+        "url": "https://progression.fyi",
+        "for": "rubric",
+        "note": "Level definitions from several companies."
+      },
+      {
+        "title": "Nielsen Norman Group: usability testing 101",
+        "url": "https://www.nngroup.com/articles/usability-testing-101/",
+        "for": "research",
+        "note": "A short method for a first test."
+      }
+    ],
+    "roles": [],
+    "picks": [
+      {
+        "id": "P-001",
+        "week_of": "2026-10-12",
+        "kind": "book",
+        "title": "Rocket Surgery Made Easy",
+        "by": "Steve Krug",
+        "url": "https://sensible.com/rocket-surgery-made-easy/",
+        "minutes": 336,
+        "why": "A short do-it-yourself manual for the first test you are running this week.",
+        "look_for": "Copy his test script into your notes and cut it to fit 15 minutes.",
+        "status": "new",
+        "checked": "2026-10-12",
+        "needs_review": true
+      }
+    ],
+    "refreshed": "2026-10-12",
+    "gaps": []
+  },
+  "onboarding": {
+    "version": 1,
+    "status": "in_progress",
+    "started": "2026-10-22",
+    "backup": "onboarding-20261022-191243",
+    "round": "R0",
+    "sitting": {
+      "n": 1,
+      "asked": 0,
+      "max": 7,
+      "started": "2026-10-22"
+    },
+    "consent": {},
+    "off_limits": [],
+    "last_asked": null,
+    "pending_followup": null,
+    "answers": {},
+    "skipped": {},
+    "contradictions": [],
+    "round_summaries": {},
+    "generated_questions": {},
+    "notes": {},
+    "skill_map": {}
+  },
+  "unknowns": {
+    "updated": "2026-10-22",
+    "items": []
+  },
+  "prior": {
+    "archived": "2026-10-22T13:42:43.873Z",
+    "backup": "onboarding-20261022-191243",
+    "note": "Read only. Nothing here is current until the person confirms it or answers again.",
+    "profile": {
+      "name": "Sam Rivera",
+      "updated": "2026-10-12",
+      "role_now": "Product Designer, Northwind Studio (made-up company), since 2023-03",
+      "north_star": {
+        "role": "Lead product designer at a mid-size software company",
+        "salary_inr_per_month": 0,
+        "recognition": [
+          "Inbound recruiter messages: 2+ per month",
+          "Published case studies: 0 to 3",
+          "One talk or essay referenced by people outside the team"
+        ],
+        "timeline": "No deadline. Look again in 4 weeks."
+      },
+      "positioning": "Product designer with three shipped products and a design system, strongest at flows with many states. Mid-level by evidence; aiming at lead scope.",
+      "constraints": {
+        "hours_per_day": 1,
+        "skips_allowed": true,
+        "learns_best_by": "practising on real work, with critique",
+        "avoid": [
+          "streaks and penalties",
+          "courses without an artifact"
+        ]
+      },
+      "root_causes": {
+        "1": "Few people reviewed the work, so there was no outside bar to clear.",
+        "2": "Team deadlines always beat personal learning.",
+        "3": "Past learning was reading and watching, never an artifact judged by others.",
+        "_about": "Why growth stalled. Demo text for a made-up person."
+      },
+      "beliefs_to_test": [
+        {
+          "belief": "Nobody will read my case studies",
+          "counter": "None are published yet, so this is untested",
+          "status": "untested"
+        }
+      ],
+      "intake": [],
+      "pace": "steady",
+      "person": {
+        "items": [],
+        "words": []
+      }
+    },
+    "evidence": [
+      {
+        "id": "ev-001",
+        "date": "2023-03",
+        "type": "shipped",
+        "title": "Joined Northwind Studio as the only designer",
+        "detail": "A made-up starting point: no design system, three screens of inconsistent UI.",
+        "links": [],
+        "prior": true
+      },
+      {
+        "id": "ev-002",
+        "date": "2024",
+        "type": "shipped",
+        "title": "Redesigned the checkout flow",
+        "detail": "Every state designed: empty, loading, error, success.",
+        "links": [],
+        "prior": true
+      },
+      {
+        "id": "ev-003",
+        "date": "2025",
+        "type": "shipped",
+        "title": "Wrote the component library",
+        "detail": "Tokens, 24 components, usage notes. Used by two teams.",
+        "links": [],
+        "prior": true
+      },
+      {
+        "id": "ev-004",
+        "date": "2026-09",
+        "type": "ai",
+        "title": "Portfolio read by Claude",
+        "detail": "Strong visuals; the stories need a clearer problem and result.",
+        "links": [],
+        "prior": true
+      }
+    ],
+    "ratings": {
+      "product_thinking": {
+        "level": 2.5,
+        "confidence": 0.5,
+        "source": "ai",
+        "evidence": [
+          "ev-001",
+          "ev-002"
+        ],
+        "note": "Frames the problem before the screens; no outcome numbers yet.",
+        "history": [
+          {
+            "date": "2026-10-12",
+            "level": 2.5,
+            "source": "ai",
+            "reason": "Demo rating from the demo evidence"
+          }
+        ],
+        "target": 3
+      },
+      "craft": {
+        "level": 2,
+        "confidence": 0.4,
+        "source": "shipped",
+        "evidence": [
+          "ev-002"
+        ],
+        "note": "Consistent and state-complete; not yet reviewed by a senior designer.",
+        "history": [
+          {
+            "date": "2026-10-12",
+            "level": 2,
+            "source": "shipped",
+            "reason": "Demo rating from the demo evidence"
+          }
+        ],
+        "target": 3
+      },
+      "systems": {
+        "level": 2.5,
+        "confidence": 0.4,
+        "source": "shipped",
+        "evidence": [
+          "ev-003"
+        ],
+        "note": "One documented component library in use by two teams.",
+        "history": [
+          {
+            "date": "2026-10-12",
+            "level": 2.5,
+            "source": "shipped",
+            "reason": "Demo rating from the demo evidence"
+          }
+        ],
+        "target": 3
+      },
+      "research": {
+        "level": 1.5,
+        "confidence": 0.3,
+        "source": "self",
+        "evidence": [],
+        "note": "Has not run a test with a stranger yet.",
+        "history": [
+          {
+            "date": "2026-10-12",
+            "level": 1.5,
+            "source": "self",
+            "reason": "Demo rating from the demo evidence"
+          }
+        ],
+        "target": 3
+      },
+      "communication": {
+        "level": 2,
+        "confidence": 0.3,
+        "source": "ai",
+        "evidence": [
+          "ev-004"
+        ],
+        "note": "Clear in writing; case studies are not packaged.",
+        "history": [
+          {
+            "date": "2026-10-12",
+            "level": 2,
+            "source": "ai",
+            "reason": "Demo rating from the demo evidence"
+          }
+        ],
+        "target": 3
+      },
+      "collaboration": {
+        "level": 2,
+        "confidence": 0.3,
+        "source": "self",
+        "evidence": [],
+        "note": "Works well with engineers; no design peers at work.",
+        "history": [
+          {
+            "date": "2026-10-12",
+            "level": 2,
+            "source": "self",
+            "reason": "Demo rating from the demo evidence"
+          }
+        ],
+        "target": 3
+      },
+      "building": {
+        "level": 2,
+        "confidence": 0.3,
+        "source": "shipped",
+        "evidence": [],
+        "note": "Builds small prototypes in code.",
+        "history": [
+          {
+            "date": "2026-10-12",
+            "level": 2,
+            "source": "shipped",
+            "reason": "Demo rating from the demo evidence"
+          }
+        ],
+        "target": 3
+      },
+      "domain": {
+        "level": 2,
+        "confidence": 0.3,
+        "source": "self",
+        "evidence": [],
+        "note": "Knows the product area from daily work.",
+        "history": [
+          {
+            "date": "2026-10-12",
+            "level": 2,
+            "source": "self",
+            "reason": "Demo rating from the demo evidence"
+          }
+        ],
+        "target": 3
+      }
+    },
+    "gaps": [
+      {
+        "id": "G-01",
+        "competency": "research",
+        "title": "Do a first usability test",
+        "why": "None is recorded yet, and a case study should have one.",
+        "source": "your skills table",
+        "status": "open",
+        "opened": "2026-10-12",
+        "closes_when": "One written-up test: three findings and a design change.",
+        "now": "The skill tasks this week take you through it.",
+        "track": "skill",
+        "evenings": 4,
+        "estimated": "2026-10-12"
+      },
+      {
+        "id": "G-02",
+        "competency": "communication",
+        "title": "Turn one project into a case study that makes sense to a stranger",
+        "why": "Portfolios usually lose on the telling, not the work.",
+        "source": "your skills table",
+        "status": "open",
+        "opened": "2026-10-12",
+        "closes_when": "One case study published and read by someone outside the team.",
+        "track": "reach",
+        "evenings": 6,
+        "estimated": "2026-10-12"
+      }
+    ],
+    "reach": {
+      "_about": "Does the market respond? Funnel per application batch, and recognition counters. Only market-source facts go here.",
+      "updated": "2026-10-12",
+      "funnel": {
+        "stages": [
+          "applied",
+          "screen",
+          "portfolio_review",
+          "challenge",
+          "final",
+          "offer"
+        ],
+        "batches": [
+          {
+            "id": "batch-0",
+            "label": "Before this app",
+            "period": "2026 so far",
+            "applied": 12,
+            "screen": 1,
+            "portfolio_review": 0,
+            "challenge": 0,
+            "final": 0,
+            "offer": 0,
+            "titles": [
+              "Product Designer"
+            ],
+            "note": "Baseline."
+          }
+        ],
+        "applications": []
+      },
+      "recognition": {
+        "linkedin_followers": [
+          {
+            "date": "2026-10-05",
+            "value": 400
+          }
+        ],
+        "inbound_messages": [],
+        "published": [],
+        "mentions_by_strangers": []
+      }
+    },
+    "rubric": {
+      "_about": "Product design competencies by level. Levels: 1 junior, 2 mid, 3 senior, 4 lead/staff. Based on public design career ladders (Dropbox, Buffer, Monzo via progression.fyi). The scale is fixed; ratings in skills.json refer to it.",
+      "levels": {
+        "1": "Junior: executes defined tasks with guidance",
+        "2": "Mid: owns features end to end, needs little guidance",
+        "3": "Senior: owns problem framing and outcomes, raises the bar for others",
+        "4": "Lead / Staff: sets direction across products or teams, influences strategy, grows designers"
+      },
+      "competencies": [
+        {
+          "id": "product_thinking",
+          "name": "Product thinking",
+          "group": "skill",
+          "levels": {
+            "1": "Designs to a given spec",
+            "2": "Frames the user problem before designing; understands the business model of the feature",
+            "3": "Chooses which problems are worth solving; ties design decisions to metrics and business outcomes",
+            "4": "Shapes product strategy; defines what the product should become over years"
+          }
+        },
+        {
+          "id": "craft",
+          "name": "Craft: visual and interaction",
+          "group": "skill",
+          "levels": {
+            "1": "Clean screens with help on hierarchy and detail",
+            "2": "Consistent, polished UI; designs every state of a flow",
+            "3": "Distinctive, reference-quality work; sets craft standards others follow",
+            "4": "Defines the visual and interaction language of a product line"
+          }
+        },
+        {
+          "id": "systems",
+          "name": "Design systems and IA",
+          "group": "skill",
+          "levels": {
+            "1": "Uses an existing system",
+            "2": "Builds and documents a system for one product; structures information clearly",
+            "3": "Runs a system across products and contributors; governs change",
+            "4": "Designs systems that other teams adopt; sets organisation-wide standards"
+          }
+        },
+        {
+          "id": "research",
+          "name": "Research and validation",
+          "group": "skill",
+          "levels": {
+            "1": "Participates in research run by others",
+            "2": "Runs lightweight interviews and usability tests; turns findings into design changes",
+            "3": "Plans research for a product area; combines qualitative and quantitative evidence",
+            "4": "Builds the team's research practice and evidence culture"
+          }
+        },
+        {
+          "id": "communication",
+          "name": "Communication and influence",
+          "group": "skill",
+          "levels": {
+            "1": "Explains their screens",
+            "2": "Presents rationale, handles feedback, writes clear documentation",
+            "3": "Persuades leadership; tells the story of the work in case studies and talks; gives useful critique",
+            "4": "Represents design to the company and the industry; shapes how others think"
+          }
+        },
+        {
+          "id": "collaboration",
+          "name": "Collaboration and leadership",
+          "group": "skill",
+          "levels": {
+            "1": "Works with a mentor",
+            "2": "Works directly with PM and engineering; takes critique well",
+            "3": "Mentors other designers; runs critique; unblocks cross-functional teams",
+            "4": "Hires, grows and leads designers; sets team process"
+          }
+        },
+        {
+          "id": "building",
+          "name": "Building: code and AI",
+          "group": "skill",
+          "levels": {
+            "1": "Static mockups only",
+            "2": "Clickable prototypes; basic HTML/CSS",
+            "3": "Ships working front-end prototypes; uses AI tools to go from design to code",
+            "4": "Defines how the team designs and builds with AI; ships production-quality front ends"
+          }
+        },
+        {
+          "id": "domain",
+          "name": "Domain: consumer finance",
+          "group": "skill",
+          "levels": {
+            "1": "Learns the domain as needed",
+            "2": "Understands the core concepts users face",
+            "3": "Understands the mechanics well enough to stop misleading UI and challenge engineers and finance",
+            "4": "Recognised domain expert; others seek their judgement"
+          }
+        }
+      ],
+      "sources": {
+        "_about": "Trust order for any rating or claim. Higher wins when sources disagree.",
+        "market": "A real market result: screen, interview, offer, inbound message, published feature",
+        "expert": "A senior designer or hiring manager who reviewed the actual work",
+        "shipped": "Work that exists and can be inspected: a live product, a document, a repo",
+        "ai": "Claude's assessment from evidence",
+        "self": "The person's own rating"
+      }
+    },
+    "confirmed": {}
+  }
+}

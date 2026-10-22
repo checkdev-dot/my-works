@@ -1,0 +1,24 @@
+{
+  "_example": "This is an example of what an add-on entry looks like. It is not installed and has no skill file yet. /growth module add creates the real one.",
+  "id": "cv-analyser",
+  "name": "CV analyser",
+  "capability": "cv",
+  "does": "Reads your CV and says what to change first, with a score.",
+  "skill": { "kind": "file", "path": "modules/cv-analyser/skill/SKILL.md" },
+  "input": "Your CV as a PDF or pasted text",
+  "source": "pasted",
+  "installed": "YYYY-MM-DD",
+  "enabled": true,
+  "default": true,
+  "can_publish": false,
+  "abilities": [
+    { "id": "score-cv", "label": "Score your CV and say what to change first", "say": ["score my CV"], "topic": "cv-review", "reads": "your CV as a PDF or pasted text", "gives": "score", "enabled": true }
+  ],
+  "impact": {
+    "adds": [{ "text": "A score out of 100 for your CV", "why": "The file ends every read with a number; the built-in read gives notes only." }],
+    "strengthens": [{ "text": "Goes further than the built-in CV read", "why": "The file lists 12 checks; the built-in checklist has 6.", "target": "builtin-cv-read" }],
+    "can_drop": [],
+    "based_on": "file",
+    "decided": "YYYY-MM-DD"
+  }
+}

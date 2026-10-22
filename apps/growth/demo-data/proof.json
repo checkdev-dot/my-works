@@ -1,0 +1,47 @@
+{
+  "_about": "Can others SEE that the person can do the work? Each item is an artifact that exists or doesn't. status: missing | draft | done | verified (verified = an outside person has seen and responded to it).",
+  "updated": "2026-10-12",
+  "items": [
+    {
+      "id": "pr-cv",
+      "name": "CV, one page, ready to send",
+      "status": "draft",
+      "priority": 1,
+      "note": "Draft exists. Needs the numbers checked.",
+      "evidence": [],
+      "links": [],
+      "why": "The first thing a recruiter opens.",
+      "cv": 25,
+      "interview": 0,
+      "unlocks": "Applications"
+    },
+    {
+      "id": "pr-case1",
+      "name": "Case study 1: the checkout redesign",
+      "status": "missing",
+      "priority": 2,
+      "note": "",
+      "evidence": [
+        "ev-002"
+      ],
+      "links": [],
+      "why": "Hiring managers read the story before the screens.",
+      "cv": 10,
+      "interview": 25,
+      "unlocks": "Portfolio reviews"
+    },
+    {
+      "id": "pr-test",
+      "name": "One usability test write-up",
+      "status": "missing",
+      "priority": 3,
+      "note": "",
+      "evidence": [],
+      "links": [],
+      "why": "Shows research, the gap in the rating.",
+      "cv": 5,
+      "interview": 20,
+      "unlocks": "Case study 1"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "",
+  "updated": "2026-10-12",
+  "role_now": "",
+  "positioning": "",
+  "north_star": {
+    "role": "",
+    "salary_inr_per_month": 0,
+    "recognition": []
+  },
+  "constraints": {
+    "hours_per_day": 1,
+    "skips_allowed": true,
+    "learns_best_by": "",
+    "avoid": []
+  },
+  "root_causes": {},
+  "beliefs_to_test": [],
+  "intake": [],
+  "pace": "steady",
+  "person": {
+    "items": [],
+    "words": []
+  },
+  "modules": {
+    "installed": [],
+    "results": [],
+    "primary": {},
+    "retired": []
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "_about": "Each day Mon to Sat has one Skill task and one Reach task, about 30 minutes each: tonight's hour. Either can be done first. Sunday is the weekly review. Practice is on new real work. Every task is worth 20 points; points are a simple count of work done, not a grade. Trust comes from the evidence source, not the points.",
+  "week_of": "2026-10-12",
+  "focus": "Run a first usability test and get your CV into shape.",
+  "focus_short": "First test, CV ready",
+  "tasks": [
+    {
+      "id": "S-01",
+      "day": "Mon",
+      "track": "skill",
+      "competency": "research",
+      "kind": "learn",
+      "minutes": 30,
+      "points": 20,
+      "adds": "your first Research evidence",
+      "task": "Write 3 questions for a usability test",
+      "why": "You will use them with a real person this week.",
+      "steps": [
+        "Read the brief",
+        "Write 3 questions",
+        "Name one person to ask"
+      ],
+      "artifact": "Your 3 questions and one name",
+      "status": "todo",
+      "impact": "medium",
+      "example": "1. Show me how you would pay for this.\n2. What would you expect to happen next?\nWho I could ask: a friend who shops online.",
+      "exampleWhy": "Each question gets the tester to do something instead of giving an opinion.",
+      "where": "phone",
+      "stepsDone": []
+    },
+    {
+      "id": "R-01",
+      "day": "Mon",
+      "track": "reach",
+      "kind": "proof",
+      "proof": "pr-cv",
+      "minutes": 30,
+      "points": 30,
+      "adds": "your CV, ready to send",
+      "task": "Read your CV and fix what is wrong",
+      "why": "It is the first thing a recruiter sees.",
+      "steps": [
+        "Mark anything inaccurate",
+        "Add anything missing you are proud of",
+        "Paste your corrections"
+      ],
+      "artifact": "Your corrections",
+      "status": "todo",
+      "impact": "high",
+      "example": "Changed \"worked on the checkout\" to \"redesigned the checkout flow as the only designer\".",
+      "exampleWhy": "Each change names what you did and how big it was.",
+      "where": "desk"
+    }
+  ]
+}

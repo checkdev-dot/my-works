@@ -1,0 +1,25 @@
+{
+  "_about": "A bet = hypothesis + action + metric + target + result. One active bet per track. This is the proof a step was the right one.",
+  "updated": "2026-10-12",
+  "bets": [
+    {
+      "id": "B-S1",
+      "track": "skill",
+      "status": "active",
+      "focus": "research",
+      "attacks_root_cause": "3",
+      "hypothesis": "Testing small pieces of new work with one person at a time should build Research skill faster than classes.",
+      "action": "Read the brief, put one screen in front of a real person, ask for feedback, repeat.",
+      "metric": "Research level and its source",
+      "baseline": "1.5, own rating",
+      "target": "2.5, rated from shipped work",
+      "started": "2026-10-12",
+      "review_by": "2026-11-09",
+      "result": null,
+      "learned": null,
+      "tasks": [
+        "S-01"
+      ]
+    }
+  ]
+}

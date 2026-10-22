@@ -1,0 +1,22 @@
+{
+  "_about": "Does the market respond? Funnel per application batch, and recognition counters. Only market-source facts go here.",
+  "updated": "2026-10-22",
+  "funnel": {
+    "stages": [
+      "applied",
+      "screen",
+      "portfolio_review",
+      "challenge",
+      "final",
+      "offer"
+    ],
+    "batches": [],
+    "applications": []
+  },
+  "recognition": {
+    "linkedin_followers": [],
+    "inbound_messages": [],
+    "published": [],
+    "mentions_by_strangers": []
+  }
+}

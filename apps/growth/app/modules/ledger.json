@@ -1,0 +1,25 @@
+{
+  "_about": "What the Growth app can already do on its own, one entry per ability. Add-ons are compared against this list when they are connected, so 'adds', 'strengthens' and 'can drop' are judged against facts. Hiding an entry (profile.modules.retired) is reversible; nothing here is ever deleted.",
+  "abilities": [
+    { "id": "builtin-task-review", "topic": "task-review", "label": "Review a task you handed in", "say": ["look at my usability test task"], "where": "growth-coach: critique checklists per kind of work" },
+    { "id": "builtin-cv-read", "topic": "cv-review", "label": "Read your CV and say what to change first", "say": ["look at my CV"], "where": "growth-coach: CV checklist and the one-page CV in growth/cv" },
+    { "id": "builtin-cv-build", "topic": "cv-build", "label": "Build, tailor, check and export your CV, every fact with a source", "say": ["build my CV", "tailor my CV for this job"], "where": "/growth cv build and the other cv commands; data/career.json" },
+    { "id": "builtin-portfolio-read", "topic": "portfolio-review", "label": "Read your portfolio and name the weakest case study", "say": ["look at my portfolio"], "where": "growth-coach: portfolio checklist" },
+    { "id": "builtin-case-study", "topic": "case-study", "label": "Work on a case study with you", "say": ["work on the checkout case study"], "where": "growth-coach: case study checklist; career-notes sections 3.9 and 3.10 apply" },
+    { "id": "builtin-mock-interview", "topic": "interview-practice", "label": "Run a mock interview, one question at a time", "say": ["mock interview for a fintech role"], "where": "/growth interview" },
+    { "id": "builtin-library-scoring", "topic": "library", "label": "Find and score things to read, watch and hear", "say": ["update my library", "is this worth my time?"], "where": "growth-coach: Scoring picks before they are shown" },
+    { "id": "builtin-trinkets", "topic": "trinkets", "label": "A small checked thought from a designer", "say": ["give me a thought from a designer"], "where": "growth-coach: Trinkets" },
+    { "id": "builtin-journal-read", "topic": "journal", "label": "Read your journal and say what it shows", "say": ["what does my journal show this week"], "where": "/growth journal read" },
+    { "id": "builtin-plan-week", "topic": "planning", "label": "Plan your week", "say": ["plan my week"], "where": "growth-coach: weekly plan" },
+    { "id": "builtin-goal-change", "topic": "goal", "label": "Change your goal when it feels different", "say": ["my goal feels too far"], "where": "growth-coach: goal protocol" },
+    { "id": "builtin-pace-gaps", "topic": "pace-and-gaps", "label": "Change your pace or reorder your gaps", "say": ["make this week lighter", "move this gap up"], "where": "profile.pace and library.gaps" },
+    { "id": "builtin-linkedin-read", "topic": "linkedin-review", "label": "Read your LinkedIn profile text and say what to change first", "say": ["analyse my LinkedIn"], "where": "growth-coach: LinkedIn checklist; /growth analyse linkedin without an add-on" },
+    { "id": "builtin-outreach", "topic": "outreach", "label": "Draft a short note to a person or company for you to send", "say": ["draft a note to someone at a company"], "where": "/growth outreach" },
+    { "id": "builtin-news", "topic": "news", "label": "Say what is new in your field that matters to you", "say": ["what's new in design"], "where": "/growth news" },
+    { "id": "builtin-skill-test", "topic": "skill-test", "label": "Test a skill with a short check", "say": ["test me on research"], "where": "/growth test" },
+    { "id": "builtin-recall", "topic": "recall", "label": "Quiz you on your own notes", "say": ["quiz me on my notes"], "where": "/growth recall" },
+    { "id": "builtin-applications", "topic": "applications", "label": "Keep track of the jobs you applied for", "say": ["I applied to a company"], "where": "/growth apply and reach.funnel.applications" },
+    { "id": "builtin-learning-brief", "topic": "learn", "label": "A short learning brief on a topic", "say": ["teach me about service blueprints"], "where": "/growth learn" },
+    { "id": "builtin-fraud-moment", "topic": "support", "label": "Answer a bad moment with your own evidence", "say": ["I feel like a fraud"], "where": "growth-coach: When the person spirals" }
+  ]
+}

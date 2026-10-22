@@ -1,0 +1,143 @@
+{
+  "_about": "Current level per competency (see rubric.json). confidence 0-1 is how sure we are of the level, driven by source quality. history is append-only; every change needs a date, source and reason. target is the next-jump level (senior = 3) unless an active bet sets a nearer one.",
+  "updated": "2026-10-12",
+  "ratings": {
+    "product_thinking": {
+      "level": 2.5,
+      "confidence": 0.5,
+      "source": "ai",
+      "evidence": [
+        "ev-001",
+        "ev-002"
+      ],
+      "note": "Frames the problem before the screens; no outcome numbers yet.",
+      "history": [
+        {
+          "date": "2026-10-12",
+          "level": 2.5,
+          "source": "ai",
+          "reason": "Demo rating from the demo evidence"
+        }
+      ],
+      "target": 3
+    },
+    "craft": {
+      "level": 2,
+      "confidence": 0.4,
+      "source": "shipped",
+      "evidence": [
+        "ev-002"
+      ],
+      "note": "Consistent and state-complete; not yet reviewed by a senior designer.",
+      "history": [
+        {
+          "date": "2026-10-12",
+          "level": 2,
+          "source": "shipped",
+          "reason": "Demo rating from the demo evidence"
+        }
+      ],
+      "target": 3
+    },
+    "systems": {
+      "level": 2.5,
+      "confidence": 0.4,
+      "source": "shipped",
+      "evidence": [
+        "ev-003"
+      ],
+      "note": "One documented component library in use by two teams.",
+      "history": [
+        {
+          "date": "2026-10-12",
+          "level": 2.5,
+          "source": "shipped",
+          "reason": "Demo rating from the demo evidence"
+        }
+      ],
+      "target": 3
+    },
+    "research": {
+      "level": 1.5,
+      "confidence": 0.3,
+      "source": "self",
+      "evidence": [],
+      "note": "Has not run a test with a stranger yet.",
+      "history": [
+        {
+          "date": "2026-10-12",
+          "level": 1.5,
+          "source": "self",
+          "reason": "Demo rating from the demo evidence"
+        }
+      ],
+      "target": 3
+    },
+    "communication": {
+      "level": 2,
+      "confidence": 0.3,
+      "source": "ai",
+      "evidence": [
+        "ev-004"
+      ],
+      "note": "Clear in writing; case studies are not packaged.",
+      "history": [
+        {
+          "date": "2026-10-12",
+          "level": 2,
+          "source": "ai",
+          "reason": "Demo rating from the demo evidence"
+        }
+      ],
+      "target": 3
+    },
+    "collaboration": {
+      "level": 2,
+      "confidence": 0.3,
+      "source": "self",
+      "evidence": [],
+      "note": "Works well with engineers; no design peers at work.",
+      "history": [
+        {
+          "date": "2026-10-12",
+          "level": 2,
+          "source": "self",
+          "reason": "Demo rating from the demo evidence"
+        }
+      ],
+      "target": 3
+    },
+    "building": {
+      "level": 2,
+      "confidence": 0.3,
+      "source": "shipped",
+      "evidence": [],
+      "note": "Builds small prototypes in code.",
+      "history": [
+        {
+          "date": "2026-10-12",
+          "level": 2,
+          "source": "shipped",
+          "reason": "Demo rating from the demo evidence"
+        }
+      ],
+      "target": 3
+    },
+    "domain": {
+      "level": 2,
+      "confidence": 0.3,
+      "source": "self",
+      "evidence": [],
+      "note": "Knows the product area from daily work.",
+      "history": [
+        {
+          "date": "2026-10-12",
+          "level": 2,
+          "source": "self",
+          "reason": "Demo rating from the demo evidence"
+        }
+      ],
+      "target": 3
+    }
+  }
+}

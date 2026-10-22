@@ -1,0 +1,50 @@
+{
+  "name": "Sam Rivera",
+  "updated": "2026-10-12",
+  "role_now": "Product Designer, Northwind Studio (made-up company), since 2023-03",
+  "north_star": {
+    "role": "Lead product designer at a mid-size software company",
+    "salary_inr_per_month": 0,
+    "recognition": [
+      "Inbound recruiter messages: 2+ per month",
+      "Published case studies: 0 to 3",
+      "One talk or essay referenced by people outside the team"
+    ],
+    "timeline": "No deadline. Look again in 4 weeks."
+  },
+  "positioning": "Product designer with three shipped products and a design system, strongest at flows with many states. Mid-level by evidence; aiming at lead scope.",
+  "constraints": {
+    "hours_per_day": 1,
+    "skips_allowed": true,
+    "learns_best_by": "practising on real work, with critique",
+    "avoid": [
+      "streaks and penalties",
+      "courses without an artifact"
+    ]
+  },
+  "root_causes": {
+    "1": "Few people reviewed the work, so there was no outside bar to clear.",
+    "2": "Team deadlines always beat personal learning.",
+    "3": "Past learning was reading and watching, never an artifact judged by others.",
+    "_about": "Why growth stalled. Demo text for a made-up person."
+  },
+  "beliefs_to_test": [
+    {
+      "belief": "Nobody will read my case studies",
+      "counter": "None are published yet, so this is untested",
+      "status": "untested"
+    }
+  ],
+  "intake": [],
+  "pace": "steady",
+  "person": {
+    "items": [],
+    "words": []
+  },
+  "modules": {
+    "installed": [],
+    "results": [],
+    "primary": {},
+    "retired": []
+  }
+}

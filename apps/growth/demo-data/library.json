@@ -1,0 +1,67 @@
+{
+  "_about": "Links and resources, each tied to a skill, proof item or bet so nothing is lost in chat.",
+  "updated": "2026-10-12",
+  "items": [
+    {
+      "title": "progression.fyi: public design career ladders",
+      "url": "https://progression.fyi",
+      "for": "rubric",
+      "note": "Level definitions from several companies."
+    },
+    {
+      "title": "Nielsen Norman Group: usability testing 101",
+      "url": "https://www.nngroup.com/articles/usability-testing-101/",
+      "for": "research",
+      "note": "A short method for a first test."
+    }
+  ],
+  "roles": [],
+  "gaps": [
+    {
+      "id": "G-01",
+      "competency": "research",
+      "title": "Do a first usability test",
+      "why": "None is recorded yet, and a case study should have one.",
+      "source": "your skills table",
+      "status": "open",
+      "opened": "2026-10-12",
+      "closes_when": "One written-up test: three findings and a design change.",
+      "now": "The skill tasks this week take you through it.",
+      "track": "skill",
+      "evenings": 4,
+      "estimated": "2026-10-12"
+    },
+    {
+      "id": "G-02",
+      "competency": "communication",
+      "title": "Turn one project into a case study that makes sense to a stranger",
+      "why": "Portfolios usually lose on the telling, not the work.",
+      "source": "your skills table",
+      "status": "open",
+      "opened": "2026-10-12",
+      "closes_when": "One case study published and read by someone outside the team.",
+      "track": "reach",
+      "evenings": 6,
+      "estimated": "2026-10-12"
+    }
+  ],
+  "picks": [
+    {
+      "id": "P-001",
+      "week_of": "2026-10-12",
+      "kind": "book",
+      "title": "Rocket Surgery Made Easy",
+      "by": "Steve Krug",
+      "url": "https://sensible.com/rocket-surgery-made-easy/",
+      "minutes": 336,
+      "why": "A short do-it-yourself manual for the first test you are running this week.",
+      "look_for": "Copy his test script into your notes and cut it to fit 15 minutes.",
+      "competency": "research",
+      "status": "new",
+      "task": "S-01",
+      "gap": "G-01",
+      "checked": "2026-10-12"
+    }
+  ],
+  "refreshed": "2026-10-12"
+}

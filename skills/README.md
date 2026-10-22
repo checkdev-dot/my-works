@@ -1,3 +1,5 @@
 # Skills
 
-Claude skills live here. The Growth skill and its app will be added later.
+Claude skills ship next to the app they drive.
+
+- [Growth, the coach and G mini](../apps/growth/skills): install them with `node apps/growth/install.mjs`.

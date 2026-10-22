@@ -1,0 +1,4 @@
+{
+  "_about": "Append-only log of things that happened: work shipped, feedback received, applications, wins, rejections. Each entry has a source type from rubric.json sources. Ratings and proof items point at these ids.",
+  "entries": []
+}

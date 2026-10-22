@@ -1,0 +1,43 @@
+{
+  "_about": "Does the market respond? Funnel per application batch, and recognition counters. Only market-source facts go here.",
+  "updated": "2026-10-12",
+  "funnel": {
+    "stages": [
+      "applied",
+      "screen",
+      "portfolio_review",
+      "challenge",
+      "final",
+      "offer"
+    ],
+    "batches": [
+      {
+        "id": "batch-0",
+        "label": "Before this app",
+        "period": "2026 so far",
+        "applied": 12,
+        "screen": 1,
+        "portfolio_review": 0,
+        "challenge": 0,
+        "final": 0,
+        "offer": 0,
+        "titles": [
+          "Product Designer"
+        ],
+        "note": "Baseline."
+      }
+    ],
+    "applications": []
+  },
+  "recognition": {
+    "linkedin_followers": [
+      {
+        "date": "2026-10-05",
+        "value": 400
+      }
+    ],
+    "inbound_messages": [],
+    "published": [],
+    "mentions_by_strangers": []
+  }
+}

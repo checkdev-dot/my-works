@@ -1,0 +1,41 @@
+{
+  "name": "growth",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev -p 4321 -H 127.0.0.1",
+    "lan": "node scripts/lan-relay.mjs",
+    "build": "next build",
+    "start": "next start -p 4321",
+    "check": "node scripts/check-data.mjs",
+    "trust": "node scripts/trust-check.mjs",
+    "domains:check": "node scripts/domains-check.mjs",
+    "domains:flow": "node scripts/domains-flow-check.mjs",
+    "domains:regression": "node scripts/domains-regression.mjs all",
+    "onboarding:lint": "node scripts/onboarding-lint.mjs",
+    "onboarding:check": "node scripts/onboarding-check.mjs",
+    "onboarding:fixtures": "node scripts/onboarding-fixtures.mjs",
+    "onboarding:sim": "node scripts/onboarding-sim.mjs all",
+    "onboarding:regression": "node scripts/onboarding-regression.mjs all",
+    "test:store": "node scripts/onboarding-store-test.mjs",
+    "cv:check": "node scripts/cv-check.mjs",
+    "cv:act": "node scripts/cv-act.mjs",
+    "cv:export": "node scripts/cv-export.mjs",
+    "cv:promote": "node scripts/cv-promote.mjs",
+    "brief": "node scripts/make-brief.mjs",
+    "domain:gap": "node scripts/domain-gap.mjs",
+    "verify": "tsc --noEmit -p . && node scripts/check-data.mjs"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "lucide-react": "^1.55.0",
+    "next": "^16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

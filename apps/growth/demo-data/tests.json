@@ -1,0 +1,4 @@
+{
+  "_about": "Skill tests. Claude writes the test (scenario questions at the competency's next level) with status 'ready'; you answer in the app ('answered'); Claude scores it ('scored') and the score becomes evidence on the competency.",
+  "tests": []
+}

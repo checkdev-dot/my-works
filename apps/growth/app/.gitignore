@@ -1,0 +1,15 @@
+# Dependencies and build output
+node_modules
+.next
+next-env.d.ts
+*.tsbuildinfo
+
+# Your own data: never publish. install.mjs creates these folders empty.
+data/
+cv/
+people/
+research/
+modules/_scratch/
+
+# Secrets and local settings
+.env*
