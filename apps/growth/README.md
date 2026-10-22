@@ -45,7 +45,25 @@ The loop is simple. You work in the app. When something needs Claude (a critique
 
 ## G mini: for people you help
 
-G mini is a smaller, separate tool for helping someone else, such as a friend or a colleague who is stuck in their career. That person doesn't need Claude Code. You type, they answer beside you.
+G mini is a smaller, separate tool for giving someone a hand with one career move: a friend or colleague who needs a little help, not a full coaching programme. They sit with you for one interview and get one PDF to keep. They don't need Claude Code. You type, they answer beside you.
+
+**Who it suits:** someone who knows roughly where they want to go and wants an honest picture of the gap, the path and the interviews. It is not therapy, a job board or a guarantee, and it does not apply for jobs.
+
+**Careers it knows well today:**
+- **Design:** product designer, UX, brand and visual design.
+- **PR and communications:** PR specialist, communications and content roles.
+- **Marketing:** content marketer, product marketing manager, brand and growth roles.
+- **HR:** HR generalist or HR business partner moving into HR transformation, organisational development (OD), change management, HR technology consulting or people analytics.
+
+**Any other career:** G mini still runs the interview and researches the target from public sources, but it says plainly that the role is not mapped yet. It shows more gaps as "still needed" instead of guessing. New careers can be added to the role map over time.
+
+**What the PDF covers:**
+- where they are now and where they want to go
+- a gap map against the target roles
+- how others made the same move (patterns, never names)
+- what the interviews look like
+- a dated plan in phases sized to their deadline and weekly hours, with an honest "fits / tight / does not fit" verdict
+- a short list of what to find out next
 
 - `/g-mini new` starts a person. One command then runs a 45 to 60 minute interview, researches their target roles with sources, and builds a PDF report.
 - Each person gets their own folder in `app/people/<id>/`. Nothing from one person is ever used for another, and G mini never reads your own Growth data, CV or career notes. The scripts refuse any path outside that person's folder.
