@@ -65,10 +65,7 @@ G mini is a smaller, separate tool for giving someone a hand with one career mov
 - a dated plan in phases sized to their deadline and weekly hours, with an honest "fits / tight / does not fit" verdict
 - a short list of what to find out next
 
-- `/g-mini new` starts a person. One command then runs a 45 to 60 minute interview, researches their target roles with sources, and builds a PDF report.
-- Each person gets their own folder in `app/people/<id>/`. Nothing from one person is ever used for another, and G mini never reads your own Growth data, CV or career notes. The scripts refuse any path outside that person's folder.
-- Every reply starts with "Working on: <name>" so you always know whose file is open.
-- Other commands: `/g-mini <id> interview`, `research`, `report`, `edit`, `mock`, and `/g-mini list`.
+**Kept apart:** each person gets their own folder in `app/people/<id>/`. Nothing from one person is ever used for another, and G mini never reads your own Growth data, CV or career notes. The scripts refuse any path outside that person's folder, and every write needs that person's lock code. Every reply starts with "Working on: <name>" so you always know whose file is open. The commands are in [Using G mini](#using-g-mini) below.
 
 ## Install
 
@@ -93,11 +90,89 @@ What `install.mjs` does:
 
 If a skill is already installed, it asks before overwriting (or refuses when there is no terminal). Pass `--force` to replace the skills without asking. `--dry-run` shows what it would do and writes nothing.
 
-Then, in Claude Code, from any folder:
+### Install one skill on its own
 
-- `growth start` runs the onboarding interview. It asks in rounds, says why it asks each question, and turns anything you can't answer into a task. If data already exists it archives it first, after you type a confirmation phrase.
-- `/g-mini new` starts a G mini for someone else.
-- `/growth` shows where you are and what's on tonight.
+The skills are independent folders. Install only the ones you want:
+
+| You want | Run | You get |
+|---|---|---|
+| Everything | `node install.mjs` | growth, growth-coach and g-mini |
+| Only G mini (help other people, no personal Growth) | `node install.mjs --only=g-mini` | g-mini |
+| Only your own Growth | `node install.mjs --only=growth` | growth and growth-coach (growth hands queued work to the coach, so they come together) |
+
+Both still need the `app/` folder and `npm install` in it, because the skills run the app's scripts and the app shows the results. G mini writes only to `app/people/`, so you can ignore the Growth pages in the app.
+
+**Without the installer:** copy `skills/<name>/SKILL.md` into `~/.claude/skills/<name>/SKILL.md` (on Windows `C:\Users\<you>\.claude\skills\<name>\`). Then create a `config.json` next to it:
+- for `growth`: `{ "growthRoot": "<full path to app>", "coachSkill": "<full path to ~/.claude/skills/growth-coach/SKILL.md>", "dossier": "" }`
+- for `g-mini`: `{ "appRoot": "<full path to app>", "peopleDir": "<full path to app>/people" }`
+
+Use forward slashes in the paths. Restart Claude Code after adding a skill, so it picks it up.
+
+**To remove a skill:** delete its folder in `~/.claude/skills/`. Your data in `app/` stays.
+
+## Using Growth
+
+Everything happens in Claude Code: you type a command or say it in plain words, and Claude writes the result into the app. Then open http://localhost:4321 to see it. Every command in the app's **Commands** page has an "i" button that says what it does, what it changes, how often to use it and what to do after.
+
+**First time:**
+1. Start the app: `npm run dev` in `app/`.
+2. In Claude Code, say `growth start`. Answer in sittings of about 20 minutes; skip anything with "skip".
+3. When the interview is done, say `plan my four weeks`, then `update my library`.
+
+**Each evening:** open **Tonight** in the app, do the one step, and press **Hand it in**. When the app says Claude owes you something, say `answer it`.
+
+**The six everyday commands:**
+
+| Say | What happens |
+|---|---|
+| `where do I stand` (or `/growth`) | Where things stand, what's on tonight, anything Claude owes you |
+| `answer it` | Claude works through everything the app queued (reviews, plans, tests) |
+| `change my plan` | Makes the week lighter, moves a gap, or changes your goal, after your yes |
+| `look at my CV` | Reviews your CV or any piece of work and says what to change first |
+| `update my library` | Finds and scores things worth reading, watching or hearing this week |
+| `add a skill file` | Adds someone else's skill file as an add-on, after a safety check |
+
+**CV and case studies:**
+
+| Say | What happens |
+|---|---|
+| `build my CV` | Builds a CV version from your answers, notes and evidence. Every fact has a source; gaps are marked |
+| `fill in my CV` | Asks only for the facts still missing, one list, "skip" allowed |
+| `tailor my CV for this job` | Paste a job post: a tailored version just for that job |
+| `check my CV against this job` | A keyword match against a job post, labelled as an AI estimate |
+| `save my CV as a PDF` | Saves a PDF (marked Draft while facts are missing) |
+| `use this CV` | Makes a version your main CV file; the old one is backed up |
+| `write my case studies` | Works through one case study at a time with you |
+
+**Planning:** `plan my week`, `plan my four weeks`, `weekly check`, `review my four weeks`, `why this task`.
+
+Plain words work too: "I'm stuck on this task", "I only have 20 minutes", "I feel like a fraud", "read my journal". The full list is on the app's Commands page.
+
+## Using G mini
+
+G mini needs no app page: Claude does the work in Claude Code and saves a PDF.
+
+**Start to finish, one command:**
+1. Sit the person next to you and say `/g-mini new`.
+2. Claude asks their name, suggests a short id (for example `sam`), and asks their OK to save their answers.
+3. Give their CV and LinkedIn text if they have them: paste the text, or give the file path. Both are optional.
+4. The interview: about 40 questions, one at a time, 45 to 60 minutes. They can say "skip" to any.
+5. When the last question is answered, Claude researches their target roles and builds the PDF on its own. They can leave.
+6. Claude tells you where the PDF is (`app/people/<id>/report/<date>/report.pdf`). Check it and send it yourself. Claude never sends anything.
+
+**Later, only when needed:**
+
+| Command | What it does |
+|---|---|
+| `/g-mini <id>` | Opens that person, or resumes an interview that stopped |
+| `/g-mini <id> edit` | Changes a fact they corrected, then rebuilds the PDF as a new dated version (the old one is kept) |
+| `/g-mini <id> interview` | Redoes or finishes the interview (old answers are kept and you're asked before each is replaced) |
+| `/g-mini <id> research` | Redoes the research |
+| `/g-mini <id> report` | Rebuilds the PDF |
+| `/g-mini <id> mock` | A live practice interview with them, only when you ask |
+| `/g-mini list` | Everyone you have made a G mini for |
+
+If the PDF says **Draft**, fill the yellow "still needed" items with the person (`/g-mini <id> edit`), then rebuild.
 
 ### Optional: your career notes file
 

@@ -5,6 +5,7 @@
 //   node install.mjs --demo     put demo-data/ (one made-up person) into app/data instead of the blank starter files
 //   node install.mjs --force    overwrite skills that are already installed (otherwise it refuses, or asks when you are at a terminal)
 //   node install.mjs --dry-run  print what it would do and write nothing
+//   node install.mjs --only=g-mini            install just G mini (or --only=growth, which also brings growth-coach)
 //
 // Skills go to ~/.claude/skills/<name>/ (the folder Claude Code reads). To test without touching your real home folder,
 // set HOME (macOS, Linux) or USERPROFILE (Windows) to a temporary folder first.
@@ -21,9 +22,20 @@ const APP = path.join(ROOT, "app");
 const SKILLS_SRC = path.join(ROOT, "skills");
 const DEMO = path.join(ROOT, "demo-data");
 const BLANK = path.join(ROOT, "blank-data");
-const NAMES = ["growth", "growth-coach", "g-mini"];
+const ALL = ["growth", "growth-coach", "g-mini"];
 
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const args = new Set(argv.filter((a) => !a.startsWith("--only=")));
+// --only=g-mini, or --only=growth,growth-coach. growth needs growth-coach (it hands queued work to the coach), so asking for one brings the other.
+const onlyArg = argv.find((a) => a.startsWith("--only="));
+let NAMES = ALL;
+if (onlyArg) {
+  const want = onlyArg.slice(7).split(",").map((s) => s.trim()).filter(Boolean);
+  const bad = want.filter((w) => !ALL.includes(w));
+  if (bad.length || !want.length) { console.error(`Unknown skill in --only: ${bad.join(", ") || "(none)"}. Choose from: ${ALL.join(", ")}.`); process.exit(1); }
+  if (want.includes("growth") || want.includes("growth-coach")) want.push("growth", "growth-coach");
+  NAMES = ALL.filter((n) => want.includes(n));
+}
 const FORCE = args.has("--force");
 const DEMO_ON = args.has("--demo");
 const DRY = args.has("--dry-run");
