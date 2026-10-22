@@ -2,7 +2,7 @@
 
 `growth` is the front door to Growth. It is the skill that turns what you type in Claude Code into the right protocol, and it writes the result into the app's local files.
 
-Source: [`skills/growth/SKILL.md`](../../skills/growth/SKILL.md) and its [README](../../skills/growth/README.md).
+Source: [`skills/growth/SKILL.md`](https://github.com/checkdev-dot/my-works/blob/main/apps/growth/skills/growth/SKILL.md) and its [README](https://github.com/checkdev-dot/my-works/blob/main/apps/growth/skills/growth/README.md).
 
 ## Purpose
 

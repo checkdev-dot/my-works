@@ -2,7 +2,7 @@
 
 `growth-coach` is the coach behind Growth. It holds the rules Growth coaches by, and it answers the work the app queues.
 
-Source: [`skills/growth-coach/SKILL.md`](../../skills/growth-coach/SKILL.md) and its [README](../../skills/growth-coach/README.md).
+Source: [`skills/growth-coach/SKILL.md`](https://github.com/checkdev-dot/my-works/blob/main/apps/growth/skills/growth-coach/SKILL.md) and its [README](https://github.com/checkdev-dot/my-works/blob/main/apps/growth/skills/growth-coach/README.md).
 
 ## Purpose
 

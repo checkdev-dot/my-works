@@ -56,4 +56,4 @@ G mini is a separate, smaller tool for giving a friend or colleague a hand with 
 
 ## Source
 
-The code, the skills and these docs live in the `my-works` repository under `apps/growth`. See the [Growth README](../README.md) for the short version.
+The code, the skills and these docs live in the `my-works` repository under `apps/growth`. See the [Growth README](https://github.com/checkdev-dot/my-works/blob/main/apps/growth/README.md) for the short version.

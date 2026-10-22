@@ -102,6 +102,6 @@ Five third-party add-ons ship in `app/modules/`, unchanged and under their own M
 | `resume-tailoring` | Researches the company and role, then tailors, including for several job posts. |
 | `case-study` | Portfolio case studies, with a structured intake first. |
 
-Each folder has a `LICENSE` and a `notes.md` with the rules Growth applies when it uses the skill. Their authors are credited in the [Growth README](../../README.md#third-party-skills). Claude uses them through `module-scratch.mjs`, which checks every skill file against its recorded sha1 before it makes a working copy. If one has changed, nothing is written.
+Each folder has a `LICENSE` and a `notes.md` with the rules Growth applies when it uses the skill. Their authors are credited in the [Growth README](https://github.com/checkdev-dot/my-works/blob/main/apps/growth/README.md#third-party-skills). Claude uses them through `module-scratch.mjs`, which checks every skill file against its recorded sha1 before it makes a working copy. If one has changed, nothing is written.
 
 Related: [Commands](../reference/commands.md), [Scripts](../reference/scripts.md).

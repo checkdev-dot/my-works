@@ -2,7 +2,7 @@
 
 G mini is a separate tool for helping other people. It is never for your own Growth.
 
-Source: [`skills/g-mini/SKILL.md`](../../skills/g-mini/SKILL.md) and its [README](../../skills/g-mini/README.md).
+Source: [`skills/g-mini/SKILL.md`](https://github.com/checkdev-dot/my-works/blob/main/apps/growth/skills/g-mini/SKILL.md) and its [README](https://github.com/checkdev-dot/my-works/blob/main/apps/growth/skills/g-mini/README.md).
 
 ## Purpose
 
