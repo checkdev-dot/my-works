@@ -19,6 +19,17 @@ A fast, calm home screen for TVs that replaces an ad-filled launcher with one qu
 
 ![Calm Home TV](apps/webapps/calm-home-tv/docs/media/home-dock.gif)
 
+### Android apps
+
+#### [Split](apps/android/split-app)
+An Android app that splits shared spending the moment you pay. It reads your bank's payment texts on the phone, asks if a payment was shared, and splits it with the same people as last time in one tap. Groups ← Home → People pages, settle up, WhatsApp reminders, and sync with friends without a server. It never moves money.
+
+| ![Split quick tour](apps/android/split-app/docs/media/tour.gif) |
+|:---:|
+| [Quick tour](apps/android/split-app/docs/media/quick-tour.mp4) · [Walkthrough](apps/android/split-app/docs/media/walkthrough.mp4) · [Promo](apps/android/split-app/docs/media/promo-landscape.mp4) |
+
+![Split](apps/android/split-app/docs/screenshots/screens.png)
+
 ### Career app
 
 #### [Growth](apps/growth)
