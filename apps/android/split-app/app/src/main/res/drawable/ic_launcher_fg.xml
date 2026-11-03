@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A hung number plate on its hook, split down the middle. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#F2EFE6" android:pathData="M52,30h4v8h-4z" />
+    <path android:fillColor="#F2EFE6" android:pathData="M33,38h19v38h-19a2,2 0,0 1,-2 -2v-34a2,2 0,0 1,2 -2z" />
+    <path android:fillColor="#F2C230" android:pathData="M56,38h19a2,2 0,0 1,2 2v34a2,2 0,0 1,-2 2h-19z" />
+</vector>

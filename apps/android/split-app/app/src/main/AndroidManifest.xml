@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Android 11+ hides other apps unless named here; needed to show each service's real icon. -->
+    <queries>
+        <package android:name="com.application.zomato" />
+        <package android:name="in.swiggy.android" />
+        <package android:name="com.grofers.customerapp" />
+        <package android:name="com.zeptoconsumerapp" />
+        <package android:name="in.amazon.mShop.android.shopping" />
+        <package android:name="com.easydiner" />
+        <package android:name="com.techmash.playo" />
+        <package android:name="com.bt.bms" />
+        <package android:name="com.ubercab" />
+        <package android:name="com.olacabs.customer" />
+        <package android:name="com.rapido.passenger" />
+        <package android:name="com.whatsapp" />
+    </queries>
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Split">
+
+        <activity android:name=".ui.MainActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.PopupActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=".popup"
+            android:theme="@style/Theme.Split.Popup" />
+
+        <activity
+            android:name=".ui.SplitActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:taskAffinity=".split"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Split.Sheet" />
+
+        <receiver
+            android:name=".detect.SmsReceiver"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".notify.NotSharedReceiver" android:exported="false" />
+        <receiver android:name=".notify.LaterReceiver" android:exported="false" />
+
+        <service
+            android:name=".detect.PaymentNotificationListener"
+            android:exported="true"
+            android:label="Split payment detection"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>
