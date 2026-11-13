@@ -1,0 +1,19 @@
+{
+  "name": "font-engine-scripts",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Library build + evaluation scripts for the font matcher. Font files are cached outside OneDrive (see common.mjs).",
+  "scripts": {
+    "list": "node fetch-list.mjs",
+    "download": "node download.mjs",
+    "analyse": "node analyse.mjs",
+    "build": "node build-index.mjs",
+    "evidence": "node evidence.mjs"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.1.0",
+    "esbuild": "^0.25.0",
+    "opentype.js": "^2.0.0"
+  }
+}

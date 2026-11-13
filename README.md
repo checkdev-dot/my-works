@@ -14,6 +14,14 @@ Everything Dev designs and builds, in one place.
 
 ![Home Page App](apps/webapps/home-page-app/docs/screenshots/screens.png)
 
+#### [Font engine](apps/webapps/font-engine)
+*Working name.* Shape a letter until it looks right, and it finds the real free fonts closest to it. Double-click a letter to open it, drag its own edges, pick how it is built (a `b` with or without its notch, a one- or two-storey `a`), zoom out and the whole word follows. Then keep two or three fonts and see them in seven real templates, from a dashboard to a packaging label, before you choose. An engine has measured 1,715 free font families so a shape made by hand can be compared with them directly.
+
+| ![Shaping a word](apps/webapps/font-engine/docs/shots/app-2-word.png) | ![Closest real fonts](apps/webapps/font-engine/docs/shots/app-4-results.png) |
+|:---:|:---:|
+
+![Preview templates](apps/webapps/font-engine/docs/shots/preview/ui-1-dashboard.png)
+
 #### [Calm Home TV](apps/webapps/calm-home-tv)
 A fast, calm home screen for TVs that replaces an ad-filled launcher with one quiet screen: greeting, weather, your usual apps at this time of day, a gliding dock, and a PS4 auto-switch. Smooth at 60 fps on a cheap TV, and fully reversible.
 
