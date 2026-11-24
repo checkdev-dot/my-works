@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "TV Mode Prime Skip",
+  "version": "1.0.0",
+  "description": "Skips Prime Video ads, intros and recaps. No network access, no tracking.",
+  "content_scripts": [
+    {
+      "matches": ["*://*.primevideo.com/*", "*://*.amazon.in/*", "*://*.amazon.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}

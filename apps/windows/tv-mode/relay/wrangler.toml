@@ -1,0 +1,22 @@
+# TV Mode relay + remote page on Cloudflare Workers (free plan is enough).
+# One-time: npm i -g wrangler  (or use npx), then from this folder:
+#   npx wrangler login
+#   npx wrangler deploy
+# It prints https://tvmode.<account>.workers.dev. Put that in
+# %APPDATA%\TVMode\config.json as "remote" and restart TV Mode.
+name = "tvmode"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+# The web/ folder is served as static files: /remote/ is the phone page.
+[assets]
+directory = "../web"
+run_worker_first = ["/relay/*"]
+
+[[durable_objects.bindings]]
+name = "ROOMS"
+class_name = "Room"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Room"]

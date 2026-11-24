@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>TV Remote</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="remote.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M5.5 15l6.5-6.5 6.5 6.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h14M14.5 4.5L18 8l-3.5 3.5M20 16H6M9.5 12.5L6 16l3.5 3.5"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M5.5 9l6.5 6.5L18.5 9"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5.5L8.5 12l6.5 6.5"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5.5l6.5 6.5L9 18.5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5v14M15.5 5v14"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M10 6l-6 6 6 6M4 12h16"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4zM10 20v-6h4v6"/></symbol>
+    <symbol id="i-point" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4"/></symbol>
+    <symbol id="i-vold" viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10zM16 12h5"/></symbol>
+    <symbol id="i-volu" viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10zM16 12h5M18.5 9.5v5"/></symbol>
+    <symbol id="i-spk" viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10zM16 9a4.5 4.5 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10zM16 9.5l5 5M21 9.5l-5 5"/></symbol>
+    <symbol id="i-rew" viewBox="0 0 24 24"><path d="M11 6.5L5.5 12l5.5 5.5M18.5 6.5L13 12l5.5 5.5"/></symbol>
+    <symbol id="i-subs" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M10.5 10.3a2.2 2.2 0 1 0 0 3.4M17 10.3a2.2 2.2 0 1 0 0 3.4"/></symbol>
+    <symbol id="i-skip" viewBox="0 0 24 24"><path d="M5 6l8 6-8 6zM17 6v12"/></symbol>
+    <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></symbol>
+    <symbol id="i-fwd" viewBox="0 0 24 24"><path d="M13 6.5l5.5 5.5-5.5 5.5M5.5 6.5L11 12l-5.5 5.5"/></symbol>
+    <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 3v9M6.3 6.8a8 8 0 1 0 11.4 0"/></symbol>
+    <symbol id="i-del" viewBox="0 0 24 24"><path d="M9 6h11v12H9l-6-6zM12.5 9.5l5 5M17.5 9.5l-5 5"/></symbol>
+    <symbol id="i-enter" viewBox="0 0 24 24"><path d="M20 6v7H6M10 8.5L5.5 13l4.5 4.5"/></symbol>
+    <symbol id="i-kbd" viewBox="0 0 24 24"><path d="M3 7h18v10H3zM7 11h.01M11 11h.01M15 11h.01M8 14h8"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><path d="M5 12h.01M12 12h.01M19 12h.01"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5l9.5 16.5h-19zM12 10v4.5M12 17.2h.01"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8h.01"/></symbol>
+    <!-- scroll: a wheel step, a bar and a chevron; not the d-pad chevrons -->
+    <symbol id="i-scrollup" viewBox="0 0 24 24"><path d="M5 5h14M6.5 18l5.5-6.5 5.5 6.5"/></symbol>
+    <symbol id="i-scrolldown" viewBox="0 0 24 24"><path d="M5 19h14M6.5 6l5.5 6.5L17.5 6"/></symbol>
+    <!-- Back to Remote: a handset, not the key:back arrow -->
+    <symbol id="i-remote" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="3"/><path d="M12 7h.01M12 12h.01M12 17h.01"/></symbol>
+    <!-- service marks: simple drawings filled with each button's dimmed brand colour -->
+    <symbol id="m-jiohotstar" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.7l-6.1 3.4 1.4-6.8-5.1-4.7 6.9-.8z"/></symbol>
+    <symbol id="m-prime" viewBox="0 0 24 24"><path d="M8.5 3v9.5l8-4.75z"/><path d="M3 16.5c5 3.6 12 3.4 17.5-.6M17.6 14l3.1 1.8-1.4 3.1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-netflix" viewBox="0 0 24 24"><path d="M5 3h4v18H5zM15 3h4v18h-4zM5 3h4l10 18h-4z"/></symbol>
+    <symbol id="m-youtube" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4 5.5h16a2.5 2.5 0 0 1 2.5 2.5v8a2.5 2.5 0 0 1-2.5 2.5H4A2.5 2.5 0 0 1 1.5 16V8A2.5 2.5 0 0 1 4 5.5zM10 9v6l5.2-3z"/></symbol>
+  </defs>
+</svg>
+
+<div class="app" id="app" data-mode="remote" data-link="connecting">
+
+  <header class="head">
+    <div class="where">
+      <p class="brand">TV Mode</p>
+      <h1 id="where"><button class="wherebtn" id="whereBtn" type="button" disabled aria-haspopup="dialog" aria-controls="drawer"><span id="whereTxt">TV Mode</span><svg class="ic wic" aria-hidden="true"><use href="#i-down"/></svg></button></h1>
+    </div>
+    <div class="meta">
+      <p id="modeName" hidden></p>
+      <button class="tag" id="sleepTag" type="button" data-act="sleep:60" data-fire="up" hidden></button>
+    </div>
+    <button class="more tab" id="kbdBtn" type="button" data-mode="type" aria-label="Keyboard" aria-pressed="false"><svg class="ic"><use href="#i-kbd"/></svg></button>
+    <button class="more" id="more" type="button" aria-label="More" aria-haspopup="dialog" aria-expanded="false" aria-controls="sheet"><svg class="ic"><use href="#i-more"/></svg><span>More</span></button>
+    <!-- link banner: an overlay just under the header (More and Keyboard stay uncovered), so no control ever moves -->
+    <p class="banner" id="banner" role="status" aria-live="polite" data-kind="" hidden>
+      <svg class="ic bic-warn" aria-hidden="true"><use href="#i-warn"/></svg>
+      <svg class="ic bic-info" aria-hidden="true"><use href="#i-info"/></svg>
+      <span id="bannerText"></span>
+    </p>
+  </header>
+
+  <main class="main">
+
+    <!-- Remote -->
+    <section class="mode m-remote" aria-label="Remote">
+
+      <div class="scrubwrap">
+        <p class="times" id="times"><span id="tPos">--:--</span><span id="tDur">--:--</span></p>
+        <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Position in the video. Hold or drag to seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-disabled="true"><i id="scrubFill"></i></div>
+        <p class="scrubtip" id="scrubTip" aria-hidden="true" hidden><b id="tipT">0:00</b><span id="tipH">Let go to jump</span></p>
+      </div>
+
+      <p class="helperline" id="helperLine" role="status" hidden></p>
+
+      <div class="bh">
+        <button class="b pill" type="button" data-act="key:back" data-fire="up" aria-label="Back"><svg class="ic"><use href="#i-back"/></svg><span>Back</span></button>
+        <button class="b pill" type="button" data-act="key:home" data-fire="up" aria-label="Home"><svg class="ic"><use href="#i-home"/></svg><span>Home</span></button>
+      </div>
+
+      <button class="b menuclose" id="menuClose" type="button" data-act="media:subsclose" hidden>Close the menu on the TV</button>
+      <p class="menunote" id="menuNote" role="status" hidden></p>
+      <div class="gpad" id="gpad" data-pm="focus" role="application" aria-roledescription="touchpad" aria-label="Touchpad" aria-describedby="gpHint">
+        <button class="gplabel" id="gpLabel" type="button" aria-label="The pad moves between cards. Switch to cursor"><span class="gptxt"><span id="gpLabelT">Pad: cards</span><span class="gpnext" id="gpLabelN">Switch to cursor</span></span><svg class="ic" aria-hidden="true"><use href="#i-swap"/></svg></button>
+        <p class="gphint" id="gpHint">Swipe to move. Tap for OK.</p>
+        <div class="gpoff" id="gpOff">
+          <p class="gpoffT" id="gpOffT">Not connected</p>
+          <p class="gpoffB" id="gpOffB"></p>
+          <p class="gpoffL" id="gpOffL" hidden></p>
+          <button class="b tryagain" id="tryAgain" type="button">Try again</button>
+        </div>
+        <i class="gpdot" id="gpDot" aria-hidden="true"></i>
+        <button class="b point" id="point" type="button" aria-label="Point. Hold and aim the phone at the screen"><svg class="ic"><use href="#i-point"/></svg><span>Hold to point</span></button>
+      </div>
+
+      <div class="transport">
+        <button class="b play" id="play" type="button" data-act="media:playpause" aria-label="Play or pause"><svg class="ic"><use href="#i-play" id="playUse"/></svg></button>
+        <button class="b seek" type="button" id="psBtn" aria-haspopup="dialog" aria-controls="psheet" aria-label="Player. Subtitles, audio, episodes and speed"><svg class="ic"><use href="#i-subs"/></svg><span>Player</span></button>
+        <button class="b seek" type="button" data-act="media:fullscreen" aria-label="Full screen"><svg class="ic"><use href="#i-full"/></svg><span>Full</span></button>
+      </div>
+
+      <div class="vol" role="group" aria-label="Volume">
+        <button class="b" type="button" data-act="vol:down" data-rep="1" aria-label="Volume down"><svg class="ic"><use href="#i-vold"/></svg></button>
+        <button class="b" type="button" data-act="vol:mute" aria-label="Mute" id="mute"><svg class="ic"><use href="#i-spk" id="muteUse"/></svg><span id="volN">--</span></button>
+        <button class="b" type="button" data-act="vol:up" data-rep="1" aria-label="Volume up"><svg class="ic"><use href="#i-volu"/></svg></button>
+      </div>
+
+    </section>
+
+    <!-- Touchpad -->
+    <section class="mode m-pad" aria-label="Touchpad">
+      <button type="button" class="b tab backbar" data-mode="remote"><svg class="ic"><use href="#i-remote"/></svg><span>Back to Remote</span></button>
+      <div class="bh bhpad">
+        <button class="b pill" type="button" data-act="key:back" data-fire="up" aria-label="Back"><svg class="ic"><use href="#i-back"/></svg><span>Back</span></button>
+        <button class="b pill" type="button" data-act="key:home" data-fire="up" aria-label="Home"><svg class="ic"><use href="#i-home"/></svg><span>Home</span></button>
+      </div>
+      <div class="moff" aria-live="polite">
+        <p class="gpoffT"></p>
+        <p class="gpoffB"></p>
+        <p class="gpoffL" hidden></p>
+        <button class="b tryagain" type="button">Try again</button>
+      </div>
+      <div class="pad" id="pad" tabindex="0" aria-label="Touchpad. Drag to move, tap to click, two fingers to scroll">
+        <p>Drag to move<br>Tap to click<br>Two fingers to scroll</p>
+      </div>
+      <div class="padrow">
+        <button class="b" type="button" data-act="tap:left" aria-label="Click"><span>Click</span></button>
+        <button class="b" type="button" data-act="tap:right" aria-label="Right click"><span>Right click</span></button>
+      </div>
+    </section>
+
+    <!-- Type -->
+    <section class="mode m-type" aria-label="Type">
+      <button type="button" class="b tab backbar" data-mode="remote"><svg class="ic"><use href="#i-remote"/></svg><span>Back to Remote</span></button>
+      <div class="moff" aria-live="polite">
+        <p class="gpoffT"></p>
+        <p class="gpoffB"></p>
+        <p class="gpoffL" hidden></p>
+        <button class="b tryagain" type="button">Try again</button>
+      </div>
+      <label class="typebox">
+        <span class="sr">Text to type on the PC</span>
+        <input id="typeIn" type="text" inputmode="text" enterkeyhint="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Type here, it appears on the PC">
+      </label>
+      <div class="typerow">
+        <button class="b" type="button" data-act="textkey:backspace" data-rep="1" aria-label="Delete a letter"><svg class="ic"><use href="#i-del"/></svg><span>Delete</span></button>
+        <button class="b" type="button" data-act="textkey:enter" aria-label="Enter"><svg class="ic"><use href="#i-enter"/></svg><span>Enter</span></button>
+      </div>
+      <p class="hintline">Letters go to whatever box is open on the PC.</p>
+    </section>
+
+  </main>
+
+  <footer class="foot" id="foot">
+    <button class="b drawerbtn" id="drawerBtn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="drawer"><svg class="ic"><use href="#i-up"/></svg><span>Apps, arrows, sleep</span></button>
+    <button class="power" id="power" type="button" aria-label="Power. Hold for one second to shut down the PC">
+      <svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="r0" cx="32" cy="32" r="29"/><circle class="r1" id="ring" cx="32" cy="32" r="29" pathLength="100"/></svg>
+      <svg class="ic"><use href="#i-power"/></svg>
+    </button>
+  </footer>
+
+  <!-- Drawer: everything the pad does not need on the main screen -->
+  <div class="sheetwrap" id="drawer" hidden>
+    <button class="scrim" id="drawerScrim" type="button" aria-label="Close"></button>
+    <div class="sheet drawer" role="dialog" aria-modal="true" aria-label="Apps, arrows and sleep">
+      <div class="moodwrap" id="svcWrap">
+      <p class="moodcap" id="appsCap">Apps</p>
+      <nav class="svc" id="svc" aria-label="Services">
+        <button class="b" type="button" data-act="open:0" data-fire="up" data-app="jiohotstar" data-name="JioHotstar" aria-label="JioHotstar" aria-pressed="false"><svg class="mk" aria-hidden="true"><use href="#m-jiohotstar"/></svg><span>Hotstar</span></button>
+        <button class="b" type="button" data-act="open:1" data-fire="up" data-app="prime" data-name="Prime Video" aria-label="Prime Video" aria-pressed="false"><svg class="mk" aria-hidden="true"><use href="#m-prime"/></svg><span>Prime</span></button>
+        <button class="b" type="button" data-act="open:2" data-fire="up" data-app="netflix" data-name="Netflix" aria-label="Netflix" aria-pressed="false"><svg class="mk" aria-hidden="true"><use href="#m-netflix"/></svg><span>Netflix</span></button>
+        <button class="b" type="button" data-act="open:3" data-fire="up" data-app="youtube" data-name="YouTube" aria-label="YouTube" aria-pressed="false"><svg class="mk" aria-hidden="true"><use href="#m-youtube"/></svg><span>YouTube</span></button>
+        <button class="b svcarm" id="svcArm" type="button" data-act="open:0" data-fire="up" hidden></button>
+      </nav>
+      </div>
+      <button class="b skiprow" id="dwSkip" type="button" data-act="media:skip" aria-label="Skip intro, recap or go to the next episode"><svg class="ic"><use href="#i-skip"/></svg><span>Skip intro or next episode</span></button>
+      <div class="moodwrap">
+      <p class="moodcap" id="arrowsCap">Arrows</p>
+      <div class="dwrow">
+        <div class="dwrap">
+          <div class="dpad" role="group" aria-label="Arrow keys">
+          <span class="gap" aria-hidden="true"></span>
+          <button class="b" type="button" data-act="key:up" data-rep="1" aria-label="Up"><svg class="ic"><use href="#i-up"/></svg></button>
+          <span class="gap" aria-hidden="true"></span>
+          <button class="b" type="button" data-act="key:left" data-rep="1" aria-label="Left"><svg class="ic"><use href="#i-left"/></svg></button>
+          <button class="b ok" type="button" data-act="key:ok" aria-label="OK"><span>OK</span></button>
+          <button class="b" type="button" data-act="key:right" data-rep="1" aria-label="Right"><svg class="ic"><use href="#i-right"/></svg></button>
+          <span class="gap" aria-hidden="true"></span>
+          <button class="b" type="button" data-act="key:down" data-rep="1" aria-label="Down"><svg class="ic"><use href="#i-down"/></svg></button>
+          <span class="gap" aria-hidden="true"></span>
+        </div>
+        </div>
+        <div class="dwside">
+          <button class="b seek" type="button" data-act="media:seek:-10" aria-label="Back 10 seconds"><svg class="ic"><use href="#i-rew"/></svg><span>10</span></button>
+          <button class="b seek" type="button" data-act="media:seek:10" aria-label="Forward 10 seconds"><svg class="ic"><use href="#i-fwd"/></svg><span>10</span></button>
+          <button class="b scr" type="button" data-act="scroll:-260" data-rep="1" aria-label="Scroll up"><svg class="ic"><use href="#i-scrollup"/></svg><span>Scroll</span></button>
+          <button class="b scr" type="button" data-act="scroll:260" data-rep="1" aria-label="Scroll down"><svg class="ic"><use href="#i-scrolldown"/></svg><span>Scroll</span></button>
+        </div>
+      </div>
+      </div>
+      <div class="moodwrap">
+        <button class="b moodrow" id="moodRow" type="button" aria-expanded="false" aria-controls="moodBody"><span id="moodCap">Mood for tonight</span><span class="mv" id="moodVal">None</span><svg class="ic chev" aria-hidden="true"><use href="#i-down"/></svg></button>
+        <div id="moodBody" hidden>
+          <p class="moodsub">Nudges tonight's picks on the TV. Clears at 05:00.</p>
+          <div class="mood" id="mood" role="group" aria-label="Mood for tonight">
+            <button class="b" type="button" data-mood="light" aria-pressed="false"><span>Light</span></button>
+            <button class="b" type="button" data-mood="gripping" aria-pressed="false"><span>Gripping</span></button>
+            <button class="b" type="button" data-mood="comfort" aria-pressed="false"><span>Comfort</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="moodwrap">
+        <p class="moodcap capline"><span id="sleepCap">Sleep timer</span><span class="mv" id="sleepVal">Off</span></p>
+        <div class="sleep" role="group" aria-labelledby="sleepCap">
+          <button class="b" type="button" data-act="sleep:30" data-fire="up" aria-label="Sleep in 30 minutes"><span>Sleep 30</span></button>
+          <button class="b" type="button" data-act="sleep:60" data-fire="up" aria-label="Sleep in 60 minutes"><span>Sleep 60</span></button>
+          <button class="b" type="button" data-act="sleep:0" data-fire="up" id="sleepOff" aria-label="Cancel sleep timer"><span>Sleep off</span></button>
+        </div>
+      </div>
+      <button class="b closebtn" id="drawerClose" type="button">Close</button>
+    </div>
+  </div>
+
+  <!-- Player: subtitles and audio, episodes, speed, for every app -->
+  <div class="sheetwrap" id="psheet" hidden>
+    <button class="scrim" id="psScrim" type="button" aria-label="Close"></button>
+    <div class="sheet psheet" role="dialog" aria-modal="true" aria-labelledby="psTitle">
+      <p class="sheettitle" id="psTitle">Player</p>
+      <div class="pstabs" role="tablist" aria-label="Player">
+        <button class="b" type="button" role="tab" data-ps="subs" aria-controls="psp-subs" aria-selected="true">Subtitles</button>
+        <button class="b" type="button" role="tab" data-ps="eps" aria-controls="psp-eps" aria-selected="false">Episodes</button>
+        <button class="b" type="button" role="tab" data-ps="speed" aria-controls="psp-speed" aria-selected="false">Speed</button>
+      </div>
+      <div class="pspane" id="psp-subs" data-pane="subs" role="tabpanel">
+        <p class="psnote" id="psSubsNote">Reading the player…</p>
+        <p class="psh" id="psSubsH" hidden>Subtitles</p>
+        <div class="pslist" id="psSubs" role="radiogroup" aria-labelledby="psSubsH"></div>
+        <p class="psh" id="psAudioH" hidden>Audio</p>
+        <div class="pslist" id="psAudio" role="radiogroup" aria-labelledby="psAudioH"></div>
+      </div>
+      <div class="pspane" id="psp-eps" data-pane="eps" role="tabpanel" hidden>
+        <div class="psseason" hidden>
+          <button class="b" type="button" id="psSePrev" aria-label="Previous season"><svg class="ic"><use href="#i-left"/></svg></button>
+          <p id="psSe">Season 1</p>
+          <button class="b" type="button" id="psSeNext" aria-label="Next season"><svg class="ic"><use href="#i-right"/></svg></button>
+        </div>
+        <p class="psnote" id="psEpsNote">Finding the episodes…</p>
+        <div class="pslist" id="psEps"></div>
+      </div>
+      <div class="pspane" id="psp-speed" data-pane="speed" role="tabpanel" hidden>
+        <div class="psspeed" id="psSpeed" role="radiogroup" aria-label="Playback speed">
+          <button class="b" type="button" data-rate="0.75" aria-checked="false" role="radio">0.75×</button>
+          <button class="b" type="button" data-rate="1" aria-checked="true" role="radio">1×</button>
+          <button class="b" type="button" data-rate="1.25" aria-checked="false" role="radio">1.25×</button>
+          <button class="b" type="button" data-rate="1.5" aria-checked="false" role="radio">1.5×</button>
+          <button class="b" type="button" data-rate="2" aria-checked="false" role="radio">2×</button>
+        </div>
+      </div>
+      <div class="psseek">
+        <button class="b seek" id="psPlay" type="button" data-act="media:playpause" aria-label="Play or pause"><svg class="ic"><use href="#i-play" id="psPlayUse"/></svg><span id="psPlayT">Play</span></button>
+        <button class="b seek" type="button" data-act="media:seek:-10" aria-label="Back 10 seconds"><svg class="ic"><use href="#i-rew"/></svg><span>10</span></button>
+        <button class="b seek" type="button" data-act="media:seek:10" aria-label="Forward 10 seconds"><svg class="ic"><use href="#i-fwd"/></svg><span>10</span></button>
+        <button class="b seek" id="psSkip" type="button" data-act="media:skip" aria-label="Skip intro, recap or go to the next episode"><svg class="ic"><use href="#i-skip"/></svg><span>Skip</span></button>
+      </div>
+      <button class="b closebtn" id="psClose" type="button">Close</button>
+    </div>
+  </div>
+
+  <!-- More: bottom sheet -->
+  <div class="sheetwrap" id="sheet" hidden>
+    <button class="scrim" id="sheetScrim" type="button" aria-label="Close"></button>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="More controls">
+      <p class="sheettitle">More</p>
+      <p class="sheetcap">This phone</p>
+      <button class="b row" id="handBtn" type="button" aria-pressed="false"><span class="rt">Left hand</span><span class="rh" id="handHint">Off. Mirrors the header, Back, Home and Power</span></button>
+      <button class="b row" id="installBtn" type="button" hidden><span class="rt">Install on this phone</span><span class="rh" id="installHint">Opens straight from the home screen</span></button>
+      <button class="b row" id="calBtn" type="button" aria-label="Calibrate Point mode"><span class="rt">Calibrate</span><span class="rh">Teach Point where the TV edges are</span></button>
+      <button class="b row" type="button" data-act="recenter" aria-label="Move the pointer to the middle of the screen"><span class="rt">Re-centre</span><span class="rh">Pointer to the middle of the screen</span></button>
+      <p class="sheetcap">The TV</p>
+      <button class="b row" id="addPhone" type="button"><span class="rt">Add a phone</span><span class="rh">Show the QR so another phone can join</span></button>
+      <button class="b row" id="screenBtn" type="button" aria-pressed="false"><span class="rt" id="screenName">Desk screen: On</span><span class="rh" id="screenHint">Tap to turn the desk monitor off</span></button>
+      <div class="sheetrule" role="presentation"></div>
+      <button class="b row exitrow" id="exit" type="button" aria-label="Close TV screen. Start TV brings it back"><span class="rt">Close TV screen</span><span class="rh">Start TV brings it back</span></button>
+      <button class="b row exitrow" id="quitTv" type="button" aria-label="Turn off TV Mode completely. The phone stops working until TV Mode is started again on the PC"><span class="rt">Turn off TV Mode</span><span class="rh">Phone stops until it starts on the PC</span></button>
+      <button class="b closebtn" id="sheetClose" type="button">Close</button>
+    </div>
+  </div>
+
+  <section class="downview" id="downview" role="alertdialog" aria-labelledby="downTitle" hidden>
+    <p class="downtitle" id="downTitle">Shutting down in <b id="downN">10</b></p>
+    <div class="downbar" id="downBar" aria-hidden="true"><i id="downFill"></i></div>
+    <button class="cancel" id="cancel" type="button">Cancel</button>
+  </section>
+
+  <!-- the PC is on but TV Mode is not running (PC sends {"t":"standby"}) -->
+  <section class="downview standview" id="standby" role="dialog" aria-labelledby="standTitle" hidden>
+    <p class="downtitle" id="standTitle">TV Mode is not running</p>
+    <p class="hintline" id="standHint">The PC is on. Start TV Mode to use the remote.</p>
+    <button class="cancel startbtn" id="startTv" type="button">Start TV</button>
+    <div class="standoff">
+      <button class="power" id="standPower" type="button" aria-label="Shut down the PC. Hold for one second">
+        <svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="r0" cx="32" cy="32" r="29"/><circle class="r1" cx="32" cy="32" r="29" pathLength="100"/></svg>
+        <svg class="ic"><use href="#i-power"/></svg>
+      </button>
+      <p class="hintline">Hold to shut the PC down. It counts 10 seconds first.</p>
+    </div>
+  </section>
+
+  <!-- this phone has no token and no working link: how to get one (never a dimmed remote) -->
+  <section class="downview standview joinview" id="joinview" role="dialog" aria-labelledby="joinTitle" hidden>
+    <p class="downtitle" id="joinTitle">Join this TV</p>
+    <p class="hintline say" id="joinWhy" hidden>That link was already used or has expired.</p>
+    <p class="hintline">On a phone that already works: More, then Add a phone. Scan the QR on its screen, or tap Show on TV there.</p>
+    <p class="hintline joinpc">Or open <b>127.0.0.1:8770/api/pair.png</b> on the PC.</p>
+    <button class="mini joinretry" id="joinRetry" type="button">Check again</button>
+  </section>
+
+  <!-- the answer to a share from another app (the PC sends {"t":"saved"}) -->
+  <section class="downview standview savedview" id="saved" role="dialog" aria-labelledby="savedTitle" hidden>
+    <p class="downtitle" id="savedTitle">Saving to TV</p>
+    <p class="hintline" id="savedHint">Just a moment.</p>
+    <button class="cancel startbtn" id="savedPlay" type="button" hidden>Play on TV</button>
+    <button class="mini" id="savedDone" type="button" hidden>Done</button>
+  </section>
+
+  <!-- Add a phone: this phone's pairing QR, its link to share, and the same QR on the TV -->
+  <section class="downview standview addview" id="addview" role="dialog" aria-labelledby="addTitle" hidden>
+    <p class="downtitle" id="addTitle">Add a phone</p>
+    <div class="addqr" id="addQr" role="img" aria-label="One-time pairing QR code"></div>
+    <p class="hintline" id="addHint">This link works once, for 10 minutes. The phone that opens it can do everything this one can.</p>
+    <button class="cancel startbtn" id="addTv" type="button" disabled>Show on TV</button>
+    <button class="mini" id="addShare" type="button" disabled>Share link</button>
+    <button class="mini" id="addDone" type="button">Done</button>
+  </section>
+
+  <section class="downview calview" id="calview" role="dialog" aria-labelledby="calTitle" hidden>
+    <p class="downtitle" id="calTitle">Aim at the <b id="calSide">left</b> lamp on the TV</p>
+    <p class="hintline" id="calHint">Hold the phone the way you watch. Point its top edge at the lamp, then tap Here.</p>
+    <button class="cancel" id="calHere" type="button">Here</button>
+    <button class="mini" id="calStop" type="button">Cancel</button>
+  </section>
+
+</div>
+<p class="dbg" id="dbg" hidden></p>
+<script src="../vendor/sha256.js"></script>
+<script src="../vendor/qrcode.js"></script>
+<script src="remote.js"></script>
+</body>
+</html>

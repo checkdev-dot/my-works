@@ -1,0 +1,488 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>TV Mode Helper mock page</title>
+<!-- Run the Prime / JioHotstar content scripts against a mock player and a mock chrome.runtime.
+     Open test/helper-mock.html over http (any static server on the extension folder) or file://:
+       ?svc=prime | hotstar | prime-links | hotstar-links     the TV window: commands, tracks, skips
+       ?svc=prime-detail                                      a title's page: a looping hero video, Resume, Go ad free: not the player
+       ?svc=prime-bar                                         a Subtitles button that only redraws the control bar (no menu): read() must say nolist, press no control
+       ?svc=prime-loading                                     "Subtitles unavailable" while the video loads, then the real button: the reader waits
+       ?svc=prime-real                                        Prime as probed 2026-11-13: "Turn off subtitles" toggle, Settings -> Subtitles / Audio -> choices, an X-Ray panel
+       ?svc=prime&desk=1                                      a window off the TV: the helper switches to desk reports
+       ?svc=youtube                                           YouTube: desk reports only
+     The result is in #out ("ALL PASS" or the failures) and in window.__done. -->
+<style>
+  html,body{margin:0;height:100%;background:#111;color:#ddd;font:14px monospace}
+  #stage{position:fixed;inset:0}
+  video{position:absolute;left:0;top:0;width:100%;height:100%;background:#222}
+  #out{position:fixed;left:8px;bottom:8px;max-height:40%;overflow:auto;white-space:pre-wrap;background:#000;padding:6px;z-index:9}
+  .atvwebplayersdk-title-text,.atvwebplayersdk-subtitle-text{position:absolute;left:20px;top:20px;color:#fff}
+  .atvwebplayersdk-subtitle-text{top:44px}
+  .ad{position:absolute;right:20px;top:20px;color:#fc0}
+  button{position:absolute;padding:8px}
+  #menu{position:absolute;right:20px;bottom:80px;width:260px;background:#333;padding:10px}
+</style>
+<div id="stage"></div>
+<pre id="out"></pre>
+<script>
+(function () {
+  var BASE = location.href; // the hotstar mock rewrites the address, which would break the relative script paths
+  var Q = new URLSearchParams(location.search || window.__mockSearch || ''), mode = Q.get('svc') || 'prime', deskRun = Q.get('desk') === '1';
+  var svc = /hotstar/.test(mode) ? 'jiohotstar' : /youtube/.test(mode) ? 'youtube' : 'prime';
+  var server = 'desk'; // what TV Mode answers for the window position: 'desk' (off the TV) or 'tv'
+  var log = [], queue = [], res = [], out = document.getElementById('out');
+  function check(name, ok, extra) { res.push((ok ? 'PASS ' : 'FAIL ') + name + (ok ? '' : ' ' + JSON.stringify(extra))); out.textContent = res.join('\n'); }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  // mock extension API
+  window.chrome = { runtime: {
+    id: 'mock', lastError: null,
+    getManifest: function () { return { version: '2.1.0' }; },
+    sendMessage: function (msg, cb) {
+      log.push(msg);
+      if (!cb) return;
+      if (msg.path !== 'watch') return cb(null);
+      if (!deskRun && svc !== 'youtube') return cb({ cmds: queue.splice(0) }); // the TV window, as before
+      // TV Mode's answer, as Go gives it: a TV-style report from off the TV gets {cmds:[],desk:true};
+      // a desk report gets {cmds:[],desk:bool}. The mock adds a queued command to every reply to prove
+      // a desk window ignores it (the real server never sends one).
+      var onTV = server === 'tv';
+      if (msg.body.where === 'desk') return cb({ cmds: queue.slice(), desk: !onTV });
+      cb(onTV ? { cmds: queue.splice(0) } : { cmds: queue.slice(), desk: true });
+    }
+  } };
+  function msgs(path) { return log.filter(function (m) { return m.path === path; }); }
+  function last(path) { var l = msgs(path); return l[l.length - 1]; }
+
+  var stage = document.getElementById('stage'), v = document.createElement('video');
+  var cur = 0, paused = false, dur = 2700, rate = 1, plays = 0;
+  var rs = 4;
+  Object.defineProperty(v, 'duration', { get: function () { return dur; } });
+  Object.defineProperty(v, 'currentTime', { get: function () { return cur; }, set: function (x) { cur = x; } });
+  Object.defineProperty(v, 'paused', { get: function () { return paused; } });
+  Object.defineProperty(v, 'readyState', { get: function () { return rs; } });
+  Object.defineProperty(v, 'playbackRate', { get: function () { return rate; }, set: function (x) { rate = x; } });
+  v.play = function () { plays++; paused = false; return Promise.resolve(); };
+  v.pause = function () { paused = true; };
+  stage.appendChild(v);
+
+  var skipped = 0;
+  function mk(tag, attrs, text, parent) { var e = document.createElement(tag); Object.keys(attrs || {}).forEach(function (k) { e.setAttribute(k, attrs[k]); }); if (text) e.textContent = text; (parent || stage).appendChild(e); return e; }
+
+  // the fake subtitles / audio menu: a button that opens a panel with two headed groups
+  var menu = null, sel = { Audio: 'English', Subtitles: 'Off' };
+  var tbtn = mk('button', { 'aria-label': 'Subtitles and audio' }, 'CC'); tbtn.style.right = '20px'; tbtn.style.bottom = '20px';
+  function renderMenu() {
+    menu.innerHTML = '';
+    [['Audio', ['English', 'Hindi']], ['Subtitles', ['Off', 'English', 'Hindi']]].forEach(function (g) {
+      mk('h3', {}, g[0], menu);
+      g[1].forEach(function (n) {
+        var b = mk('div', { role: 'menuitemradio', 'aria-checked': String(sel[g[0]] === n) }, n, menu);
+        b.onclick = function () { sel[g[0]] = n; renderMenu(); };
+      });
+    });
+  }
+  tbtn.onclick = function () { if (menu) { menu.remove(); menu = null; } else { menu = mk('div', { id: 'menu' }); renderMenu(); } };
+
+  if (svc === 'prime') {
+    mk('div', { 'class': 'atvwebplayersdk-title-text' }, 'The Boys');
+    mk('div', { 'class': 'atvwebplayersdk-subtitle-text' }, 'Season 2, Ep. 3 Barbary Coast');
+    var sk = mk('button', { 'class': 'atvwebplayersdk-skipelement-button' }, 'Skip Intro'); sk.style.left = '20px'; sk.style.bottom = '20px';
+    sk.onclick = function () { skipped++; };
+    document.title = 'Prime Video: The Boys';
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* file:// */ } // a detail address is not needed: the player is the whole window
+  } else if (svc === 'jiohotstar') {
+    var hb = mk('button', {}, 'Skip Intro'); hb.style.left = '20px'; hb.style.bottom = '20px'; hb.onclick = function () { skipped++; };
+    document.title = 'Watch Gravity Falls S1 Episode 2 on JioHotstar';
+    try { history.replaceState(null, '', '/in/shows/gravity-falls/1260021/dipper-vs-manliness/1260022/watch?mock=1'); } catch (e) { /* file:// */ }
+  }
+  var adEl = null;
+  function setAd(on) {
+    if (on && !adEl) adEl = mk('div', { 'class': svc === 'prime' ? 'atvwebplayersdk-ad-timer-text ad' : 'ad' }, svc === 'prime' ? 'Ad 0:12' : 'Ad 1 of 2');
+    if (!on && adEl) { adEl.remove(); adEl = null; }
+  }
+
+  function load(src) { return new Promise(function (ok, bad) { var s = document.createElement('script'); s.src = new URL(src, BASE).href; s.onload = ok; s.onerror = function () { bad(new Error(src)); }; document.head.appendChild(s); }); }
+
+  async function run() {
+    while (innerWidth < 200) await sleep(200); // a hidden preview pane has no size: wait for one
+    if (svc === 'youtube') return runYoutube();
+    if (deskRun) return runDesk();
+    if (/links$/.test(mode)) return runLinks();
+    if (mode === 'prime-detail') return runDetail();
+    if (mode === 'prime-bar') return runBar();
+    if (mode === 'prime-real') return runReal();
+    if (mode === 'prime-loading') return runLoading();
+    // 1. a half-size video is a hero trailer, not the player: no report
+    v.style.height = '45%'; v.style.width = '60%';
+    await load('../probe.js'); // 2.5: Prime and JioHotstar both
+    await load('../tracks.js'); await load('../deskrep.js'); await load('../core.js'); await load(svc === 'prime' ? '../prime.js' : '../hotstar.js');
+    check('scripts loaded', !!window.TVHelperCore && !!window.TVTracks);
+    await sleep(1300);
+    var hello = last('hello');
+    check('hello carries svc, version, host', hello && hello.body.svc === svc && hello.body.ver === '2.1.0' && !!hello.body.host && !!hello.body.scr, hello);
+    check('trailer-sized video reports nothing', msgs('watch').length === 0, msgs('watch').length);
+    // 2. the player
+    v.style.height = '100%'; v.style.width = '100%';
+    cur = 125; await sleep(1300);
+    var w = last('watch');
+    check('player reports watch', !!w && w.body.dur === 2700 && w.body.pos === 125 && w.body.playing === true, w);
+    check('report carries the page snapshot', w && w.body.w && w.body.w.dur === 2700 && (svc !== 'prime' || (w.body.w.pt === 'The Boys' && /Ep\. 3/.test(w.body.w.ps))), w && w.body.w);
+    check('report says where the window is', w && w.body.scr && 'x' in w.body.scr && 'dpr' in w.body.scr, w && w.body.scr);
+    check('not an ad', w && w.body.ad === false, w && w.body.ad);
+    // 3. commands in the reply
+    queue.push({ a: 'seekto', ms: 300000 }); await sleep(700);
+    check('seekto', Math.abs(cur - 300) < 1, cur);
+    queue.push({ a: 'seekby', ms: -10000 }); await sleep(700);
+    check('seekby', Math.abs(cur - 290) < 1.5, cur);
+    queue.push({ a: 'speed', ms: 1500 }); await sleep(700);
+    check('speed', rate === 1.5, rate);
+    queue.push({ a: 'playpause' }); await sleep(700);
+    check('pause', paused === true);
+    queue.push({ a: 'playpause' }); await sleep(700);
+    check('play again', paused === false);
+    // the wanted state (2.4): idempotent, and a player that undoes it is reported
+    queue.push({ a: 'pause' }); await sleep(700);
+    check('pause (wanted state)', paused === true);
+    queue.push({ a: 'pause' }); await sleep(700);
+    check('pause again changes nothing', paused === true);
+    queue.push({ a: 'play' }); await sleep(700);
+    check('play (wanted state)', paused === false);
+    queue.push({ a: 'play' }); await sleep(700);
+    check('play again changes nothing', paused === false);
+    var realPause = v.pause; v.pause = function () { /* the player puts it back */ };
+    queue.push({ a: 'pause' }); await sleep(1800);
+    check('a reverted pause is reported as cmdErr', msgs('watch').some(function (x) { return /^pause: the player reverted it/.test(x.body.cmdErr || ''); }));
+    v.pause = realPause;
+    // full screen: the player's own control, never an "Exit full screen" one
+    var fsx = mk('button', { 'aria-label': 'Exit full screen' }, 'x'), fsb = mk('button', { 'aria-label': 'Full screen' }, 'FS'), fsn = 0, fsxn = 0;
+    fsx.style.left = '200px'; fsx.style.bottom = '60px'; fsb.style.left = '260px'; fsb.style.bottom = '60px';
+    fsx.onclick = function () { fsxn++; }; fsb.onclick = function () { fsn++; };
+    queue.push({ a: 'fullscreen' }); await sleep(700);
+    check('fullscreen pressed the player control only', fsn === 1 && fsxn === 0, { fsn: fsn, fsxn: fsxn });
+    check('report carries coverage', last('watch').body.cov > 0.9, last('watch').body.cov);
+    fsb.remove(); fsx.remove();
+    queue.push({ a: 'skip' }); await sleep(700);
+    check('skip pressed the skip button', skipped >= 1, skipped);
+    // 4. subtitles and audio
+    queue.push({ a: 'tracks' }); await sleep(2600);
+    var t = last('tracks');
+    check('tracks lists audio and subtitles', t && t.body.audio.length === 2 && t.body.subs.length === 3 && t.body.subs[0].on === true && t.body.audio[0].on === true, t && t.body);
+    check('menu closed again', menu === null);
+    queue.push({ a: 'settrack', kind: 'subs', id: 'Hindi' }); await sleep(3500);
+    t = last('tracks');
+    check('settrack pressed Hindi', sel.Subtitles === 'Hindi' && t && t.body.subs.filter(function (x) { return x.on; })[0].label === 'Hindi', { sel: sel, t: t && t.body });
+    check('menu closed after settrack', menu === null);
+    // 5. an ad: still reports (so commands arrive), flagged
+    setAd(true); await sleep(1300);
+    w = last('watch');
+    check('ad flagged', w && w.body.ad === true, w && w.body.ad);
+    if (svc === 'prime') { await sleep(500); check('prime ad skipper speeds up and mutes', rate === 8 && v.muted === true, { rate: rate, muted: v.muted }); }
+    if (svc === 'prime') {
+      var pe = msgs('probe');
+      check('probe: ad start sent', pe.some(function (x) { return x.body.ev === 'ad' && x.body.x.ad === true && Array.isArray(x.body.buttons); }), pe.map(function (x) { return x.body.ev; }));
+      check('probe: ad rate trial recorded', pe.some(function (x) { return x.body.ev === 'ad:rate' && x.body.set === undefined && x.body.x.set === 8 && 'readBack' in x.body.x; }), pe.map(function (x) { return x.body.ev; }));
+      check('probe: play / pause read at +300 and +1500', pe.some(function (x) { return /^cmd:pause:\+300$/.test(x.body.ev); }) && pe.some(function (x) { return /^cmd:pause:\+1500$/.test(x.body.ev); }));
+    }
+    setAd(false); await sleep(1300);
+    w = last('watch');
+    check('ad over', w && w.body.ad === false);
+    if (svc === 'prime') check('rate restored after the ad', rate === 1.5 || rate === 1, rate);
+    // 6. a pasted-in tracks failure: no button on the page
+    tbtn.remove();
+    queue.push({ a: 'tracks' }); await sleep(2400); // the player hides its buttons: the reader waits about 2.3 s for one before it fails
+    await sleep(600);
+    w = last('watch');
+    check('tracks failure is reported as cmdErr', msgs('watch').some(function (m) { return /^tracks: nobutton/.test(m.body.cmdErr || ''); }));
+    await sleep(1200);
+    check('a failure is reported once', msgs('watch').filter(function (m) { return /^tracks: nobutton/.test(m.body.cmdErr || ''); }).length === 1, msgs('watch').filter(function (m) { return /^tracks: nobutton/.test(m.body.cmdErr || ''); }).length);
+    stage.appendChild(tbtn); var nt = msgs('tracks').length; queue.push({ a: 'tracks' }); await sleep(2800);
+    w = last('watch');
+    check('retry after a failure works and sends no stale error', msgs('tracks').length === nt + 1 && !w.body.cmdErr, { n: msgs('tracks').length - nt, err: w.body.cmdErr });
+    // 7. the page leaves the player: reports stop
+    v.style.height = '30%'; v.style.width = '30%';
+    var n = msgs('watch').length; await sleep(1300);
+    check('no reports once the player is gone', msgs('watch').length === n, msgs('watch').length - n);
+    done();
+  }
+
+  // ---- a window off the TV (2.1): TV Mode answers desk:true, the helper switches to desk reports ----
+  function deskMsgs() { return log.filter(function (m) { return m.path === 'watch' && m.body.where === 'desk'; }); }
+  function tvMsgs() { return log.filter(function (m) { return m.path === 'watch' && !m.body.where; }); }
+  function forbidden() { return log.filter(function (m) { return m.path === 'tracks' || m.path === 'link' || (m.path === 'watch' && (m.body.cmdErr || m.body.cmds)); }); }
+
+  async function runDesk() {
+    window.__tvdeskEvery = 1500; cur = 125; // the real interval is 30 s
+    await load('../tracks.js'); await load('../deskrep.js'); await load('../core.js'); await load('../prime.js');
+    check('scripts loaded', !!window.TVHelperCore && !!window.TVDesk);
+    await sleep(2300);
+    // 1. the first report is the normal TV one; TV Mode says desk; from then on only desk reports
+    var first = msgs('watch')[0];
+    check('first report is the TV-style one (no where)', first && !first.body.where && !!first.body.scr, first);
+    var d = deskMsgs();
+    check('then desk reports', d.length >= 1 && tvMsgs().length === 1, { desk: d.length, tv: tvMsgs().length });
+    var b = d[0] && d[0].body;
+    check('desk payload fields', b && b.where === 'desk' && b.svc === 'prime' && b.title === 'The Boys' && b.pos === 125 && b.dur === 2700 && b.playing === true && b.ad === false, b);
+    check('desk url has no query or fragment', b && /^[a-z]+:\/\/[^?#]*$/.test(b.url) && b.w && !/[?#]/.test(b.w.href), b && [b.url, b.w && b.w.href]);
+    check('desk payload carries the page snapshot for Prime', b && b.w && b.w.pt === 'The Boys' && /Ep\. 3/.test(b.w.ps), b && b.w);
+    check('desk report carries the window position', b && b.scr && 'x' in b.scr, b && b.scr);
+    // 2. at most one report per interval (a TV tick would send 2 per second)
+    var n0 = deskMsgs().length; await sleep(4000);
+    var n1 = deskMsgs().length - n0;
+    check('rate: 4 s at a 1.5 s interval is 2 to 3 reports', n1 >= 2 && n1 <= 3, n1);
+    // 3. commands in the reply are ignored (the mock puts them there on purpose)
+    queue.push({ a: 'seekto', ms: 300000 }, { a: 'speed', ms: 2000 }, { a: 'playpause' }, { a: 'tracks' });
+    cur = 125; await sleep(3500);
+    check('commands ignored at the desk', Math.abs(cur - 125) < 1 && rate === 1 && paused === false, { cur: cur, rate: rate, paused: paused }); // (Prime's own skipper may press Skip Intro by itself: that is not a command)
+    check('no tracks, links, cmdErr or cmds ever sent from the desk', forbidden().length === 0, forbidden());
+    queue.length = 0;
+    // 4. an ad is not what he watches
+    setAd(true); var na = deskMsgs().length; await sleep(2200);
+    check('no desk report during an ad', deskMsgs().length === na, deskMsgs().length - na);
+    setAd(false); await sleep(1800);
+    // 5. pause: exactly one final report, then silence
+    paused = true; cur = 640; var np = deskMsgs().length; await sleep(1500);
+    var fin = deskMsgs().slice(np);
+    check('pause sends exactly one final report', fin.length === 1 && fin[0].body.final === true && fin[0].body.playing === false && fin[0].body.pos === 640, fin.map(function (m) { return m.body; }));
+    await sleep(3600);
+    check('nothing while paused', deskMsgs().length === np + 1, deskMsgs().length - np);
+    paused = false; var nr = deskMsgs().length; await sleep(1300);
+    check('play again reports at once', deskMsgs().length === nr + 1 && last('watch').body.playing === true && !last('watch').body.final, deskMsgs().length - nr);
+    // 6. the window moves: the helper asks again with a TV-style report; TV Mode now says it is on the TV
+    server = 'tv';
+    var tv0 = tvMsgs().length, sx = window.screenX;
+    Object.defineProperty(window, 'screenX', { get: function () { return sx + 400; }, configurable: true });
+    await sleep(1600);
+    check('window moved: a TV-style report goes out again', tvMsgs().length > tv0, tvMsgs().length - tv0);
+    queue.push({ a: 'seekto', ms: 900000 }); await sleep(1300);
+    check('on the TV: commands are obeyed again', Math.abs(cur - 900) < 2, cur);
+    done();
+  }
+
+  // ---- YouTube in Chrome: desk reports only ----
+  async function runYoutube() {
+    window.__tvdeskEvery = 1500; window.__tvhStable = 400;
+    var player = mk('div', { id: 'movie_player' });
+    var fx = mk('ytd-watch-flexy', { 'video-id': 'OLDvideo123' });
+    var h1 = document.createElement('h1'); var wm = mk('ytd-watch-metadata'); wm.appendChild(h1); h1.textContent = 'The previous video';
+    v.classList.add('html5-main-video');
+    window.__tvhLoc = { pathname: '/', search: '' }; // the home page
+    await load('../deskrep.js'); await load('../youtube.js');
+    check('scripts loaded', !!window.TVDesk && !!window.__tvhYoutube);
+    await sleep(1500);
+    check('home page: nothing', msgs('watch').length === 0, msgs('watch').length);
+    // /watch for a video whose page still shows the old one: nothing yet
+    window.__tvhLoc = { pathname: '/watch', search: '?v=abcdefghijk&list=PLx&t=5&utm=a#frag' };
+    cur = 300; await sleep(1800);
+    check('stale page (title is the previous video): nothing', msgs('watch').length === 0, msgs('watch').length);
+    fx.setAttribute('video-id', 'abcdefghijk'); h1.textContent = 'A long talk about helpers';
+    await sleep(2200);
+    var d = msgs('watch'), b = d[0] && d[0].body;
+    check('first report after the page settles', d.length >= 1, d.length);
+    check('payload', b && b.where === 'desk' && b.svc === 'youtube' && b.title === 'A long talk about helpers' && b.pos === 300 && b.dur === 2700 && b.playing === true && b.ad === false, b);
+    check('url is exactly watch?v=<id>', b && b.url === 'https://www.youtube.com/watch?v=abcdefghijk', b && b.url);
+    // commands in the reply are ignored
+    queue.push({ a: 'seekto', ms: 100000 }, { a: 'playpause' }, { a: 'speed', ms: 2000 }); cur = 300; await sleep(3200);
+    check('commands ignored', Math.abs(cur - 300) < 1 && rate === 1 && paused === false, { cur: cur, rate: rate, paused: paused });
+    var n = msgs('watch').length;
+    check('rate: reports are 1.5 s apart or more', n >= 2 && n <= 5, n);
+    check('only desk watch reports, nothing else, ever', log.every(function (m) { return m.path === 'watch' && m.body.where === 'desk'; }) && forbidden().length === 0, log.map(function (m) { return m.path; }));
+    // an ad
+    player.classList.add('ad-showing'); var na = msgs('watch').length; await sleep(2200);
+    check('no report during an ad', msgs('watch').length === na, msgs('watch').length - na);
+    player.classList.remove('ad-showing'); await sleep(1700);
+    // pause
+    paused = true; cur = 777; var np = msgs('watch').length; await sleep(1500);
+    var fin = msgs('watch').slice(np);
+    check('pause: one final report', fin.length === 1 && fin[0].body.final === true && fin[0].body.playing === false && fin[0].body.pos === 777, fin.map(function (m) { return m.body; }));
+    paused = false; await sleep(1300); // playing again: a play report went out
+    // navigate to another video: the old one is closed, the new one waits for its title
+    var nn = msgs('watch').length;
+    window.__tvhLoc = { pathname: '/watch', search: '?v=zzzzzzzzzzz' };
+    await sleep(1600);
+    var nav = msgs('watch').slice(nn);
+    check('navigating away closes the old video, reports nothing for the new until it settles', nav.length === 1 && nav[0].body.final === true && /abcdefghijk/.test(nav[0].body.url), nav.map(function (m) { return m.body; }));
+    // a clip of two minutes or less, and a live stream (infinite duration), are not reported
+    fx.setAttribute('video-id', 'zzzzzzzzzzz'); h1.textContent = 'A short clip'; dur = 90; var ns = msgs('watch').length; await sleep(2500);
+    check('a 90 s clip is not reported', msgs('watch').length === ns, msgs('watch').length - ns);
+    dur = Infinity; await sleep(1500);
+    check('a live stream is not reported', msgs('watch').length === ns, msgs('watch').length - ns);
+    done();
+  }
+
+  // a title's page (2.4): the hero video covers the window and loops, a Resume button and "Go ad free" show,
+  // and the player's own chrome is absent. It must not count as the player; the real player must.
+  async function runDetail() {
+    [].slice.call(stage.querySelectorAll('.atvwebplayersdk-title-text,.atvwebplayersdk-subtitle-text,.atvwebplayersdk-skipelement-button')).forEach(function (e) { e.remove(); });
+    tbtn.remove();
+    v.loop = true; v.muted = true; paused = false;
+    var resume = mk('button', {}, 'Resume'), goAd = mk('button', {}, 'Go ad free'), pr = 0, gr = 0;
+    resume.style.left = '40%'; resume.style.top = '40%'; goAd.style.left = '40%'; goAd.style.top = '50%';
+    resume.onclick = function () { pr++; }; goAd.onclick = function () { gr++; };
+    await load('../probe.js'); await load('../tracks.js'); await load('../deskrep.js'); await load('../core.js'); await load('../prime.js');
+    var P = window.TVHelperCore._prime;
+    await sleep(1300);
+    check('hero + Resume is not the player', P.isPlayer() === false);
+    check('the hero reports no watch', msgs('watch').length === 0, msgs('watch').length);
+    check('the play control found is Resume, not Go ad free', !!P.playButton() && P.playButton().textContent === 'Resume', P.playButton() && P.playButton().textContent);
+    await sleep(7000); // the page snapshot comes a few seconds after the page settles
+    var pe = msgs('probe');
+    check('probe: a title page snapshot with its buttons', pe.some(function (x) { return x.body.ev === 'page' && x.body.player === false && x.body.buttons.some(function (b) { return b.v; }); }), pe.map(function (x) { return x.body.ev; }));
+    resume.remove();
+    check('a looping hero with no button is not the player either', P.isPlayer() === false);
+    check('"Go ad free" alone is no play control', P.playButton() === null);
+    v.loop = false; v.muted = false;
+    mk('div', { 'class': 'atvwebplayersdk-title-text' }, 'The Boys');
+    await sleep(1300);
+    check('the player (title text, no loop) is the player', P.isPlayer() === true);
+    check('the player reports', msgs('watch').length > 0);
+    check('nothing pressed Go ad free', gr === 0, gr);
+
+    done();
+  }
+
+  // 2.5: the control bar is not a menu. Pressing Subtitles only redraws the bar (new elements, the same buttons plus a
+  // "Subtitles" word): the old reader listed Close player / Mute / Fullscreen as choices.
+  async function runBar() {
+    [].slice.call(stage.querySelectorAll('.atvwebplayersdk-skipelement-button')).forEach(function (e) { e.remove(); });
+    tbtn.remove();
+    var pressed = {}, bar = null;
+    function draw() {
+      if (bar) bar.remove();
+      bar = mk('div', { 'class': 'bar' });
+      mk('span', {}, 'Subtitles', bar);
+      ['Close player', 'Subtitles', 'Mute', 'Enter Picture-in-Picture', 'Fullscreen', 'Settings', 'Speed unavailable'].forEach(function (n, i) {
+        var b = mk('button', { 'aria-label': n }, n, bar); b.style.left = (20 + i * 70) + 'px'; b.style.top = '70px';
+        b.onclick = function () { pressed[n] = (pressed[n] || 0) + 1; draw(); };
+      });
+    }
+    draw();
+    await load('../probe.js'); await load('../tracks.js');
+    var r = await window.TVTracks.run(null);
+    check('control bar only: read says nolist', r && r.err === 'nolist', r);
+    check('no control other than Subtitles / Settings was pressed', !pressed['Close player'] && !pressed['Mute'] && !pressed['Fullscreen'] && !pressed['Enter Picture-in-Picture'], pressed);
+    var r2 = await window.TVTracks.run({ kind: 'subs', id: 'Mute' });
+    check('a control label is never pressed as a choice', (r2 && r2.err) && !pressed['Mute'], { r2: r2, pressed: pressed });
+    done();
+  }
+
+  // Prime as the 2026-11-13 probe showed it: "Turn off subtitles" is an ON/OFF TOGGLE (never a menu), Settings opens a panel with
+  // Subtitles / Audio / Speed / Video Quality, and each of those opens a list of choices. The X-Ray panel is also in the page.
+  async function runReal() {
+    [].slice.call(stage.querySelectorAll('.atvwebplayersdk-skipelement-button')).forEach(function (e) { e.remove(); });
+    tbtn.remove();
+    var subsOn = true, toggled = 0, pnl = null, view = '', chosen = { subs: 'English [CC]', audio: 'English' }, escs = 0;
+    var tg = mk('button', { 'aria-label': 'Turn off subtitles', 'class': 'hh' }, 'CC'); tg.style.right = '20px'; tg.style.bottom = '20px';
+    tg.onclick = function () { toggled++; subsOn = !subsOn; tg.setAttribute('aria-label', subsOn ? 'Turn off subtitles' : 'Turn on subtitles'); };
+    var stb = mk('button', { 'aria-label': 'Settings', 'class': 'hh' }, 'S'); stb.style.right = '90px'; stb.style.bottom = '20px';
+    var spd = mk('button', { 'aria-label': 'Speed: 1x', 'class': 'hh' }, '1x'); spd.style.right = '160px'; spd.style.bottom = '20px';
+    // the X-Ray panel, always on the page
+    var xr = mk('div', { 'class': 'fs_xray' }); xr.style.cssText = 'position:absolute;left:20px;top:100px';
+    var tl = mk('div', { role: 'tablist' }, '', xr); mk('button', { role: 'tab' }, 'Related', tl); mk('button', { role: 'tab' }, 'Details', tl);
+    mk('button', { 'class': 'fs_xrayTabLinkItem' }, 'In scene', xr);
+    var xl = mk('ul', { 'class': 'fs_xrayQuickViewList' }, '', xr); mk('li', { 'class': 'fs_xrayQuickViewListItem' }, 'Jessica MattenKatara', xl);
+    function draw() {
+      if (pnl) pnl.remove(); pnl = null;
+      if (!view) return;
+      pnl = mk('div', { id: 'pnl' }); pnl.style.cssText = 'position:absolute;right:20px;bottom:80px;width:240px;background:#333;padding:10px';
+      if (view === 'top') {
+        ['Subtitles', 'Audio', 'Speed', 'Video Quality'].forEach(function (n) { var b = mk('button', { 'aria-label': n, 'class': 'hh' }, n, pnl); b.style.position = 'static'; b.style.display = 'block'; b.onclick = function () { view = n === 'Subtitles' ? 'subs' : n === 'Audio' ? 'audio' : 'top'; draw(); }; });
+      } else {
+        var names = view === 'subs' ? ['English [CC]', 'Hindi'] : ['English', 'Hindi'];
+        names.forEach(function (n) {
+          var d = mk('div', { role: 'menuitemradio', 'aria-checked': String(chosen[view] === n), 'class': 'ch' }, n, pnl);
+          d.onclick = function () { chosen[view] = n; view = ''; draw(); };
+        });
+      }
+    }
+    stb.onclick = function () { view = view ? '' : 'top'; draw(); };
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { escs++; view = ''; draw(); } });
+    await load('../probe.js'); await load('../tracks.js');
+    window.TVProbe.init({ cfg: { svc: 'prime', isPlayer: function () { return true; }, ad: function () { return false; } }, Core: { coverage: function () { return 1; }, mainVideo: function () { return v; } }, send: function (p, b) { window.chrome.runtime.sendMessage({ type: 'ext', path: p, body: b }); } });
+    function names(a) { return (a || []).map(function (x) { return x.label; }).join('|'); }
+    var r = await window.TVTracks.run(null);
+    check('prime-real: read lists the submenu items only', r && names(r.subs) === 'English [CC]|Hindi' && names(r.audio) === 'English|Hindi', r);
+    check('prime-real: no X-Ray labels, Settings items or controls in the lists', !/In scene|Related|Details|Jessica|Speed|Video Quality|Turn /i.test(names(r.subs) + names(r.audio)), r);
+    check('prime-real: the on/off toggle was never pressed during a read', toggled === 0 && subsOn === true, { toggled: toggled, subsOn: subsOn });
+    check('prime-real: subtitles still on, reported as subsOn true, English marked on', r && r.subsOn === true && r.subs[0].on === true && r.audio[0].on === true, r);
+    check('prime-real: the panel is closed again', view === '' && !document.getElementById('pnl'), view);
+    var pe = msgs('probe');
+    check('prime-real: submenu markup recorded as a probe event', pe.some(function (x) { return x.body.ev === 'tracks:submenu-open' && x.body.x && x.body.x.items && x.body.x.items.length > 0 && 'cls' in x.body.x.items[0]; }), pe.map(function (x) { return x.body.ev; }));
+    var r2 = await window.TVTracks.run({ kind: 'subs', id: 'Hindi' });
+    check('prime-real: pick works and the audio list still comes back', chosen.subs === 'Hindi' && r2 && r2.subs.filter(function (x) { return x.on; })[0].label === 'Hindi' && names(r2.audio) === 'English|Hindi', { chosen: chosen, r2: r2 });
+    check('prime-real: a pick does not press the toggle', toggled === 0 && subsOn, toggled);
+    var r3 = await window.TVTracks.run({ kind: 'subs', id: 'Off' });
+    check('prime-real: Off presses "Turn off subtitles" once and reports subsOn false', toggled === 1 && subsOn === false && r3 && r3.subsOn === false, { toggled: toggled, r3: r3 });
+    var r4 = await window.TVTracks.run(null);
+    check('prime-real: reading while subtitles are off leaves them off', toggled === 1 && subsOn === false && r4 && r4.subsOn === false && names(r4.subs) === 'English [CC]|Hindi', { toggled: toggled, r4: r4 });
+    var r5 = await window.TVTracks.run({ kind: 'subs', id: 'English [CC]' });
+    check('prime-real: a language picked while subtitles are off turns them on', chosen.subs === 'English [CC]' && subsOn === true && toggled === 2 && r5 && r5.subsOn === true, { chosen: chosen, toggled: toggled, r5: r5 });
+    var r6 = await window.TVTracks.run({ kind: 'audio', id: 'Hindi' });
+    check('prime-real: an audio pick returns the subtitles list from the cache', chosen.audio === 'Hindi' && r6 && names(r6.subs) === 'English [CC]|Hindi' && r6.audio.filter(function (x) { return x.on; })[0].label === 'Hindi', r6);
+    check('prime-real: Escape only when the panel stayed open', escs === 0, escs);
+    // the list path fails (no Settings button, a new page): the phone still gets a true On / Off from the toggle
+    stb.remove(); try { history.replaceState(null, '', location.pathname + '?svc=prime-real&x=1#other'); } catch (e) { /* file:// */ }
+    var r7 = await window.TVTracks.run(null);
+    check('prime-real: no Settings: subs fall back to On / Off built from the toggle', r7 && !r7.err && r7.subsOn === true && names(r7.subs) === 'Off|On' && r7.subs[1].on === true && toggled === 2, { r7: r7, toggled: toggled });
+    done();
+  }
+
+  // "Subtitles unavailable" shows while the video is still loading (duration NaN, readyState 0): wait, then read
+  async function runLoading() {
+    [].slice.call(stage.querySelectorAll('.atvwebplayersdk-skipelement-button')).forEach(function (e) { e.remove(); });
+    tbtn.remove(); rs = 0; dur = NaN;
+    var un = mk('button', { 'aria-label': 'Subtitles unavailable' }, 'CC'); un.style.right = '20px'; un.style.bottom = '20px';
+    await load('../tracks.js');
+    setTimeout(function () { un.remove(); rs = 4; dur = 2700; stage.appendChild(tbtn); }, 2800);
+    var r = await window.TVTracks.run(null);
+    check('waited for the video, then listed the choices', r && r.subs && r.subs.length === 3, r);
+    tbtn.remove(); stage.appendChild(un); rs = 4; dur = 2700;
+    var r3 = await window.TVTracks.run(null);
+    check('a ready video with the button still unavailable says so', r3 && r3.err === 'unavailable', r3);
+    // and a video that never loads gives up after about 6 s
+    rs = 0; dur = NaN; stage.appendChild(un); var t0 = Date.now();
+    var r4 = await window.TVTracks.run(null);
+    var el = Date.now() - t0;
+    check('a video that never loads: unavailable after 5.5 to 8 s', r4 && r4.err === 'unavailable' && el > 5500 && el < 8000, { r4: r4, el: el });
+    done();
+  }
+
+  async function runLinks() {
+    await load('../tracks.js'); await load('../deskrep.js'); await load('../core.js');
+    v.remove();
+    if (svc === 'prime') {
+      document.title = 'Prime Video: The Boys - Season 2';
+      var h = mk('h1', {}, 'The Boys');
+      var ul = mk('ul');
+      [0, 1, 2].forEach(function (i) {
+        var li = mk('li', { id: 'av-ep-episode-' + i }, '', ul);
+        if (i === 0) { var a = mk('a', { href: '/detail/0EPONE/ref=x?autoplay=1&t=0' }, 'Play', li); } else mk('span', { 'data-automation-id': 'synopsis-amzn1.dv.gti.EP' + i }, 'x', li);
+      });
+      history.replaceState(null, '', '/detail/0SHOW/ref=x');
+    } else {
+      mk('h1', {}, 'Gravity Falls');
+      mk('a', { href: '/in/shows/gravity-falls/1260021/tourist-trapped/1260030/watch', 'aria-label': 'S1 E1 Tourist Trapped' }, 'x');
+      mk('a', { href: '/in/shows/gravity-falls/1260021/dipper/1260031/watch?x=1', 'aria-label': 'S1 E2 Dipper' }, 'x');
+      history.replaceState(null, '', '/in/shows/gravity-falls/1260021');
+    }
+    await load(svc === 'prime' ? '../prime.js' : '../hotstar.js');
+    window.TVHelperCore._scanLinks();
+    var l = last('link');
+    check('link message sent', !!l, log);
+    if (svc === 'prime') {
+      check('prime title without the season', l && l.body.title === 'The Boys', l && l.body);
+      check('prime episodes (play link and gti)', l && l.body.eps.length === 3 && l.body.eps[0][0] === 2 && l.body.eps[0][1] === 1 && /\/detail\/0EPONE\/ref=x\?autoplay=1/.test(l.body.eps[0][2]) && /\/detail\/amzn1\.dv\.gti\.EP1\/\?autoplay=1/.test(l.body.eps[1][2]), l && l.body.eps);
+    } else {
+      check('hotstar title', l && l.body.title === 'Gravity Falls', l && l.body);
+      check('hotstar page and episodes', l && /\/in\/shows\/gravity-falls\/1260021$/.test(l.body.url) && l.body.eps.length === 2 && l.body.eps[1][1] === 2 && l.body.eps[1][2].indexOf('?') < 0, l && l.body);
+    }
+    done();
+  }
+
+  function done() {
+    var bad = res.filter(function (x) { return x.indexOf('FAIL') === 0; });
+    res.push(bad.length ? 'FAILED ' + bad.length : 'ALL PASS'); out.textContent = res.join('\n'); window.__done = { ok: !bad.length, res: res };
+  }
+  run().catch(function (e) { res.push('ERROR ' + e); out.textContent = res.join('\n'); window.__done = { ok: false, res: res }; });
+})();
+</script>

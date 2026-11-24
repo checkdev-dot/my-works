@@ -1,0 +1,442 @@
+:root{
+  --bg:#000000;
+  --surface:#141414;
+  --surface-press:#2a2a2a;
+  --border:#4a4a4a;
+  --text:#e6e6e6;
+  --muted:#9a9a9a;
+  --red:#b00710;
+  --red-press:#800509;
+  --ease:cubic-bezier(0,0,.2,1);
+  --dur:200ms;
+  --face:system-ui,Roboto,Arial,sans-serif;
+  /* control sizes: set by width, never by height; no gap under 8px */
+  --cell:80px;     /* d-pad key */
+  --dgap:10px;
+  --play:80px;
+  --seek:64px;
+  --svc:52px;
+  --pillw:104px;
+  --pillh:56px;
+  --gap:8px;
+}
+@media (max-width:400px){:root{--cell:64px;--dgap:8px;--play:72px;--seek:56px;--svc:48px;--pillw:88px;--pillh:52px}}
+/* short screens (Chrome toolbar showing, ~670px tall): shrink rows so nothing overlaps */
+@media (max-height:760px){:root{--cell:56px;--dgap:8px;--play:64px;--seek:52px;--svc:48px;--pillh:48px;--gap:6px}
+  .bh{margin-bottom:12px}.scrubwrap{height:48px}.vol,.pointrow{height:48px}.power{width:56px;height:56px}}
+@media (max-height:690px){:root{--cell:52px;--dgap:6px;--play:56px;--seek:48px}.bh{margin-bottom:4px}
+  .scrubwrap{height:40px}.power{width:52px;height:52px}.app{padding-top:4px;padding-bottom:4px}}
+
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body,.app{touch-action:manipulation}
+html,body{height:100%;background:var(--bg);color:var(--text);overscroll-behavior:none;overflow:hidden;
+  -webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+body{font-family:var(--face);font-size:16px;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+::selection{background:var(--red);color:#e6e6e6}
+button{font:inherit;color:inherit;border:0;background:none;touch-action:manipulation;cursor:pointer}
+:focus-visible{outline:3px solid #e6e6e6;outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.app{position:relative;height:100dvh;overflow-y:auto;overscroll-behavior:contain;width:100%;max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:var(--gap);
+  padding:max(env(safe-area-inset-top),8px) 16px max(env(safe-area-inset-bottom),8px)}
+
+/* head: always names where you are; More is a ghost button at the right */
+.head{position:relative;display:flex;align-items:center;gap:8px;flex:none;min-height:48px}
+.where{min-width:0;flex:1}
+.brand{font-size:16px;line-height:20px;color:var(--muted)}
+.where h1{font-size:18px;line-height:22px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:none}
+#modeName{font-size:16px;line-height:20px;color:var(--muted)}
+/* the Sleep chip: a 44px tap target; the chip itself is drawn by ::before, so its look is unchanged */
+.tag{position:relative;isolation:isolate;background:transparent;border:0;border-radius:4px;padding:0 8px;min-height:48px;margin:-12px 0;
+  font-size:16px;line-height:48px;font-weight:600;color:var(--text);white-space:nowrap}
+.tag::before{content:"";position:absolute;inset:12px 0;background:var(--surface);border:1px solid var(--border);border-radius:4px;z-index:-1;transition:background-color var(--dur) var(--ease)}
+.tag.p::before,.tag:active::before{background:var(--surface-press)}
+.tag[hidden]{display:none}
+.more{flex:none;display:flex;align-items:center;justify-content:center;gap:4px;min-height:48px;height:48px;min-width:48px;padding:0 8px;border-radius:8px;
+  background:transparent;color:var(--text);font-size:16px;font-weight:600;touch-action:manipulation;transition:background-color var(--dur) var(--ease)}
+.more:active{background:var(--surface-press)}
+.app:not([data-mode="remote"]) .more{visibility:hidden}
+/* narrow phones: More shows its dots only, so the service name keeps its room next to Keyboard */
+@media (max-width:400px){#more span{display:none}}
+
+/* services: each service's own mark in a dimmed brand colour; the playing one is red */
+.svc{position:relative;flex:none;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap);margin-bottom:var(--gap)}
+.svc .b{flex-direction:column;gap:2px;min-height:var(--svc);height:var(--svc);padding:0 2px;font-size:16px;font-weight:600;line-height:20px;text-align:center}
+.mk{width:20px;height:20px;flex:none;fill:var(--brand,currentColor);color:var(--brand,currentColor);stroke:none;pointer-events:none}
+.svc [data-app="jiohotstar"]{--brand:#8460c0}
+.svc [data-app="prime"]{--brand:#2b86ad}
+.svc [data-app="netflix"]{--brand:#b8262d}
+.svc [data-app="youtube"]{--brand:#b83a34}
+.svc .b[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#e6e6e6}
+.svc .b[aria-pressed="true"] .mk{fill:#e6e6e6;color:#e6e6e6}
+.svc .b[aria-pressed="true"].p,.svc .b[aria-pressed="true"]:active{background:var(--red-press);border-color:var(--red-press)}
+.svc .svcarm{position:absolute;inset:0;z-index:2;height:auto;min-height:0;width:100%;background:var(--red);border-color:var(--red);color:#e6e6e6;font-size:20px;font-weight:700}
+.svc .svcarm[hidden]{display:none}
+
+/* link banner: an overlay on the header area; it never pushes anything. Icon plus words, never colour alone */
+.banner{position:absolute;z-index:6;top:calc(100% + 2px);left:0;right:0;min-height:48px;pointer-events:none;
+  display:flex;align-items:center;gap:10px;padding:6px 12px;border-radius:8px;
+  background:var(--surface);border:1px solid var(--border);font-size:16px;font-weight:600;line-height:22px;color:var(--text);overflow:hidden}
+.banner .ic{flex:none}
+.banner[data-note]{pointer-events:auto;cursor:pointer}
+.banner span{min-width:0;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+/* a note (a server message) is two lines at most and a size smaller, so it stays clear of the Back / Home row */
+.banner[data-note] span{-webkit-line-clamp:2;font-size:15px;line-height:20px;letter-spacing:-.01em}
+.banner[data-note]{padding:6px 10px;gap:8px}
+.banner[hidden]{display:none}
+/* Touchpad and Type hide More and Keyboard, so the banner sits on the header band and never covers Back to Remote */
+.app:not([data-mode="remote"]) .banner{top:0}
+.banner .ic{width:24px;height:24px;stroke:var(--text)}
+.banner[data-kind="lost"] .bic-info,.banner:not([data-kind="lost"]) .bic-warn{display:none}
+.banner:not([data-kind="lost"]){color:var(--muted)}
+.banner:not([data-kind="lost"]) .ic{stroke:var(--muted)}
+
+.main{flex:1 0 auto;display:flex;flex-direction:column}
+.mode{display:none;flex:1;min-height:0;flex-direction:column}
+.app[data-mode="remote"] .m-remote,.app[data-mode="pad"] .m-pad,.app[data-mode="type"] .m-type{display:flex}
+.m-remote{justify-content:space-between;gap:var(--gap);flex:1 0 auto}
+
+/* buttons: surface with a grey edge; press feedback eases out over 200 ms */
+.b{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;
+  background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;
+  font-size:16px;font-weight:600;touch-action:none;
+  transition:background-color var(--dur) var(--ease),border-color var(--dur) var(--ease),transform var(--dur) var(--ease)}
+.b.p,.b:active{background:var(--surface-press);transform:scale(.97)}
+.ic{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#playUse,#muteUse{pointer-events:none}
+
+/* Back and Home: their own row at the outer corners, pill, empty middle */
+.bh{flex:none;display:flex;justify-content:space-between;align-items:center}
+.bh .pill{width:var(--pillw);height:var(--pillh);min-height:0;border-radius:28px;background:transparent;border:1px solid var(--border);padding:0 8px;gap:6px}
+.bh .pill .ic{width:24px;height:24px}
+.bh .pill.p,.bh .pill:active{background:var(--surface-press)}
+.bhpad{margin-bottom:var(--gap)}
+
+/* d-pad with OK in the centre */
+.dwrap{flex:none;display:flex;justify-content:center}
+.dpad{display:grid;grid-template-columns:repeat(3,var(--cell));grid-auto-rows:var(--cell);gap:var(--dgap)}
+.dpad .b{min-height:0;height:100%}
+.dpad .ic{width:34px;height:34px}
+.dpad .ok{background:var(--red);border-color:var(--red);color:#e6e6e6;font-size:24px;font-weight:700}
+.dpad .ok.p,.dpad .ok:active{background:var(--red-press);border-color:var(--red-press)}
+
+/* progress: seeking needs a drag or a hold, never a tap */
+.scrubwrap{position:relative;flex:none;height:56px}
+.times{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;font-size:16px;line-height:20px;color:var(--muted);pointer-events:none}
+.scrub{position:absolute;inset:0;touch-action:none}
+.scrub::before{content:"";position:absolute;left:0;right:0;bottom:14px;height:6px;border-radius:4px;background:var(--surface);border:1px solid var(--border)}
+.scrub #scrubFill{position:absolute;left:0;bottom:14px;height:6px;width:0;border-radius:4px;background:#e6e6e6;
+  transition:width var(--dur) var(--ease)}
+.scrub.drag #scrubFill{transition:none}
+.scrub.drag::before{border-color:#e6e6e6}
+.scrub[aria-disabled="true"] #scrubFill{background:var(--border)}
+.scrubtip{position:absolute;z-index:4;left:0;right:0;top:calc(100% + 8px);display:flex;flex-direction:column;align-items:center;padding:8px 16px;
+  background:var(--bg);border:1px solid #e6e6e6;border-radius:8px;pointer-events:none}
+.scrubtip[hidden]{display:none}
+.scrubtip b{font-size:48px;line-height:52px;font-weight:700;color:#e6e6e6}
+.scrubtip span{font-size:16px;line-height:20px;color:var(--muted)}
+.scrubtip.off{border-color:var(--border)}
+.scrubtip.off b{color:var(--muted)}
+
+/* the pad: the main way to move around the TV (TOUCHPAD-SHAPE.md). Its behaviour follows
+   the page on screen; the label at the top says which, the dot follows the finger */
+.gpad{position:relative;flex:1 1 auto;min-height:160px;border-radius:16px;background:var(--surface);border:1px solid var(--border);
+  touch-action:none;overflow:hidden;transition:border-color var(--dur) var(--ease)}
+.gpad.touch{border-color:#e6e6e6}
+.gplabel{position:absolute;left:0;right:0;top:20px;text-align:center;font-size:20px;line-height:24px;font-weight:700;color:var(--text);pointer-events:none;
+  transition:opacity var(--dur) var(--ease)}
+.gphint{position:absolute;left:16px;right:16px;top:48px;text-align:center;font-size:16px;line-height:20px;color:var(--muted);pointer-events:none}
+.gpad.touch .gplabel,.gpad.touch .gphint{opacity:.35}
+.gpad.swap .gplabel{color:#e6e6e6}
+.gpdot{position:absolute;left:0;top:0;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:2px solid #e6e6e6;opacity:0;pointer-events:none;
+  transition:opacity 120ms var(--ease)}
+.gpad.touch .gpdot{opacity:.5}
+.gpdot.edge{border-color:var(--red)}
+.gpad .point{position:absolute;left:12px;right:12px;bottom:12px;height:56px;min-height:0}
+/* no link: the pad becomes the explanation and the way back, where the thumb already is */
+.gpoff{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px;text-align:center}
+.gpad[data-pm="off"] .gpoff{display:flex}
+.gpad[data-pm="off"] .gplabel,.gpad[data-pm="off"] .gphint,.gpad[data-pm="off"] .point,.gpad[data-pm="off"] .gpdot{display:none}
+.gpoffT{font-size:20px;line-height:24px;font-weight:700;color:var(--text);text-wrap:balance}
+.gpoffB{font-size:16px;line-height:22px;color:var(--text);max-width:30ch}
+.gpoffL{font-size:16px;line-height:22px;color:var(--muted)}
+.gpoff [hidden]{display:none}
+.gpoff .tryagain{width:100%;max-width:280px;min-height:64px;margin-top:8px;font-size:20px;font-weight:700;background:var(--red);border-color:var(--red);color:#e6e6e6;touch-action:manipulation}
+.gpoff .tryagain.p,.gpoff .tryagain:active{background:var(--red-press);border-color:var(--red-press)}
+.gpoff .tryagain:disabled{background:var(--surface);border-color:var(--border);color:var(--muted)}
+.gpoff .tryagain[hidden]{display:none}
+/* Auto-retry in progress: Try again is quiet; it turns red only when nothing is retrying by itself */
+.tryagain.calm,.gpoff .tryagain.calm,.moff .tryagain.calm{background:var(--surface);border-color:var(--border);color:var(--text)}
+.tryagain.calm.p,.tryagain.calm:active{background:var(--surface-press);border-color:var(--border)}
+/* Touchpad and Type with no link: the diagnosis sits above the dimmed controls */
+.moff{display:none;flex:none;flex-direction:column;align-items:center;gap:8px;padding:12px 16px;margin-bottom:var(--gap);text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.app[data-link="off"] .moff{display:flex}
+.moff [hidden]{display:none}
+.moff .tryagain{width:100%;max-width:280px;min-height:56px;font-size:18px;font-weight:700;background:var(--red);border-color:var(--red);color:#e6e6e6;touch-action:manipulation}
+.moff .tryagain.p,.moff .tryagain:active{background:var(--red-press);border-color:var(--red-press)}
+.moff .tryagain:disabled{background:var(--surface);border-color:var(--border);color:var(--muted)}
+.app[data-link="off"] :is(.typebox,.typerow,.padrow){opacity:.5}
+.where h1.muted{color:var(--muted);font-weight:600}
+.moodsub{font-size:16px;line-height:22px;color:var(--muted);margin-top:-8px}
+
+/* transport: Play is the largest control, under the resting thumb */
+.transport{flex:none;display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:var(--gap);height:var(--play);align-items:center}
+.transport .seek{height:var(--seek);flex-direction:column;gap:0;padding:0}
+.transport .seek .ic{width:26px;height:26px}
+.transport .play{height:100%;background:var(--red);border-color:var(--red);color:#e6e6e6}
+.transport .play .ic{width:48px;height:48px;stroke-width:2.2}
+.transport .play.p,.transport .play:active{background:var(--red-press);border-color:var(--red-press)}
+
+.vol{flex:none;display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--gap);height:52px}
+.vol .b{height:100%;font-size:18px;font-weight:700}
+
+/* a screen taller than the viewport (big text, pinch zoom): plain buttons let a finger scroll it; pad, scrub, Point and Power keep touch-action:none */
+.app.tall .b:not(.point):not(.tryagain){touch-action:pan-y}
+.pointrow{flex:none;display:grid;grid-template-columns:minmax(0,1fr) 72px 72px;gap:var(--gap);height:56px}
+.pointrow .b{height:100%;min-height:0}
+.pointrow .scr{flex-direction:column;gap:0;padding:0;font-size:16px;line-height:18px}
+.pointrow .scr .ic{width:24px;height:24px}
+.point{font-size:18px;font-weight:700;touch-action:none;padding:0 4px}
+.point.held{background:var(--red);border-color:var(--red);color:#e6e6e6}
+.dbg{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:4px 8px;background:var(--bg);color:var(--muted);font-size:16px;pointer-events:none}
+
+/* bottom: sleep and power, set apart by a rule that sits in the gap */
+.foot{position:relative;flex:none;display:flex;align-items:center;gap:16px}
+.foot::before{content:"";position:absolute;left:0;right:0;top:-5px;border-top:1px solid var(--border)}
+.app:not([data-mode="remote"]) .foot{display:none}
+.drawerbtn{flex:1;height:56px;min-height:0;font-size:16px;font-weight:600;background:transparent}
+.drawerbtn .ic{width:24px;height:24px}
+.sleep{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+.sleep .b{min-height:48px;height:48px;padding:0 2px;white-space:nowrap}
+.sleep .b.set{border-color:#e6e6e6;border-width:2px;background:var(--surface-press)}
+/* drawer: the mood tap (Light, Gripping, Comfort). Same size and "set" look as Sleep */
+.moodwrap{display:flex;flex-direction:column;gap:var(--gap)}
+.moodcap{font-size:16px;line-height:22px;color:var(--muted)}
+.mood{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+.mood .b{min-height:48px;height:48px;padding:0 2px;white-space:nowrap;font-weight:600}
+.mood .b[aria-pressed="true"]{border-color:#e6e6e6;border-width:2px;background:var(--surface-press)}
+.power{position:relative;flex:none;width:64px;height:64px;border-radius:50%;background:var(--surface);color:var(--text);
+  display:grid;place-items:center;touch-action:none;transition:background-color var(--dur) var(--ease)}
+.power .ic{width:30px;height:30px}
+.power .ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);fill:none;stroke-width:4;overflow:visible}
+.ring .r0{stroke:var(--border)}
+.ring .r1{opacity:0;stroke:#e6e6e6;stroke-dasharray:100 100;stroke-dashoffset:100;stroke-linecap:butt}
+.power.hold{background:var(--red)}
+.power.hold .r1{opacity:1;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}
+
+/* touchpad */
+.backbar{flex:none;justify-content:flex-start;padding:0 16px;height:56px;margin-bottom:var(--gap);font-size:18px;font-weight:700}
+.pad{padding:16px;flex:1;min-height:0;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  touch-action:none;text-align:center;font-size:18px;font-weight:600;line-height:1.6;color:var(--muted);transition:border-color var(--dur) var(--ease)}
+.pad.touch{border-color:#e6e6e6}
+.padrow{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);height:64px;margin-top:var(--gap)}
+.padrow .b{height:100%;font-size:16px}
+
+/* type */
+.typebox{display:block;flex:none}
+.typebox input{width:100%;height:64px;padding:0 16px;background:var(--surface);color:var(--text);caret-color:#e6e6e6;
+  border:1px solid var(--border);border-radius:8px;font:600 24px/1 var(--face);-webkit-user-select:text;user-select:text}
+.typebox input::placeholder{color:var(--muted);opacity:1;font-size:18px}
+.typebox input:focus{border-color:#e6e6e6;outline:none}
+.typerow{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;height:64px}
+.typerow .b{height:100%}
+.hintline{margin-top:14px;font-size:16px;line-height:1.4;color:var(--muted)}
+
+/* drawer: apps, arrows, seek, scroll and sleep */
+.drawer .svc{margin-bottom:0}
+.skiprow{height:56px;min-height:0;font-size:18px;font-weight:700}
+.skiprow[hidden]{display:none}
+.dwrow{display:flex;gap:16px;align-items:center;justify-content:space-between}
+.dwside{display:grid;grid-template-columns:repeat(2,64px);grid-auto-rows:64px;gap:var(--gap)}
+.dwside .b{height:100%;min-height:0;flex-direction:column;gap:0;padding:0;font-size:16px;line-height:18px}
+.dwside .ic{width:24px;height:24px}
+.drawer .dpad{--cell:64px;--dgap:8px}
+@media (max-width:380px){.drawer .dpad{--cell:56px}.dwside{grid-template-columns:repeat(2,56px);grid-auto-rows:56px}}
+
+/* More: bottom sheet */
+.sheetwrap{position:fixed;inset:0;z-index:15;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.sheetwrap[hidden]{display:none}
+.scrim{position:absolute;inset:0;width:100%;height:100%;background:rgba(0,0,0,.65);border-radius:0;touch-action:manipulation}
+.sheet{position:relative;width:100%;max-width:460px;max-height:92dvh;overflow:auto;background:var(--bg);border:1px solid var(--border);border-bottom:0;
+  border-radius:8px 8px 0 0;padding:16px 16px max(env(safe-area-inset-bottom),16px);display:flex;flex-direction:column;gap:8px;
+  animation:sheetin var(--dur) var(--ease)}
+@keyframes sheetin{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.sheettitle{font-size:18px;font-weight:700;margin-bottom:2px}
+.sheet .row{min-height:60px;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;padding:6px 16px;touch-action:manipulation;text-align:left}
+.sheet .rt{font-size:18px;font-weight:700;line-height:22px}
+.sheet .rh{font-size:16px;font-weight:400;line-height:22px;color:var(--muted)}
+.sheet .row[hidden]{display:none}
+.sheet>*{flex:none}
+.sheet .row[aria-pressed="true"]{border-color:#e6e6e6;border-width:2px}
+.sheet .exitrow{min-height:56px;font-size:18px;font-weight:700}
+.sheet .exitrow.sure{background:var(--red);border-color:var(--red);color:#e6e6e6}
+.sheet .exitrow.sure .rh{color:#e6e6e6}
+.sheet .closebtn{min-height:56px;font-size:18px;font-weight:700;background:transparent;margin-top:4px}
+
+/* shutdown countdown, standby and calibration: full-screen views */
+.downview{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:64px 16px 24px}
+.downview[hidden]{display:none}
+#downview{z-index:21}
+.downtitle{font-size:28px;font-weight:700;text-align:center;line-height:1.25;color:var(--text)}
+.downtitle b{display:block;font-size:150px;color:#e6e6e6;line-height:1;margin-top:6px;font-weight:700}
+.downbar{width:100%;height:8px;border-radius:4px;background:var(--surface);border:1px solid var(--border);overflow:hidden}
+.downbar i{display:block;height:100%;width:100%;background:#e6e6e6;transition:width 1s linear}
+.cancel{width:100%;height:140px;border-radius:8px;background:var(--surface);border:2px solid var(--text);color:var(--text);
+  font-size:48px;font-weight:700;touch-action:manipulation;transition:background-color var(--dur) var(--ease)}
+.cancel:active{background:var(--surface-press)}
+.mini{min-height:56px;width:100%;padding:0 16px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font-size:18px;font-weight:600;
+  transition:background-color var(--dur) var(--ease)}
+.mini:active{background:var(--surface-press)}
+.calview{gap:16px}
+.calview .downtitle b{font-size:96px}
+.calview .hintline{text-align:center;max-width:32ch;font-size:18px}
+.calview .cancel{height:120px}
+.standview{gap:16px;justify-content:flex-start;padding-top:96px}
+.standview .hintline{text-align:center;font-size:18px;max-width:30ch}
+.standview .startbtn{margin-top:auto;height:160px;background:var(--red);border-color:var(--red);color:#e6e6e6}
+.standview .startbtn:active{background:var(--red-press)}
+.standview .startbtn:disabled{opacity:.6}
+.standoff{display:flex;align-items:center;gap:16px;width:100%;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.standoff .hintline{margin:0;text-align:left;font-size:16px;max-width:none;flex:1}
+/* "Saved to TV": the share sheet's answer (a full-screen view like Standby, above it) */
+.savedview .hintline{font-size:20px;max-width:26ch;overflow-wrap:anywhere}
+.savedview .startbtn[hidden],.savedview .mini[hidden]{display:none}
+.savedview .startbtn:not([hidden]) + .mini{margin-top:0}
+.savedview .startbtn[hidden] + .mini{margin-top:auto}
+
+/* "Add a phone": the pairing QR on a white plate (cameras need the quiet zone), then the two ways to pass it on */
+.addview{padding-top:64px}
+.addqr{width:200px;aspect-ratio:1;padding:16px;border-radius:8px;background:#fff;flex:none}
+.addqr svg{display:block;width:100%;height:100%}
+.addview .hintline{font-size:18px;max-width:30ch}
+.addview .startbtn{height:96px;font-size:28px}
+.addview .startbtn:disabled{opacity:.6}
+
+/* left hand: mirror the horizontal layout, but never swap pairs that mean a direction (arrows, seek, volume, scrub) */
+.app[data-hand="left"] .head,.app[data-hand="left"] .bh,.app[data-hand="left"] .foot{flex-direction:row-reverse}
+.app[data-hand="left"] .where{text-align:right}
+.app[data-hand="left"] .meta{align-items:flex-start}
+.app[data-hand="left"] .pointrow{grid-template-columns:72px 72px minmax(0,1fr)}
+.app[data-hand="left"] .pointrow .point{order:3}
+
+/* no link: nothing will happen, so the controls say so (the banner carries the words) */
+.app[data-link="off"] :is(.b[data-act],.point,.power,.scrub,#psBtn,#pad,#sleepTag){opacity:.5}
+/* and nothing red or white-filled looks ready to press */
+.app[data-link="off"] .transport .play,.app[data-link="off"] .dpad .ok,.app[data-link="off"] .point.held{background:var(--surface);border-color:var(--border);color:var(--text)}
+.app[data-link="off"] .scrub #scrubFill{background:var(--border)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0.01ms !important;animation-duration:0.01ms !important}
+  .b.p,.b:active{transform:none}
+  /* the Power ring is a progress readout, so it keeps its fill */
+  .power.hold .r1{transition:stroke-dashoffset 1s linear !important}
+}
+
+/* Player sheet: subtitles and audio, episodes, speed (any app) */
+.menuclose{width:100%;min-height:56px;margin-bottom:8px;font-size:18px;font-weight:700;background:var(--surface);border:1px solid #e6e6e6;color:var(--text)}
+.menuclose:active{background:var(--surface-press)}
+.menunote{margin:-4px 0 8px;font-size:16px;line-height:22px;color:var(--text)}
+.menunote[hidden]{display:none}
+.helperline{font-size:16px;line-height:20px;color:var(--muted);border-radius:8px;padding:2px 0}
+.helperline[hidden]{display:none}
+.helperline.pulse{animation:hpulse .7s var(--ease)}
+@keyframes hpulse{30%{color:#e6e6e6;background:var(--surface-press)}}
+.sheetmsg{color:var(--text)}
+.pslist .b.setting,.psspeed .b.setting{color:var(--muted)}
+.psseason[hidden]{display:none}
+/* Pause is the one red button; the pad cannot point in player mode */
+.gpad[data-pm="player"] .point{display:none}
+.menuclose[hidden]{display:none}
+.psheet{display:flex;flex-direction:column;gap:12px;height:auto;max-height:92dvh;overflow:hidden}
+.psheet>*{flex:none}
+/* only the open tab scrolls; the tabs, seek row and Done stay put */
+.psheet>.pspane{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.pstabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pstabs .b{min-height:48px;font-size:16px;font-weight:600}
+.pstabs .b[hidden]{display:none}
+.pstabs .b[aria-selected="true"]{border-color:#e6e6e6;border-width:2px;color:#e6e6e6}
+.pspane[hidden]{display:none}
+.pspane{display:flex;flex-direction:column;gap:8px}
+.pspane>*{flex:none}
+.psh{font-size:16px;line-height:20px;font-weight:700;color:var(--muted);margin-top:4px}
+.psh[hidden]{display:none}
+.psnote{font-size:16px;line-height:22px;color:var(--muted)}
+.psnote[hidden]{display:none}
+/* the sheet's message line keeps its two lines when empty, so a failed pick's words never push the rows down */
+.psheet .sheetmsg{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;height:44px}
+.psheet .sheetmsg[hidden]{display:-webkit-box;visibility:hidden}
+.pslist{display:flex;flex-direction:column;gap:8px}
+.pslist>*{flex:none}
+/* rows in the panel lists must let a finger scroll the list (.b is touch-action:none for held keys) */
+.psheet .b,.sheet .b{touch-action:pan-y}
+.pslist .b{min-height:56px;justify-content:space-between;padding:8px 16px;font-size:18px;font-weight:600;text-align:left}
+.pslist .b[aria-checked="true"]{border-color:#e6e6e6;border-width:2px;color:#e6e6e6;background:var(--surface-press)}
+.pslist .ep{flex-direction:column;align-items:flex-start;justify-content:center;gap:2px}
+.pslist .ep .en{font-size:18px;font-weight:700;line-height:22px}
+.pslist .ep .eh{font-size:16px;font-weight:400;line-height:20px;color:var(--muted)}
+.pslist .ep.next{border-color:#e6e6e6;border-width:2px}
+.psseason{display:grid;grid-template-columns:56px 1fr 56px;align-items:center;gap:8px}
+.psseason p{text-align:center;font-size:18px;font-weight:700}
+.psseason .b{min-height:56px}
+.psspeed{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.psspeed .b{min-height:64px;font-size:18px;font-weight:700}
+.psspeed .b[aria-checked="true"]{border-color:#e6e6e6;border-width:2px;color:#e6e6e6}
+.psseek{display:flex;gap:8px}
+.psseek .b{flex:1 1 0;min-width:0}
+.psseek #psPlay{flex:2.2 1 0}
+.psseek .b[hidden]{display:none}
+.psseek .b{min-height:56px}
+
+/* More: two muted captions group the rows, and the two exits sit under a rule */
+.sheetcap{font-size:16px;line-height:22px;color:var(--muted);margin-top:8px}
+.sheettitle + .sheetcap{margin-top:0}
+.sheetrule{border-top:1px solid var(--border);margin:8px 0 0}
+
+/* Drawer: Mood is one row that opens its three choices */
+.moodrow{width:100%;min-height:56px;padding:0 16px;gap:8px;justify-content:flex-start;text-align:left;font-size:18px;font-weight:700}
+.moodrow .mv{margin-left:auto;font-size:16px;font-weight:400;color:var(--muted)}
+.moodrow .chev{width:24px;height:24px;transition:transform var(--dur) var(--ease)}
+.moodrow[aria-expanded="true"] .chev{transform:rotate(180deg)}
+#moodBody{display:flex;flex-direction:column;gap:var(--gap);margin-top:var(--gap)}
+#moodBody[hidden]{display:none}
+#moodBody .moodsub{margin-top:0}
+
+/* a chosen list row carries a check, so it differs from a chosen tab (border only) */
+.pslist .b .ck{width:24px;height:24px;visibility:hidden}
+.pslist .b[aria-checked="true"] .ck{visibility:visible}
+
+/* Add a phone: the TV's answer is read in body colour; once the QR is up the button turns quiet */
+.addview .hintline.say{color:var(--text)}
+.addview .startbtn.quiet{height:72px;font-size:20px;background:var(--surface);border:1px solid var(--border);color:var(--text)}
+.addview .startbtn.quiet:active{background:var(--surface-press)}
+.addview .mini:disabled{opacity:.6}
+
+/* round 2: the service name opens the drawer on the TV's home; the pad label is a chip that cycles the pad mode */
+.wherebtn{display:inline-flex;align-items:center;gap:4px;max-width:100%;min-height:48px;margin:-13px 0;padding:0 8px 0 0;border-radius:8px;font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit;text-align:inherit}
+.wherebtn span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.wherebtn .wic{width:20px;height:20px;display:none}
+.wherebtn:not(:disabled) .wic{display:block}
+.wherebtn:not(:disabled):active{background:var(--surface-press)}
+.wherebtn:disabled{cursor:default;padding-right:0}
+.app[data-hand="left"] .wherebtn{padding:0 0 0 8px;flex-direction:row-reverse}
+.gplabel{display:inline-flex;align-items:center;justify-content:center;gap:4px;left:50%;right:auto;top:8px;transform:translateX(-50%);min-height:48px;padding:0 12px;border-radius:8px;
+  background:var(--surface);border:1px solid var(--border);pointer-events:auto;touch-action:manipulation}
+.gplabel .ic{width:20px;height:20px;flex:none}
+.gptxt{display:flex;flex-direction:column;align-items:center;text-align:center}
+.gptxt #gpLabelT{font-size:18px;line-height:22px}
+.gpnext{font-size:16px;line-height:18px;font-weight:500;color:var(--muted)}
+.gplabel:active{background:var(--surface-press)}
+.gphint{top:68px}
+.capline{display:flex;align-items:baseline;gap:8px}
+.capline .mv{margin-left:auto}
+.joinview .hintline{max-width:32ch}
+.joinview .hintline b{color:var(--text);font-weight:600;overflow-wrap:anywhere}
+.joinview .hintline.say{color:var(--text)}
+.joinview .joinretry{margin-top:auto}
+.sheet .exitrow{min-height:60px}
+.where h1{overflow:visible}
+/* More fits one 812px screen without scrolling (56px rows still clear the 48px floor) */
+.sheet .row,.sheet .exitrow{min-height:56px;padding-top:4px;padding-bottom:4px}
+.b.idle{opacity:.5}

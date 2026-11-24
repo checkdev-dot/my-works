@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TV Mode</title>
+<link rel="stylesheet" href="launcher.css">
+</head>
+<body>
+<main class="stage" id="stage" data-view="launcher" data-top="1">
+
+  <div class="sbg" id="sbg" aria-hidden="true"><div class="strailer" id="strailer"></div><div class="lamps"></div></div>
+
+  <header class="topbar">
+    <span class="status" id="status" role="status" aria-live="polite">
+      <span id="phone"><svg class="warn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 21h20zM12 10v5M12 18v.01"/></svg><span id="phoneTxt">Phone on</span></span><span class="dotsep" id="sleepSep" aria-hidden="true" hidden></span><span id="sleep" hidden>Sleep 0 min</span>
+    </span>
+    <span class="clock" id="clock">--:--</span>
+    <span class="date" id="date"></span>
+  </header>
+
+  <section class="stagetxt" id="stagetxt" aria-live="polite"></section>
+
+  <div class="flow" id="flow">
+    <nav class="svc" id="svc" aria-label="Search and services">
+      <button class="tile" type="button" data-i="search" aria-label="Search">
+        <svg viewBox="0 0 240 64" aria-hidden="true"><circle cx="70" cy="29" r="12" fill="none" stroke="currentColor" stroke-width="5"/><path d="m79 38 11 11" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><text x="104" y="43" font-size="38" font-weight="700" fill="currentColor" font-family="Sofia Sans Condensed,Bahnschrift Condensed,Arial Narrow,sans-serif" letter-spacing="1">Search</text></svg>
+      </button>
+      <button class="tile" type="button" data-i="0" data-svc="jiohotstar" aria-label="JioHotstar">
+        <svg viewBox="0 0 240 64" aria-hidden="true"><path d="M36 10l4.5 12.5L53 27l-12.5 4.5L36 44l-4.5-12.5L19 27l12.5-4.5z" fill="currentColor"/><text x="66" y="42" font-size="30" font-weight="700" fill="currentColor" font-family="Segoe UI,Arial,sans-serif" letter-spacing="-.5">JioHotstar</text></svg>
+      </button>
+      <button class="tile" type="button" data-i="1" data-svc="prime" aria-label="Prime Video">
+        <svg viewBox="0 0 240 64" aria-hidden="true"><text x="120" y="36" text-anchor="middle" font-size="30" font-weight="700" fill="currentColor" font-family="Segoe UI,Arial,sans-serif">prime video</text><path d="M62 46q58 14 112 0" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+      </button>
+      <button class="tile" type="button" data-i="2" data-svc="netflix" aria-label="Netflix">
+        <svg viewBox="0 0 240 64" aria-hidden="true"><text x="120" y="45" text-anchor="middle" font-size="40" font-weight="800" fill="currentColor" font-family="Bahnschrift Condensed,Arial Narrow,Segoe UI,sans-serif" letter-spacing="3">NETFLIX</text></svg>
+      </button>
+      <button class="tile" type="button" data-i="3" data-svc="youtube" aria-label="YouTube">
+        <svg viewBox="0 0 240 64" aria-hidden="true"><rect x="40" y="14" width="44" height="32" rx="9" fill="currentColor"/><path d="M57 22v16l14-8z" fill="#141414"/><text x="94" y="42" font-size="30" font-weight="700" fill="currentColor" font-family="Segoe UI,Arial,sans-serif" letter-spacing="-.5">YouTube</text></svg>
+      </button>
+    </nav>
+    <div id="rows"></div>
+  </div>
+
+  <section class="search" id="search" hidden aria-label="Search">
+    <div class="sbar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><input id="sq" type="search" placeholder="Search movies and shows" autocomplete="off" spellcheck="false" aria-label="Search movies and shows"></div>
+    <p class="shint" id="shint" role="status" aria-live="polite">Type on your phone. Down for the results, Back to close.</p>
+    <div class="sgrid" id="sgrid"></div>
+  </section>
+
+  <section class="panel" id="panel" hidden aria-label="Details"></section>
+
+  <section class="eps" id="eps" hidden aria-label="Episodes">
+    <div class="ehead"><div class="etitle" id="etitle"></div><div class="etabs" id="etabs"></div></div>
+    <p class="shint" id="ehint"></p>
+    <div class="sgrid" id="egrid"></div>
+  </section>
+
+  <section class="pairview" aria-label="Pair your phone">
+    <p class="pairname">TV Mode</p>
+    <div class="qrplate"><div id="qr" role="img" aria-label="QR code to pair your phone"></div></div>
+    <p class="pairtext">Scan with your phone camera</p>
+    <p class="pairskip">Press OK to skip</p>
+  </section>
+
+  <section class="downview" id="down" aria-live="assertive">
+    <p class="dlabel">Shutting down in</p>
+    <p class="dnum" id="downN">10</p>
+    <p class="dcancel">Cancel on phone</p>
+  </section>
+
+</main>
+<script src="../vendor/qrcode.js"></script>
+<script src="launcher.js"></script>
+</body>
+</html>

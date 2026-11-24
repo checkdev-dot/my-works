@@ -1,0 +1,5 @@
+*.exe
+*.exe~
+*.log
+relay/.wrangler/
+node_modules/

@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "TV Mode Helper",
+  "version": "2.5.2",
+  "description": "TV Mode's helper for Netflix, Prime Video and JioHotstar in Chrome: a TV d-pad on Netflix, and the phone's player controls (seek, scrub, speed, subtitles and audio, skip, episodes) on all three. At your desk (a window that is not on the TV) it only tells TV Mode what you are watching, including on YouTube, so the TV's Continue row can show it. Talks only to TV Mode on this PC (127.0.0.1:8770). No tracking, no cookies, no remote code.",
+  "host_permissions": ["http://127.0.0.1:8770/api/ext/*"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://www.netflix.com/*"],
+      "js": ["nav-core.js", "deskrep.js", "content.js", "go.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://www.netflix.com/*"],
+      "js": ["player.js"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://www.primevideo.com/*", "https://primevideo.com/*", "https://www.amazon.in/gp/video/*", "https://www.amazon.com/gp/video/*"],
+      "js": ["probe.js", "tracks.js", "deskrep.js", "core.js", "prime.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://www.hotstar.com/*", "https://hotstar.com/*", "https://www.jiohotstar.com/*"],
+      "js": ["probe.js", "tracks.js", "deskrep.js", "core.js", "hotstar.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["deskrep.js", "youtube.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}

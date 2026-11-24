@@ -38,6 +38,13 @@ An Android app that splits shared spending the moment you pay. It reads your ban
 
 ![Split](apps/android/split-app/docs/screenshots/screens.png)
 
+### Windows apps
+
+#### [TV Mode](apps/windows/tv-mode)
+Turns a Windows PC and a second monitor into a TV, with your phone as the remote. A calm launcher for Netflix, Prime Video, JioHotstar and YouTube, rows of what to watch from TMDB, Continue watching, and a phone remote with touchpad, d-pad, gyro pointer, sleep timer and power. A Chrome helper gives each player proper controls. Windows only, built for one person's setup; the install guide covers the rest.
+
+**Install guide:** [INSTALL.md](apps/windows/tv-mode/INSTALL.md)
+
 ### Career app
 
 #### [Growth](apps/growth)
