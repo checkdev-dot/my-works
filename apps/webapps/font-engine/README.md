@@ -14,6 +14,8 @@
 
 **3. Pick how the letter is built.** Thickness and width are not the whole story. A `b` can join its stem smoothly or with a notch, an `a` can have one storey or two, with a tail or without, a `t` can have a flat or cut top, a `G` can have a spur. Those choices are pictures, not words. When the starting style can draw the shape, the whole word changes to it; when it cannot, a faint outline shows what you asked for and the search looks for fonts built that way.
 
+![Picking how a letter is built](docs/shots/app-5-forms.png)
+
 **4. Zoom out.** The whole word is now what you shaped. That reveal is the point of the zoom.
 
 **5. Get the closest real fonts.** Each result is set in your own word, with a match percentage, what matches, what differs, and a link to get the font. "Yours" sits on top so you can compare.
@@ -22,10 +24,13 @@
 
 **6. Preview before you commit.** Keep two or three fonts, mark one preferred, and see them in real work rather than in a specimen. The preview is laid out as pages 7.1 to 7.7 of a brand manual: each piece flat at a stated scale, with a grey caption saying the scale, the smallest text size, which weights the font has and what the page is testing for. Press 1, 2 or 3 to swap fonts instantly in place, so nothing moves except the type. Compare shows the fonts as rivals; Pair makes the preferred font the headings and the next one the body text.
 
+![The preview, with the kept fonts in the tray](docs/shots/app-6-preview.png)
+
 | | |
 |:---:|:---:|
 | ![Dashboard](docs/shots/preview/ui-1-dashboard.png) | ![Press release](docs/shots/preview/ui-3-document.png) |
-| ![Poster](docs/shots/preview/graphics-1-poster.png) | ![Brand sheet](docs/shots/preview/graphics-3-brand.png) |
+| ![Poster](docs/shots/preview/graphics-1-poster.png) | ![Social posts](docs/shots/preview/graphics-2-social.png) |
+| ![Phone app](docs/shots/preview/ui-2-phone.png) | ![Brand sheet](docs/shots/preview/graphics-3-brand.png) |
 
 Seven templates in two groups. **UI:** dashboard, phone app, press release, slide. **Graphics:** poster, social posts, brand sheet. Each one is chosen to expose something a typeface has to survive: numerals at three sizes, 10 px labels, body texture, headline rhythm, a wordmark at favicon size, 8 px ingredients on a packaging label. A font that cuts off labels says so in the caption rather than failing quietly.
 
