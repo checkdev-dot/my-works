@@ -4,6 +4,18 @@ Turn a Windows PC and a second monitor (or a TV plugged into the PC) into a TV t
 
 Four services sit behind one calm launcher: **Netflix, Prime Video, JioHotstar and YouTube**. You lie down, open the remote on your phone, pick something, and it plays on the big screen. No reaching for the mouse or keyboard.
 
+**[Watch the 64-second film](media/tv-mode-ad.mp4)**
+
+![The launcher on the TV](media/tv-launcher.jpg)
+
+| The remote | The player sheet |
+|---|---|
+| ![Remote pad](media/remote-pad.jpg) | ![Player sheet](media/remote-player.jpg) |
+
+![Desk mode home](media/desk-home.jpg)
+
+![Desk mode title detail](media/desk-title.jpg)
+
 ## What it does
 
 **On the phone (the remote, a web page you add to your home screen)**
